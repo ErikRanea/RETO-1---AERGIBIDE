@@ -1,8 +1,43 @@
+
+@font-face {
+    /*Fuente del tipo de letra regular*/
+    font-family: Mulish-Regular;
+    src: url("assets/fonts/Mulish/Mulish-Regular.ttf");
+}
+
+@font-face {
+    font-family: Mulish-Bold;
+    src: url("assets/fonts/Mulish/Mulish-Bold.ttf");
+    font-weight: bold;
+}
+
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: ;
 }
+a
+{
+    text-decoration: none; 
+    color: inherit; 
+}
+
+a:visited {
+    color: inherit; /* Mantén el mismo color después de haber sido clicado */
+}
+
+a:hover {
+    color: #555; 
+}
+
+a:focus {
+    outline: none;
+}
+
+
+
+
 body{
     height: 100vh;
     width: 100%;
@@ -21,3 +56,6 @@ body{
     width: 100%;
     background-color: #FFFFFF;
 }
+
+
+
