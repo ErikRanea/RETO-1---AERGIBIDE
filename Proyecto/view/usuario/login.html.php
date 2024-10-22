@@ -13,8 +13,11 @@
     <div class="containerLogin">
         <form action="index.php?controller=usuario&action=" method="post">
             <h1>Entrar en Aergibide</h1>
-            <label for="">Email</label>
-            <input type="email" name="email" id="" >
+            <label for="">Email</label><br>
+            <input type="email" name="email" placeholder="Introduce tu email aquí"><br>
+            <label for="">Contraseña</label><br>
+            <input type="password" name="password" id="" placeholder="Introduce tu contraseña aquí"><br>
+            <a href=""><strong>¿Olvidates la contraseña?</strong></a>
         </form>
     </div>
 
