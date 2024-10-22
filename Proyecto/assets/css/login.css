@@ -2,12 +2,12 @@
 @font-face {
     /*Fuente del tipo de letra regular*/
     font-family: Mulish-Regular;
-    src: url("assets/fonts/Mulish/Mulish-Regular.ttf");
+    src: url("../fonts/Mulish/static/Mulish-Regular.ttf");
 }
 
 @font-face {
     font-family: Mulish-Bold;
-    src: url("assets/fonts/Mulish/Mulish-Bold.ttf");
+    src: url("../fonts/Mulish/static/Mulish-Bold.ttf");
     font-weight: bold;
 }
 
@@ -15,47 +15,121 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: ;
-}
-a
-{
-    text-decoration: none; 
-    color: inherit; 
+    font-family: Mulish-Regular;
+    font-size: 15px;
 }
 
-a:visited {
+.fondoAzulFrozono{
+    background-color: #4DBAD9  !important; /* Sobrescribe el color de fondo */;
+    color:white;
+}
+
+strong{
+    font-family: Mulish-Bold;
+}
+
+
+
+
+
+
+
+body{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+
+}
+.containerLogo{
+    width: 60%;
+    background-color: #F6F4F8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: .25em solid #4DBAD9;
+}
+.containerLogo img{
+    max-width: 100% ;
+}
+.containerLogin{
+    width: 40%;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    justify-content: center;
+    align-content:center ;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.email{
+    margin-top: 1em;
+    margin-bottom: .4em;
+}
+.email label{
+    padding-left: 1em;
+}
+.email input{
+    width: 100%;
+    padding: 1em;
+    padding-left: 1em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    text-align:left;
+}
+
+
+.password label{
+    padding-left: 1em;
+}
+.password input{
+    width: 100%;
+    padding: 1em;
+    padding-left: 1em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    text-align:left;
+} 
+.password a {
+
+    margin-left: 12em;
+    text-decoration: none !important; /* Forzar la eliminación del subrayado */
+    color: inherit !important; /* Forzar el color heredado */
+}
+.password a:visited {
     color: inherit; /* Mantén el mismo color después de haber sido clicado */
 }
 
-a:hover {
+.password a:hover {
     color: #555; 
 }
 
-a:focus {
+.password a:focus {
     outline: none;
 }
 
 
 
 
-body{
-    height: 100vh;
-    width: 100%;
-    display: flex;
-
+.boton{
+    margin-bottom: 5em;
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
 }
-.containerLogo{
-    width: 150%;
-    background-color: F6F4F8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-right: .25em solid #4DBAD9;
-}
-.containerLogin{
-    width: 100%;
-    background-color: #FFFFFF;
-}
-
-
-
