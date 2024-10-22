@@ -14,4 +14,19 @@ class UsuarioController{
         $this -> view = "login";
     }
 
+    public function logear(){
+
+     // $usuario =  $this -> model->existeUsuario($_POST);
+
+
+
+    }
+
+    public function apiRegistrar()
+    {
+        $this -> view = "login";
+        isset($_POST) ? $this -> model -> insertUsuario($_POST) : print_r("error");  
+        
+    }
+
 }

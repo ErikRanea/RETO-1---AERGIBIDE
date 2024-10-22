@@ -49,7 +49,7 @@ body{
     border-right: .25em solid #4DBAD9;
 }
 .containerLogo img{
-    max-width: 100% ;
+    max-width: 60% ;
 }
 .containerLogin{
     width: 40%;

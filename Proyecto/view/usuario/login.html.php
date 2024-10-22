@@ -14,7 +14,7 @@
         <img src="assets\img\LogoVectorizado.svg" alt="">
     </div>
     <div class="containerLogin">
-        <form action="index.php?controller=usuario&action=" method="post">
+        <form action="index.php?controller=usuario&action=logear" method="post">
             <h1><strong style="font-size: 35px;font-family: Mulish-Bold">Entrar en Aergibide</strong></h1> 
             <div class="inputs">
                 <div class="email">
