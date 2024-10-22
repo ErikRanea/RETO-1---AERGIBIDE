@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="containerLogo">
-        <img src="assets\img\logoSinNombre.png" alt="">
+        <img src="assets\img\LogoVectorizado.svg" alt="">
     </div>
     <div class="containerLogin">
         <form action="index.php?controller=usuario&action=" method="post">
