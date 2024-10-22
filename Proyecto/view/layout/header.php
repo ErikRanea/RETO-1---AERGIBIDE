@@ -2,18 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" >
+    <title>AERGIBIDE</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <header class="mb-5">
-        <div class="p-5 text-center bg" style="margin-top:
-58px;">
-            <h1 class="mb-3"><?php echo $controller->page_title; ?>
-            </h1>
-            <h4 class="mb-3">Este proyecto muestra cómo hacer una aplicación web MVC con PHP.</h4>
-            <h4 class="mb-3">El objetivo es mostrar cómo realizar una aplicación utilizando éste patrón de diseño   </h4>
-        </div>
-    </header>
+    <!-- Comienzo Header -->
+    <header class="header">
+            <div class="logo">
+                <img src="assets/img/LogoVectorizado.svg" alt="Logo">
+            </div>
+
+            <div class="busqueda">
+                <div class="iconos lupa">
+                    <i class="bi bi-search"></i>
+                </div>
+                <input class="barra-busq" type="text" name="" placeholder="Busqueda...">
+                <div class="filtro">
+                    <button id="btnFiltro" class="iconos">
+                        <i class="bi bi-funnel-fill"></i>
+                    </button>
+                </div>
+            </div>
+                
+            <div class="iconos panel-botones">
+                <i class="bi bi-chat-left-fill"></i>
+                <i class="bi bi-bell-fill"></i>
+                <i class="bi bi-person-fill"></i>
+                <i class="bi bi-moon-stars"></i>
+            </div>
+        </header>
+        <!-- Fin Header -->
