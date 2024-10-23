@@ -12,7 +12,7 @@ class Usuario{
 
     public function getConnection(){
         $dbObj = new db();
-        $this -> connection = $dbObj ->conection;
+        $this -> connection = $dbObj ->connection;
     }
 
 
