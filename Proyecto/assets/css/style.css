@@ -1,0 +1,105 @@
+/* General */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%; /* Asegura que el body cubra toda la página */
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.header {
+    background-color: #EAFBFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    padding: 1em;
+}
+
+.logo {
+    width: 3%;
+}
+
+.logo > img {
+    width: 100%;
+}
+
+.busqueda {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+
+.barra-busq {
+    width: 100%;
+    padding-left: 3em;
+    padding-right: 2em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.lupa {
+    position: absolute;
+    left: 10px;
+    pointer-events: none; /* Para que el clic pase al input */
+}
+
+.filtro {
+    position: absolute;
+    right: 10px;
+}
+
+#btnFiltro {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#btnFiltro:hover {
+    background-color: #EAFBFF;
+}
+
+.panel-botones {
+    display: flex;
+    gap: .5em;
+}
+
+.iconos {
+    color: #4DBAD9;
+}
+
+.iconos > i {
+    font-size: 1.5em;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #EAFBFF;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border: none;
+    box-shadow: none;
+}
+
+
+.footer > span {
+    color: #4DBAD9;
+    font-size: 2em;
+}
+
+.redes, .panel-botones {
+    display: flex;
+    gap: .5em;
+}
