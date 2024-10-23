@@ -14,4 +14,12 @@ class UsuarioController{
         $this -> view = "login";
     }
 
+    public function datosUsuario(){
+        $this -> view = "datosUsuario";
+    }
+
+    public function datosUsuarioBlack(){
+        $this -> view = "datosUsuarioBlack";
+    }
+
 }
