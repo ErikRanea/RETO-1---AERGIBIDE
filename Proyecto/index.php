@@ -6,10 +6,11 @@ require_once "model/db.php";
 
 //Se toman los valores de la sesion
 
-/*
-if (!isset($_SESSION['id']))
+
+if (!isset($_SESSION['user_data']['id']) && !isset($_SESSION['enSesion']))
 {
-    header("Location: index.php");
+    $_SESSION['enSesion'] = true;
+    header("Location: index.php?controller=usuario&action=login");
     exit(0);
 }
 
@@ -20,16 +21,16 @@ if(!isset($_SESSION['tout']))
 else
 {
   
-  if(($_SESSION['tout']+1) < time())
+  if(($_SESSION['tout']+3600) < time())
   {
 
     session_destroy();
-    header("Location: index.php");
+    header("Location: index.php?controller=usuario&action=login");
     exit(0);
   }
   $_SESSION['tout'] = time();
 }
-*/
+
 
 // Verificar si la solicitud es AJAX
 $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
@@ -70,5 +71,10 @@ if($_GET["action"] != "login"){
     require_once 'view/'.$_GET["controller"].'/'.$controller->view.'.html.php';
     require_once 'view/layout/footer.php';
 } else {
-    require_once 'view/'.$_GET["controller"].'/'.$controller->view.'.html.php';
+    mostrarLogin();
+}
+
+function mostrarLogin()
+{
+    require_once 'view/usuario/login.html.php';
 }
