@@ -62,7 +62,7 @@ body{
 
 
 
-form{
+.formulario{
     display: flex;
     flex-direction: column;
     width: 60%;
@@ -132,4 +132,5 @@ form{
     padding: .5em;
     border: #4DBAD9 solid .1em;
     border-radius: .5em;
+    width: 100%;
 }

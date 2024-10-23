@@ -3,6 +3,9 @@ class Usuario{
 
     private $tabla = "Usuarios";
     private $connection;
+    public $id;
+    public $nombre;
+    public $email;
 
 
     public function __construct()
@@ -15,6 +18,13 @@ class Usuario{
         $this -> connection = $dbObj ->conection;
     }
 
+    public function getUsuariosById($id_usuario)
+    {
+        $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$id_usuario]);     
+        return $stmt->fetch(); 
+    }
 
 
     public function insertUsuario($param)
@@ -77,38 +87,56 @@ class Usuario{
         return $stmt ->fetchAll(); 
     }
 
-    public function getUsuarioByEmailAndPassword($email,$password)
+    public function getUsuarioByEmail($email)
     {
-        $sql = "SELECT * FROM ".$this->tabla." WHERE email = ? AND password = ?";
+        $sql = "SELECT * FROM ".$this->tabla." WHERE email = ?";
         $stmt = $this-> connection ->prepare($sql);
         $stmt -> setFetchMode(PDO::FETCH_CLASS, 'Usuario');
-        $stmt -> execute([$email],[$password]);
+        $stmt -> execute([$email]);
         return $stmt ->fetch();
     }
 
     public function login($param)
     {
         // Sanitize POST
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+
+       // $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
             /* Validación del token para prevenir inyección SQL */
-        $listaSQL = ["WHERE", "where", "AND", "and", "="];
+      /*  $listaSQL = ["WHERE", "where", "AND", "and", "="];
         $limpio = true; // Cambié a true para evitar invertir la lógica después
         foreach($listaSQL as $strSQL) {
-            if (strpos($post, $strSQL) !== false) {
-                $limpio = false;
-                break;
+            foreach($post as $elementoPost)
+            {
+                if (strpos($elementoPost, $strSQL) !== false) {
+                    $limpio = false;
+                    break 2; // Salimos de ambos bucles
+                }
             }
-        }
+        } */
 
-        if (isset($post['submit']) && $limpio)
+        //if (isset($post['submit']) && $limpio)
+
+        $post = $param;
+
+
+        if (isset($post))
         {
-            $usuarioAlmacenado = $this->getUsuarioByEmailAndPassword($post['email'],$post['password']);
-
+            $usuarioAlmacenado = $this->getUsuarioByEmail($post['email']);
+          
+            if(isset($usuarioAlmacenado->email) && password_verify($post["password"] , $usuarioAlmacenado->password))
+            {
+              
+                return $usuarioAlmacenado;
+            }
+            else
+                return;
 
         }
 
     }
+
+
 
 
 
