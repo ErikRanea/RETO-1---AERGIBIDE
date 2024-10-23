@@ -66,7 +66,7 @@ if ($isAjaxRequest) {
 }
 
 // Incluir las vistas si no es una solicitud AJAX
-if($_GET["action"] != "login"){
+if($_GET["action"] != "login" && isset($_SESSION['user_data']['id'])){
     require_once 'view/layout/header.php';
     require_once 'view/'.$_GET["controller"].'/'.$controller->view.'.html.php';
     require_once 'view/layout/footer.php';
