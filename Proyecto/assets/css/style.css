@@ -1,13 +1,19 @@
+/* General */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%; /* Asegura que el body cubra toda la página */
+    display: flex;
+    flex-direction: column;
+}
+
 /* HEADER */
 .header {
     background-color: #EAFBFF;
-    border-bottom: 1px solid black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,15 +21,15 @@
     padding: 1em;
 }
 
-.logo{
+.logo {
     width: 3%;
 }
 
-.logo > img{
+.logo > img {
     width: 100%;
 }
 
-.busqueda{
+.busqueda {
     position: relative;
     display: flex;
     align-items: center;
@@ -32,8 +38,8 @@
 
 .barra-busq {
     width: 100%;
-    padding-left: 3em; 
-    padding-right: 2em; 
+    padding-left: 3em;
+    padding-right: 2em;
     padding-top: .5em;
     padding-bottom: .5em;
     border: 1px solid #ccc;
@@ -57,16 +63,16 @@
     cursor: pointer;
 }
 
-#btnFiltro :hover{
+#btnFiltro:hover {
     background-color: #EAFBFF;
 }
 
-.panel-botones{
+.panel-botones {
     display: flex;
     gap: .5em;
 }
 
-.iconos{
+.iconos {
     color: #4DBAD9;
 }
 
@@ -75,15 +81,20 @@
 }
 
 /* FOOTER */
-.footer{
+.footer {
     background-color: #EAFBFF;
-    border-top: 1px solid black;
     display: flex;
     justify-content: space-between;
     padding: 1em;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border: none;
+    box-shadow: none;
 }
 
-.footer > span{
+
+.footer > span {
     color: #4DBAD9;
     font-size: 2em;
 }
@@ -92,6 +103,3 @@
     display: flex;
     gap: .5em;
 }
-
-
-

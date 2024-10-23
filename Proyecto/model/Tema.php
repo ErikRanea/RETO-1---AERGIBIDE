@@ -1,6 +1,6 @@
 <?php
 class Tema {
-    private $tabla = "Temas";
+    private $table = "Temas";
     private $connection;
 
     public function __construct() {
@@ -8,15 +8,22 @@ class Tema {
     }
 
     public function getConnection() {
-        $dbObj = new db();
-        $this->connection = $dbObj->conection;
+        $dbObj = new Db();
+        $this->connection = $dbObj->connection;
     }
 
-    // Método para obtener los temas
+    // Método para obtener todos los temas
     public function getTemas() {
-        $sql = "SELECT * FROM " . $this->tabla;
+        $sql = "SELECT * FROM " . $this->table;
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTemasById($id) {
+        $sql = "SELECT * FROM " . $this->table. " where id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
