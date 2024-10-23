@@ -1,7 +1,9 @@
 <?php
 session_start();
+
 require_once "config/config.php";
 require_once "model/db.php";
+
 
 // Controlador y acción por defecto
 if (!isset($_GET["controller"])) $_GET["controller"] = constant("DEFAULT_CONTROLLER");
