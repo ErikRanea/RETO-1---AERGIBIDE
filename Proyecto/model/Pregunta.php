@@ -19,7 +19,7 @@ class Pregunta{
     }
 
     public function getPreguntasPorTema($id_tema){
-        $this->tabla = "Preguntas";
+        //$this->tabla = "Preguntas";
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id_tema = ?";
         $stmt = $this -> connection ->prepare($sql);
 
@@ -61,6 +61,33 @@ class Pregunta{
         return ceil($total/$limit);
     }
 
+    public function save($param){
+        /* Set default values */
+        date_default_timezone_set('Europe/Madrid'); // Establece la zona horaria
+        $id_tema = $titulo = $texto = $filePath = $id_usuario = "";
+
+        if(isset($param['file_path'])) $filePath = $param['file_path'];
+        // Sanitize POST
+        $param = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        /* Received values */
+        if(isset($param["id_tema"])) $id_tema = $param["id_tema"];
+        if(isset($param["titulo"])) $titulo = $param["titulo"];
+        if(isset($param["texto"])) $texto = $param["texto"];
+        if(isset($param["id_usuario"])) $id_usuario = $param["id_usuario"];
+        $votos = 0;
+        $fecha_hora = new DateTime();
+        $fecha_hora = $fecha_hora->format("Y-m-d H:i:s");
+
+        /* Database operations */
+        $sql = "INSERT INTO ".$this->tabla. " (id_tema, titulo, texto, votos, imagen, fecha_hora, id_usuario) 
+                VALUES(?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$id_tema, $titulo, $texto, $votos, $filePath, $fecha_hora, $id_usuario]);
+        $id = $this->connection->lastInsertId();
+
+        return $id;
+    }
 
 
 }
