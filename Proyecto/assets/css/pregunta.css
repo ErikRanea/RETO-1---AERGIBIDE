@@ -1,0 +1,31 @@
+
+.contenedorPreguntaYRespuesta
+{
+    min-height: 80vh;
+    display: grid;                   
+    grid-template-columns: 20% 60% 20%;  /* Definimos 3 columnas con el porcentaje indicado */
+    width: 100%;     
+}
+
+.cont1, .cont2, .cont3
+{
+    
+    text-align: center;              /* Centrar el texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+
+.cont1
+{
+    
+}
+.cont2
+{
+
+}
+.cont3
+{
+   
+}

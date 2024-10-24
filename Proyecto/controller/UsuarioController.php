@@ -36,6 +36,7 @@ class UsuarioController{
                     "id" => $row->id,
                     "nombre" => $row->nombre,
                     "email" => $row->email,
+                    ""
                 );
                 //Si todo va bien y entra
                 echo json_encode([
@@ -71,5 +72,7 @@ class UsuarioController{
         isset($_POST) ? $this -> model -> insertUsuario($_POST) : print_r("error");  
         
     }
+
+
 
 }

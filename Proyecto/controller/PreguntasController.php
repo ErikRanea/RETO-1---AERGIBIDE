@@ -17,14 +17,13 @@ class PreguntasController{
 
         $tema = $this->model->tema->getTemaById($_GET["id_tema"]);
         $preguntas = $this->model->getPreguntasPorTema($_GET["id_tema"]);
-        foreach ($preguntas as &$pregunta) {
-            $usuario = $this->model->usuario->getUsuariosById($pregunta["id_usuario"]);
+        foreach ($preguntas as &$pregunta) { //
+            $usuario = $this->model->usuario->getUsuarioById($pregunta["id_usuario"]);
             $pregunta["usuario"] = $usuario;
         }
-        unset($pregunta);
+        unset($pregunta); 
 
-        $this->dataToView["preguntas"] = $preguntas;
-        $this->dataToView["tema"] = $tema;
+
         return [
             "preguntas" => $preguntas,
             "tema" => $tema
@@ -47,6 +46,11 @@ class PreguntasController{
 
     public function create(){
         $this->view = "create";
+    }
+
+    public function view()
+    {
+        $this ->view = "view";
     }
 
 
