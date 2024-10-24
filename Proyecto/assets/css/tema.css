@@ -1,108 +1,109 @@
-/* General */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-    margin-bottom: 50px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Reemplazado */
 }
 
-body {
-    font-family: 'Mulish', sans-serif;
-    background-color: #f4f4f9;
+main {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Asegura que el contenido principal y el footer se distribuyan verticalmente */
-    min-height: 100vh;
+    padding: 20px;
 }
 
 .containerTema {
     display: flex;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto; /* Centramos el contenedor horizontalmente */
-    flex-grow: 1; /* Permite que el contenido crezca para ocupar el espacio */
+    width: 100%;
+    margin-left: 15%;
+    gap: 10px;
 }
 
 .temas {
-    width: 65%;
+    flex-grow: 1;
+    padding: 20px;
 }
 
 .tema {
-    font-size: 32px;
-    padding: 20px;
+    background-color: transparent;
+    padding: 15px;
+    font-size: 30px;
+    margin-bottom: 30px;
     border-bottom: 2px solid #4DBAD9;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.sidebar {
-    width: 30%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.ultimas-publicaciones h3 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.publicacion {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.icono {
-    width: 40px;
-    height: 40px;
-    background-color: #4DBAD9;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.texto {
-    font-size: 16px;
-    color: #333;
-}
-
-.texto p {
-    margin: 0;
-}
-
-.estadisticas h3 {
-    margin-top: 40px;
-    font-size: 18px;
-    color: #333;
+    cursor: pointer;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    margin-top: 20px;
 }
 
 .page-btn {
-    background-color: #4DBAD9;
-    border: none;
+    background-color: #4DBAD9; /* Reemplazado */
+    color: #fff;
+    padding: 5px 10px;
     margin: 0 5px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.page-btn.active {
+    background-color: #379BB3; /* Reemplazado */
+}
+
+.sidebar {
+    width: 300px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ultimas-publicaciones h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333; /* Reemplazado */
+}
+
+.publicacion {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.icono img {
+    margin-right: 10px;
+}
+
+.texto p {
+    margin: 0;
+    color: #333; /* Reemplazado */
+}
+
+.estadisticas {
+    margin-top: 20px;
+    color: #333; /* Reemplazado */
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
+    background-color: #e0f7ff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-text {
     font-size: 16px;
-    color: white;
+    color: #4DBAD9; /* Reemplazado */
 }
 
-.page-btn:hover {
-    background-color: #379BB3;
+.social-icons img {
+    width: 20px;
+    margin-left: 10px;
 }
-
-
