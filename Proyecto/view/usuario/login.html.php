@@ -14,23 +14,23 @@
         <img src="assets\img\LogoVectorizado.svg" alt="">
     </div>
     <div class="containerLogin">
-        <form action="index.php?controller=usuario&action=" method="post">
+        <div class="formulario">
             <h1><strong style="font-size: 35px;font-family: Mulish-Bold">Entrar en Aergibide</strong></h1> 
             <div class="inputs">
                 <div class="email">
                     <label for=""><strong>Email</strong></label><br>
-                    <input type="email" name="email" placeholder="Introduce tu email aquí"><br>
+                    <input type="email" name="email" id="email" placeholder="Introduce tu email aquí" require><br>
                 </div>
 
                 <div class="password">
                     <label for=""><strong>Contraseña</strong></label><br>
-                    <input type="password" name="password" id="" placeholder="Introduce tu contraseña aquí"><br>
+                    <input type="password" name="password" id="password" placeholder="Introduce tu contraseña aquí" require><br>
                     <a href=""><strong>¿Olvidates la contraseña?</strong></a><br>
                 </div>
             </div>  
-            <button type="submit" class="boton fondoAzulFrozono">Entrar</button>
-        </form>
+            <button type="submit" id = "botonDeLogin" class="boton fondoAzulFrozono">Entrar</button>
+        </div>
     </div>
-
+    <script src="assets/js/login.js"></script>
 </body>
 </html>

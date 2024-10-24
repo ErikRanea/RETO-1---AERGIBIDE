@@ -1,35 +1,46 @@
+/* General */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+html, body {
+    height: 100%;
 }
 
-.container {
+body {
+    font-family: 'Mulish', sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Asegura que el contenido principal y el footer se distribuyan verticalmente */
+    min-height: 100vh;
+}
+
+.containerTema {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto; /* Centramos el contenedor horizontalmente */
+    flex-grow: 1; /* Permite que el contenido crezca para ocupar el espacio */
 }
 
 .temas {
     width: 65%;
-    margin-left: 25%;
-    margin-right: 5%;
 }
 
 .tema {
+    font-size: 32px;
     padding: 20px;
-    border-bottom: 1px solid lightblue;
-    font-size: 24px;
-
+    border-bottom: 2px solid #4DBAD9;
+    margin-bottom: 20px;
+    color: #333;
 }
 
 .sidebar {
-    width: 25%;
+    width: 30%;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -37,45 +48,60 @@ body {
 }
 
 .ultimas-publicaciones h3 {
+    font-size: 18px;
     margin-bottom: 20px;
+    color: #333;
 }
 
 .publicacion {
     display: flex;
-    margin-bottom: 20px;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .icono {
     width: 40px;
     height: 40px;
-    background-color: lightblue;
+    background-color: #4DBAD9;
     border-radius: 50%;
+    display: inline-block;
     margin-right: 10px;
 }
 
+.texto {
+    font-size: 16px;
+    color: #333;
+}
+
 .texto p {
-    font-size: 14px;
+    margin: 0;
 }
 
 .estadisticas h3 {
     margin-top: 40px;
+    font-size: 18px;
+    color: #333;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
-    margin: 20px;
+    margin: 20px 0;
 }
 
 .page-btn {
-    background-color: #a8dbef;
+    background-color: #4DBAD9;
     border: none;
     margin: 0 5px;
-    padding: 10px 15px;
+    padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 16px;
+    color: white;
 }
 
 .page-btn:hover {
-    background-color: #6bb3c8;
+    background-color: #379BB3;
 }
+
+
