@@ -10,11 +10,13 @@ html, body {
     display: flex;
     flex-direction: column;
     margin-bottom: 50px;
+    background-color: #1F1F1F; /* Fondo oscuro general */
+    color: #FFFFFF; /* Texto blanco puro */
 }
 
 /* HEADER */
 .header {
-    background-color: #EAFBFF;
+    background-color: #162F3B; /* Fondo oscuro del header */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,8 +45,10 @@ html, body {
     padding-right: 2em;
     padding-top: .5em;
     padding-bottom: .5em;
-    border: 1px solid #ccc;
+    background-color: #333333; /* Fondo de la barra de búsqueda */
+    border: 1px solid #666666; /* Borde oscuro */
     border-radius: 5px;
+    color: #FFFFFF; /* Texto blanco puro */
 }
 
 .lupa {
@@ -65,7 +69,7 @@ html, body {
 }
 
 #btnFiltro:hover {
-    background-color: #EAFBFF;
+    background-color: #333333; /* Fondo más oscuro al pasar el cursor */
 }
 
 .panel-botones {
@@ -74,7 +78,7 @@ html, body {
 }
 
 .iconos {
-    color: #4DBAD9;
+    color: #4DBAD9; /* Color azul claro para los iconos */
 }
 
 .iconos > i {
@@ -83,7 +87,7 @@ html, body {
 
 /* FOOTER */
 .footer {
-    background-color: #EAFBFF;
+    background-color: #162F3B; /* Fondo oscuro del footer */
     display: flex;
     justify-content: space-between;
     padding: 4em 2em;
@@ -96,15 +100,17 @@ html, body {
 }
 
 .footer > span {
-    color: #4DBAD9;
+    color: #4DBAD9; /* Color azul claro para el texto */
     font-size: 2em;
 }
 
 .redes, .panel-botones {
     display: flex;
     gap: .5em;
+    color: #4DBAD9; /* Color azul claro para los iconos del footer */
 }
 
+/* PAGINACIÓN */
 /* PAGINACIÓN */
 .pagination {
     display: flex;
@@ -114,12 +120,12 @@ html, body {
     bottom: 120px; /* Ajusta la posición para que quede justo por encima del footer (ajusta este valor si es necesario) */
     left: 0;
     width: 100%; /* Hace que la paginación ocupe todo el ancho */
-    background-color: #F6F4F8; /* Fondo de paginación */
+    background-color: #1F1F1F; /* Fondo de paginación en modo oscuro */
     z-index: 100; /* Asegura que esté encima de otros elementos */
 }
 
 .page-btn {
-    background-color: #4DBAD9;
+    background-color: #4DBAD9; /* Color de los botones de paginación */
     border: none;
     margin: 0 5px;
     padding: 10px 20px;
@@ -131,9 +137,10 @@ html, body {
 }
 
 .page-btn.active {
-    background-color: #379BB3;
+    background-color: #379BB3; /* Color de botón activo */
 }
 
 .page-btn:hover {
-    background-color: #379BB3;
+    background-color: #379BB3; /* Color al pasar el cursor */
 }
+

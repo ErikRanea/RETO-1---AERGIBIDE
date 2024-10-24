@@ -33,7 +33,8 @@
                 <i class="bi bi-chat-left-fill"></i>
                 <i class="bi bi-bell-fill"></i>
                 <i class="bi bi-person-fill"></i>
-                <i class="bi bi-moon-stars"></i>
+                <i id="darkModeIcon" class="bi bi-moon-stars"></i>
             </div>
         </header>
+    <script src="assets/js/darkMode.js"></script>
         <!-- Fin Header -->

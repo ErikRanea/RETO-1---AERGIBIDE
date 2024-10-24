@@ -37,8 +37,8 @@ class Pregunta{
         return $stmt ->fetchAll();
     }
 
-    public function getPreguntasPaginated($id_tema, $page = 1){
-        $limit=PAGINATION;
+    public function getPreguntasPaginated($id_tema, $pagination, $page = 1){
+        $limit=$pagination;
         $offset = ($page - 1) * $limit; // Calcula el desplazamiento
         $sql = "SELECT * FROM ".$this->tabla." WHERE id_tema= :id_tema LIMIT :limit OFFSET :offset";
         $stmt = $this->connection->prepare($sql);
@@ -46,12 +46,12 @@ class Pregunta{
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindParam(':id_tema', $id_tema, PDO::PARAM_INT);
         $stmt->execute();
-        $totalPages = $this->getNumberPages($id_tema); //ceil($this->getNumperPages()/$limit);
+        $totalPages = $this->getNumberPages($id_tema, $pagination); //ceil($this->getNumperPages()/$limit);
         return [$stmt->fetchAll(), $page, $totalPages];
     }
 
-    public function getNumberPages($id_tema){
-        $limit=PAGINATION;
+    public function getNumberPages($id_tema, $pagination){
+        $limit=$pagination;
         $sql = "SELECT COUNT(*) FROM ".$this->tabla. " WHERE id_tema=?";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$id_tema]);
