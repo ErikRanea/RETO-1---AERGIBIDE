@@ -2,6 +2,9 @@
 require_once 'model/Tema.php';
 require_once 'model/Publicacion.php';
 
+require_once 'model/Tema.php';
+require_once 'model/Publicacion.php';
+
 class TemaController {
     public $view;
     public $model;
@@ -10,37 +13,36 @@ class TemaController {
         $this->model = new Tema();  // Instancia del modelo Tema
     }
 
-    // Método para mostrar los temas y preguntas
+
     public function mostrarTemas() {
-        $temas = $this->model->getTemas();  // Obtiene los temas
-        $publicacionModel = new publicacion();
+        // Definir el número de temas por página
+        $temasPorPagina = 7;
 
-        // Vamos a obtener todas las preguntas
-        $publicaciones = $publicacionModel->getPubliaciones();  // Obtiene todas las preguntas
+        // Obtener la página actual de la URL, por defecto es la página 1
+        $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
-        // Asigna los temas y preguntas a $dataToView
+        // Calcular el offset para la consulta
+        $offset = ($paginaActual - 1) * $temasPorPagina;
+
+        // Obtener el total de temas para calcular el número de páginas
+        $totalTemas = $this->model->contarTemas();
+        $totalPaginas = ceil($totalTemas / $temasPorPagina);
+
+        // Obtener los temas paginados
+        $temas = $this->model->getTemasPaginados($temasPorPagina, $offset);
+
+        // Obtener las últimas publicaciones
+        $publicacionModel = new Publicacion();
+        $publicaciones = $publicacionModel->getPubliaciones();
+
+        // Asignar los temas, publicaciones y datos de paginación a $dataToView
         $dataToView["temas"] = $temas;
         $dataToView["publicaciones"] = $publicaciones;
-
+        $dataToView["totalPaginas"] = $totalPaginas;
+        $dataToView["paginaActual"] = $paginaActual;
 
         $this->view = 'view';  // Asigna la vista
         return $dataToView;  // Devuelve los datos a la vista
     }
-
-    // Método para ver los detalles de un tema específico junto a sus preguntas
-    public function view() {
-        $tema_id = $_GET['id'];  // Obtiene el ID del tema
-        $tema = $this->model->getTemaById($tema_id);  // Obtiene el tema por ID
-
-        // Obtener las preguntas asociadas a este tema
-        $preguntaModel = new Pregunta();
-        $preguntas = $preguntaModel->getPreguntasByTemaId($tema_id);
-
-        // Pasar los datos de tema y preguntas a la vista
-        $dataToView["data"] = $tema;
-        $dataToView["preguntas"] = $preguntas;
-
-        $this->view = 'view';  // Asigna la vista
-        return $dataToView;  // Devuelve los datos
-    }
 }
+
