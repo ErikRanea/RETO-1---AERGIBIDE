@@ -47,14 +47,11 @@ class PreguntasController{
         $paginas = [$preguntas_pag[1], $preguntas_pag[2]];
 
         foreach ($preguntas as &$pregunta) {
-            $usuario = $this->model->usuario->getUsuariosById($pregunta["id_usuario"]);
+            $usuario = $this->model->usuario->getUsuarioById($pregunta["id_usuario"]);
             $pregunta["usuario"] = $usuario;
         }
         unset($pregunta);
 
-        $this->dataToView["preguntas"] = $preguntas;
-        $this->dataToView["tema"] = $tema;
-        $this->dataToView["paginas"] = $paginas;
 
         return [
             "preguntas" => $preguntas,
