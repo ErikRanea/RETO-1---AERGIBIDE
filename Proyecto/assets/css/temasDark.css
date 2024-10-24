@@ -6,8 +6,10 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9; /* Reemplazado */
+    background-color: #1F1F1F;
+    color: #FFFFFF;
 }
+
 
 main {
     display: flex;
@@ -32,6 +34,7 @@ main {
     font-size: 30px;
     margin-bottom: 30px;
     border-bottom: 2px solid #4DBAD9;
+    color: #FFFFFF;
     cursor: pointer;
 }
 
@@ -57,7 +60,7 @@ main {
 .sidebar {
     width: 300px;
     padding: 20px;
-    background-color: #f8f9fa;
+    background-color: #1A1A1A;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -65,7 +68,7 @@ main {
 .ultimas-publicaciones h3 {
     font-size: 18px;
     margin-bottom: 10px;
-    color: #333; /* Reemplazado */
+    color: #FFFFFF; /* Reemplazado */
 }
 
 .publicacion {
@@ -79,31 +82,10 @@ main {
 
 .texto p {
     margin: 0;
-    color: #333; /* Reemplazado */
+    color: #FFFFFF; /* Reemplazado */
 }
 
 .estadisticas {
     margin-top: 20px;
-    color: #333; /* Reemplazado */
-}
-
-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #e0f7ff;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer-text {
-    font-size: 16px;
-    color: #4DBAD9; /* Reemplazado */
-}
-
-.social-icons img {
-    width: 20px;
-    margin-left: 10px;
+    color: #FFFFFF; /* Reemplazado */
 }
