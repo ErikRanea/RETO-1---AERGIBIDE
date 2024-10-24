@@ -5,11 +5,6 @@ $usuario = $_SESSION["user_data"];
 if (isset($_GET["id_tema"])) $id_tema = $_GET["id_tema"];
 if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
 
-date_default_timezone_set('Europe/Madrid'); // Establece la zona horaria
-$fecha_hora = new DateTime();
-$fecha_hora = $fecha_hora->format("Y-m-d H:i:s");
-print_r($fecha_hora)
-
 ?>
 
 <div class="row">
@@ -54,7 +49,7 @@ print_r($fecha_hora)
             <label>
                 Describe tu problema
                 <br>
-                <textarea name="texto" placeholder="Descripcio de tu Problema"></textarea>
+                <textarea name="texto" placeholder="Descripción de tu Problema"></textarea>
             </label>
         </div>
         <br>

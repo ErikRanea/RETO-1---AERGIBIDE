@@ -84,7 +84,7 @@ class PreguntaController{
 
         // Ahora pasamos todos los datos (incluido el archivo, si existe) al modelo
         $param = $_POST;
-        $param['file_path'] = $filePath; // Agregamos la ruta del archivo al array de parámetros
+        $param['file_path'] = $filePath;
 
         $id = $this->model->save($param);
         $result = $this->model->getPreguntaById($id);

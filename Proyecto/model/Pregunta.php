@@ -80,7 +80,6 @@ class Pregunta{
         $fecha_hora = $fecha_hora->format("Y-m-d H:i:s");
 
         /* Database operations */
-        // $sql = sprintf("INSERT INTO %s (title, content) VALUES ('%s', '%s')", $this->table, $title, $content);
         $sql = "INSERT INTO ".$this->tabla. " (id_tema, titulo, texto, votos, imagen, fecha_hora, id_usuario) 
                 VALUES(?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->connection->prepare($sql);

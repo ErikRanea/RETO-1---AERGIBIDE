@@ -32,7 +32,7 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
             <hr>
         <?php endforeach; ?>
 
-        <nav aria-label="Paginación de notas" class="">
+        <nav aria-label="Paginación de preguntas" class="">
             <ul class="pagination justify-content-center">
                 <!-- Enlace a la página anterior -->
                 <?php if ($paginas[0] > 1): ?>
