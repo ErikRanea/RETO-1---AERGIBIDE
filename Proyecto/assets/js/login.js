@@ -18,7 +18,7 @@ async function validarCredenciales(event)
     params.append('password', password);
 
     try {
-        const response = await fetch('http://localhost/RETO-1---AERGIBIDE/Proyecto/index.php?controller=usuario&action=logear', {
+        const response = await fetch('index.php?controller=usuario&action=logear', {
             method: 'POST',  // Método POST
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

@@ -9,6 +9,7 @@ html, body {
     height: 100%; /* Asegura que el body cubra toda la página */
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
 }
 
 /* HEADER */
@@ -49,7 +50,7 @@ html, body {
 .lupa {
     position: absolute;
     left: 10px;
-    pointer-events: none; /* Para que el clic pase al input */
+    pointer-events: none;
 }
 
 .filtro {
@@ -80,6 +81,7 @@ html, body {
     font-size: 1.5em;
 }
 
+
 /* FOOTER */
 .footer {
     background-color: #EAFBFF;
@@ -87,11 +89,13 @@ html, body {
     justify-content: space-between;
     padding: 1em;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    left: 0;
     border: none;
     box-shadow: none;
 }
+
 
 
 .footer > span {
@@ -102,4 +106,31 @@ html, body {
 .redes, .panel-botones {
     display: flex;
     gap: .5em;
+}
+
+/*paginacion*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.page-btn {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.page-btn.active {
+    background-color: #379BB3;
+}
+
+.page-btn:hover {
+    background-color: #379BB3;
 }
