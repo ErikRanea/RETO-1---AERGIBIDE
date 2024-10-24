@@ -11,7 +11,7 @@ class Publicacion {
         $this->connection = $dbObj->connection;
     }
 
-    // Método para obtener las últimas 5 publicaciones (preguntas y respuestas)
+    //Obtener las últimas 5 publicaciones (preguntas y respuestas)
     public function getPubliaciones() {
         $sql = "
             (SELECT 'pregunta' as tipo, p.titulo, p.texto, p.fecha_hora, u.foto_perfil 
@@ -33,7 +33,7 @@ class Publicacion {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Devolver los resultados como array asociativo
     }
 
-    // Método para obtener preguntas por tema (sin cambios)
+
     public function getPublicacionesByTemaId($tema_id) {
         $sql = "SELECT * FROM Preguntas WHERE id_tema = :tema_id";  // Filtrar preguntas por el tema
         $stmt = $this->connection->prepare($sql);
@@ -41,5 +41,7 @@ class Publicacion {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
 }
 
