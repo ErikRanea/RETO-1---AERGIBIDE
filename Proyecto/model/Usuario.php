@@ -18,7 +18,7 @@ class Usuario{
         $this -> connection = $dbObj ->connection;
     }
 
-    public function getUsuariosById($id_usuario)
+    public function getUsuarioById($id_usuario)
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);

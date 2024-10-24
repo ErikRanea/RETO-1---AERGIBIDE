@@ -31,10 +31,10 @@ class Tema {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTemasById($id) {
+    public function getTemaById($id) {
         $sql = "SELECT * FROM " . $this->table . " WHERE id = ?";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch();
     }
 }

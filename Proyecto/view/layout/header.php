@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <link rel="stylesheet" href="assets/css/tema.css">
-
+    <link rel="stylesheet" href="assets/css/pregunta.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
