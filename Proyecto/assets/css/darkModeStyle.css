@@ -111,15 +111,14 @@ html, body {
 }
 
 /* PAGINACIÓN */
-/* PAGINACIÓN */
 .pagination {
     display: flex;
     justify-content: center;
     padding: 10px 0; /* Espaciado alrededor de la paginación */
     position: absolute; /* Posición absoluta para que quede fija pero respetando el footer */
-    bottom: 120px; /* Ajusta la posición para que quede justo por encima del footer (ajusta este valor si es necesario) */
+    bottom: 135px; /* Ajusta la posición para que quede justo por encima del footer */
     left: 0;
-    width: 100%; /* Hace que la paginación ocupe todo el ancho */
+    width: 100%;
     background-color: #1F1F1F; /* Fondo de paginación en modo oscuro */
     z-index: 100; /* Asegura que esté encima de otros elementos */
 }
