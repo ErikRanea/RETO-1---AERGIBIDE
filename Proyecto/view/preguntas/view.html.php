@@ -1,6 +1,8 @@
 <div class="contenedorPreguntaYRespuesta">
     <div class="cont1">
-        %20
+        <div class="fotoUsuarioPregunta">
+            <img src="<?php echo isset($dataToView["usuario"]) ? $dataToView["usuario"] -> foto_perfil : "assets/img/fotoPorDefecto.png"?>" alt="">
+        </div>
     </div>
 
 

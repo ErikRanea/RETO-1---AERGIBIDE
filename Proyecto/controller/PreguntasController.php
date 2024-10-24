@@ -1,10 +1,13 @@
 <?php
 require_once "model/Pregunta.php";
 
+
 class PreguntasController{
     //public $page_title;
     public $view;
     public $model;
+    public $modeloPrincipal;
+    
 
     public function __construct(){
         //$this->page_title = "";
@@ -67,6 +70,26 @@ class PreguntasController{
     public function view()
     {
         $this ->view = "view";
+
+        $id = isset($_GET["id_pregunta"]) ? $_GET["id_pregunta"] : false;
+        
+        if(!$id)
+        {
+            header("Location: index.php?controller=tema&action=mostrarTemas");
+        }
+
+
+
+        $pregunta = $this ->model->getPreguntaById($id);
+        $usuarioPregunta = $this -> model -> usuario -> getUsuarioById($pregunta["id_usuario"]);
+
+        $datos = array();
+
+        array_push($datos,$pregunta);
+        array_push($datos,$usuarioPregunta);
+        
+        return $datos;
+
     }
 
 

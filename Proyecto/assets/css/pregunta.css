@@ -19,8 +19,19 @@
 
 .cont1
 {
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
+
+.cont1 img
+{
+    max-width: 40%;
+    max-height: 40%;
+}
+
+
 .cont2
 {
 
