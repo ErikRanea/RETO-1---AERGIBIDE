@@ -276,3 +276,25 @@ html, body {
     margin-bottom: 1em;
     color: white;
 }
+
+/* PANEL LATERAL */
+
+.panelLateral {
+    background-color: #EAFBFF;
+    height: 100%;
+    width: 17em;
+    align-content: center;
+    text-align: center;
+    padding: 2em;
+}
+
+.panelLateral p {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.panelLateral a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
