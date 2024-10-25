@@ -18,7 +18,6 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
     <!-- Cargar los estilos de modo oscuro si la cookie está habilitada -->
     <?php if ($darkModeEnabled): ?>
         <link rel="stylesheet" href="assets/css/darkModeStyle.css"> <!-- Estilos base modo oscuro -->
-        <link rel="stylesheet" href="assets/css/temasDark.css"> <!-- Estilos adicionales modo oscuro -->
     <?php endif; ?>
 </head>
 <body>
@@ -30,17 +29,41 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
                 <img src="assets/img/LogoVectorizado.svg" alt="Logo">
             </div>
 
-            <form method="GET" action="index.php">
-                <input type="hidden" name="controller" value="Busqueda">
-                <input type="hidden" name="action" value="buscar">
-                <input class="barra-busq" type="text" name="termino" placeholder="Busqueda...">
-                <button type="submit">Buscar</button>
-            </form>
+            <div class="busqueda">
+                <form method="GET" action="index.php" style="display: flex; align-items: center; width: 100%;">
+                    <input type="hidden" name="controller" value="Busqueda">
+                    <input type="hidden" name="action" value="buscar">
+
+                    <div class="iconos lupa">
+                        <button id="btnLupa" class="iconos">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                    <input class="barra-busq" type="text" name="termino" placeholder="Busqueda...">
+
+                    <div class="filtro">
+                        <button id="btnFiltro" class="iconos">
+                            <i class="bi bi-funnel-fill"></i>
+                        </button>
+                    </div>
+
+                    <button type="submit" style="display: none;"></button> <!-- Este botón se usará para enviar el formulario -->
+                </form>
+            </div>
+
 
             <div class="iconos panel-botones">
                 <i class="bi bi-chat-left-fill"></i>
                 <i class="bi bi-bell-fill"></i>
                 <i id="person" class="bi bi-person-fill"></i>
+
+                <!-- Menú desplegable -->
+                <div id="dropdown" class="dropdown-content">
+                    <a id="person1" href="index.php?controller=usuario&action=mostrardatosusuario">Configuración</a>
+                    <a href="index.php?controller=usuario&action=cerrarSesion">Cerrar sesión</a>
+                </div>
+
                 <!-- Formulario para cambiar entre modo oscuro y claro -->
                 <form method="POST" action="">
                     <button type="submit" name="toggleDarkMode" class="iconosDark">
@@ -49,4 +72,5 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
                 </form>
             </div>
         </header>
+
         <!-- Fin Header -->

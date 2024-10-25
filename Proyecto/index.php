@@ -33,6 +33,7 @@ else
   $_SESSION['tout'] = time();
 }
 
+//cerrar la sesion
 
 // Verificar si la solicitud es AJAX
 $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
@@ -72,6 +73,13 @@ if (method_exists($controller, $_GET["action"])) {
 if ($isAjaxRequest) {
     echo json_encode($dataToView);
     exit; // Importante: salir del script para evitar cargar las vistas
+}
+
+// Manejar la acción de cerrar sesión
+if ($_GET["action"] === "cerrarSesion") {
+    $controller->cerrarSesion(); // Llama al método de cerrar sesión
+} else if (method_exists($controller, $_GET["action"])) {
+    $dataToView = $controller->{$_GET["action"]}();
 }
 
 // Incluir las vistas si no es una solicitud AJAX

@@ -61,6 +61,16 @@ body {
     right: 10px;
 }
 
+#btnLupa {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#btnLupa:hover {
+    background-color: #EAFBFF;
+}
+
 #btnFiltro {
     background-color: transparent;
     border: none;
@@ -275,3 +285,29 @@ a:hover {
     color: #4DBAD9;
     text-decoration: none;
 }
+
+/* Estilos para el menú desplegable */
+.dropdown-content {
+    display: none; /* Ocultar por defecto */
+    position: absolute;
+    background-color: white; /* Cambia esto si usas modo oscuro */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Asegúrate de que esté encima del contenido */
+    right: 10px; /* Alineación a la derecha */
+    top: 80px; /* Mueve el menú 50px hacia abajo desde el icono */
+    width: 200px; /* Cambia el ancho del menú a 200px */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.dropdown-content a {
+    color: black; /* Cambia el color si usas modo oscuro */
+    padding: 12px 16px; /* Aumenta el padding para hacer el menú más grande */
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #4DBAD9;
+    border-radius: 10px;
+}
+
