@@ -51,7 +51,9 @@
                   </td>
                 </tr>
             </table>
-            <button type="submit" class="actualizarFoto">Guardar</button>
+            <div class="divBotonGuardar">
+                <button type="submit" class="actualizarFoto">Guardar</button>
+            </div>
         </form>
     </div>
 </div>

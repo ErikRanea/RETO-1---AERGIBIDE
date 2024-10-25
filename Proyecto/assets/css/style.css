@@ -203,6 +203,10 @@ html, body {
     height: 100vh;
 }
 
+.divBotonGuardar {
+    padding-top: 1em;
+}
+
 /* DATOS USUARIO BLACK */
 
 .estiloTablaBlack {
