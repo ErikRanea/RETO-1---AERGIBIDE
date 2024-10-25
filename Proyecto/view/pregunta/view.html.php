@@ -13,7 +13,7 @@
         <div class="divPregunta">
             <h1><strong><?php echo isset($dataToView["pregunta"]) ? $dataToView["pregunta"]["titulo"] : "TituloNoEncontrado"?></strong></h1>
             <p><?php echo isset($dataToView["pregunta"]) ? $dataToView["pregunta"]["texto"] : "Texto no encontrado"?></p>
-            <?php if($dataToView["pregunta"]["imagen"] != null)echo?>
+            <?php if($dataToView["pregunta"]["imagen"] != null)?><img src="<?php echo $dataToView["pregunta"]["imagen"]?>" alt=""><?php;?>
         </div>
     </div>
 
