@@ -7,9 +7,9 @@ require_once "model/db.php";
 //Se toman los valores de la sesion
 
 
-if (!isset($_SESSION['user_data']['id']) && !isset($_SESSION['enSesion']))
+if (!isset($_SESSION['user_data']['id']) && !isset($_SESSION['is_logged_in']))
 {
-    $_SESSION['enSesion'] = true;
+    $_SESSION['is_logged_in'] = false;
     header("Location: index.php?controller=usuario&action=login");
     exit(0);
 }

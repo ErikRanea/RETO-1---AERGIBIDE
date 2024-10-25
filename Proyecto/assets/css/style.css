@@ -26,6 +26,7 @@ html, body {
     height: 100%; /* Asegura que el body cubra toda la página */
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
 }
 
 /* HEADER */
@@ -66,7 +67,7 @@ html, body {
 .lupa {
     position: absolute;
     left: 10px;
-    pointer-events: none; /* Para que el clic pase al input */
+    pointer-events: none;
 }
 
 .filtro {
@@ -102,14 +103,14 @@ html, body {
     background-color: #EAFBFF;
     display: flex;
     justify-content: space-between;
-    padding: 1em;
+    padding: 4em 2em;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    left: 0;
     border: none;
     box-shadow: none;
 }
-
 
 .footer > span {
     color: #4DBAD9;
@@ -301,4 +302,37 @@ html, body {
     color: black;
     text-decoration: none;
     font-weight: bold;
+}
+
+/* PAGINACIÓN */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0; /* Espaciado alrededor de la paginación */
+    position: absolute; /* Posición absoluta para que quede fija pero respetando el footer */
+    bottom: 135px; /* Ajusta la posición para que quede justo por encima del footer */
+    left: 0;
+    width: 100%;
+    background-color: #F6F4F8;
+    z-index: 100; /* Asegura que esté encima de otros elementos */
+}
+
+.page-btn {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.page-btn.active {
+    background-color: #379BB3;
+}
+
+.page-btn:hover {
+    background-color: #379BB3;
 }

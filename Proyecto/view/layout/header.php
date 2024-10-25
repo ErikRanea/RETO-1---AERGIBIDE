@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <link rel="stylesheet" href="assets/css/tema.css">
-
+    <link rel="stylesheet" href="assets/css/pregunta.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
@@ -32,8 +32,9 @@
             <div class="iconos panel-botones">
                 <i class="bi bi-chat-left-fill"></i>
                 <i class="bi bi-bell-fill"></i>
-                <i class="bi bi-person-fill"></i>
-                <i class="bi bi-moon-stars"></i>
+                <i id = "person" class="bi bi-person-fill"></i>
+                <i id="darkModeIcon" class="bi bi-moon-stars"></i>
             </div>
         </header>
+    <script src="assets/js/darkMode.js"></script>
         <!-- Fin Header -->
