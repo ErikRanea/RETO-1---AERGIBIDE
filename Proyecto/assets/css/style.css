@@ -176,7 +176,7 @@ html, body {
     font-family: Mulish-Regular;
 }
 
-.actualizarFoto {
+.diseñoBoton {
     background-color: #4DBAD9;
     border: none;
     color: white;
@@ -202,6 +202,10 @@ html, body {
     display: flex;
     align-items: center;
     height: 100vh;
+}
+
+.divBotonGuardar {
+    padding-top: 1em;
 }
 
 /* DATOS USUARIO BLACK */
