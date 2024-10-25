@@ -6,7 +6,7 @@ class PreguntasController{
     //public $page_title;
     public $view;
     public $model;
-    public $modeloPrincipal;
+
     
 
     public function __construct(){
