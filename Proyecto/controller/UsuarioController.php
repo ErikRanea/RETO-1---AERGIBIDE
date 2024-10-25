@@ -96,4 +96,19 @@ class UsuarioController{
         
     }
 
+    public function update() {
+        if (isset($_POST)) {
+            $usuarioId = $_SESSION['user_data']['id'];
+            $usuario = $this->model->getUsuarioById($usuarioId);
+            $usuario->nombre = $_POST['nombre'];
+            $usuario->apellido = $_POST['apellido'];
+            $usuario->username = $_POST['username'];
+            $usuario->email = $_POST['email'];
+            $usuario->password = $_POST['password'];
+            $this->model->updateUsuario($usuario);
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+            exit();
+        }
+    }
+
 }
