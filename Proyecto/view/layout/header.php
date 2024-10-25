@@ -1,3 +1,10 @@
+<?php
+// Incluir el archivo del controlador que maneja el modo oscuro
+include 'controller/DarkModeController.php';
+
+// Comprobar si la cookie de modo oscuro está habilitada
+$darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enabled';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +15,19 @@
     <link rel="stylesheet" href="assets/css/tema.css">
     <link rel="stylesheet" href="assets/css/pregunta.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Cargar los estilos de modo oscuro si la cookie está habilitada -->
+    <?php if ($darkModeEnabled): ?>
+        <link rel="stylesheet" href="assets/css/darkModeStyle.css"> <!-- Estilos base modo oscuro -->
+        <link rel="stylesheet" href="assets/css/temasDark.css"> <!-- Estilos adicionales modo oscuro -->
+    <?php endif; ?>
+
 </head>
 <body>
 <div class="container">
     <!-- Comienzo Header -->
     <header class="header">
-            <div class="logo">
+            <div class="logo" id="logoBtn">
                 <img src="assets/img/LogoVectorizado.svg" alt="Logo">
             </div>
 
@@ -33,8 +47,14 @@
                 <i class="bi bi-chat-left-fill"></i>
                 <i class="bi bi-bell-fill"></i>
                 <i id = "person" class="bi bi-person-fill"></i>
-                <i id="darkModeIcon" class="bi bi-moon-stars"></i>
+                <!-- Formulario para cambiar entre modo oscuro y claro -->
+                <form method="POST" action="">
+                    <button type="submit" name="toggleDarkMode" class="iconosDark">
+                        <!-- Cambiar el icono dependiendo del modo activo -->
+                        <i class="bi <?= $darkModeEnabled ? 'bi-moon-stars-fill' : 'bi-moon-stars'; ?>"></i>
+                    </button>
+                </form>
             </div>
         </header>
-    <script src="assets/js/darkMode.js"></script>
+    <script src="assets/js/redirect.js"></script>
         <!-- Fin Header -->
