@@ -164,6 +164,7 @@ html, body {
 
 .listaDatos {
     margin: 0 auto;
+    width: 50%;
 }
 
 .listaDatos h2 {
@@ -174,6 +175,7 @@ html, body {
     margin: 0 auto;
     text-align: center;
     font-family: Mulish-Regular;
+    align-items: center;
 }
 
 .diseñoBoton {
@@ -302,6 +304,10 @@ html, body {
     color: black;
     text-decoration: none;
     font-weight: bold;
+}
+
+.panelLateral a:hover {
+    color: #4DBAD9;
 }
 
 /* PAGINACIÓN */
