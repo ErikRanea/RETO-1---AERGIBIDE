@@ -37,4 +37,15 @@ class Tema {
         $stmt->execute([$id]);
         return $stmt->fetch();
     }
+
+
+    public function getTemas()
+    {
+        $sql =  "SELECT * FROM ".$this->table;
+        $stmt = $this->connection->prepare($sql);
+        $stmt -> execute();
+        return $stmt->fetchAll();
+    }
+
+
 }

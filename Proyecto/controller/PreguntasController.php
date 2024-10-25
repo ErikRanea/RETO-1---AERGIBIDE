@@ -67,34 +67,7 @@ class PreguntasController{
         $this->view = "create";
     }
 
-    public function view()
-    {
-        $this ->view = "view";
-
-        $id = isset($_GET["id_pregunta"]) ? $_GET["id_pregunta"] : false;
-        
-        if(!$id)
-        {
-            header("Location: index.php?controller=tema&action=mostrarTemas");
-        }
-
-
-
-        $pregunta = $this ->model->getPreguntaById($id);
-        $usuarioPregunta = $this -> model -> usuario -> getUsuarioById($pregunta["id_usuario"]);
-
-        $datos = array();
-
-        
-
-        $datos["pregunta"] = $pregunta;
-        $datos["usuario"] = $usuarioPregunta;
-  
-
-        return $datos;
-
-    }
-
+   
 
 
 
