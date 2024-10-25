@@ -41,6 +41,7 @@ html, body {
 
 .logo {
     width: 3%;
+    cursor: pointer;
 }
 
 .logo > img {
@@ -62,12 +63,14 @@ html, body {
     padding-bottom: .5em;
     border: 1px solid #ccc;
     border-radius: 5px;
+
 }
 
 .lupa {
     position: absolute;
     left: 10px;
     pointer-events: none;
+    cursor: pointer;
 }
 
 .filtro {
@@ -88,6 +91,7 @@ html, body {
 .panel-botones {
     display: flex;
     gap: .5em;
+    cursor: pointer;
 }
 
 .iconos {
@@ -120,6 +124,7 @@ html, body {
 .redes, .panel-botones {
     display: flex;
     gap: .5em;
+    cursor: pointer;
 }
 
 /* DATOS USUARIO */
@@ -341,4 +346,12 @@ html, body {
 
 .page-btn:hover {
     background-color: #379BB3;
+}
+
+.iconosDark{
+    background: transparent;
+    border: none;
+    color: #4DBAD9;
+    cursor: pointer;
+    font-size: 1.5em;
 }
