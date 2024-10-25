@@ -9,7 +9,7 @@
 
 .cont1, .cont2, .cont3
 {
-    
+    border: 2px solid red;
     text-align: center;              /* Centrar el texto */
     display: flex;
     justify-content: center;
@@ -21,14 +21,22 @@
 {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
+    justify-content: right;
 }
 
-.cont1 img
+.fotoUsuarioPregunta
+{
+    padding-top: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.fotoUsuarioPregunta img
 {
     max-width: 40%;
-    max-height: 40%;
+    max-height: 50%;
+    border-radius: 3.13em;
 }
 
 

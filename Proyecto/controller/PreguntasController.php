@@ -85,9 +85,12 @@ class PreguntasController{
 
         $datos = array();
 
-        array_push($datos,$pregunta);
-        array_push($datos,$usuarioPregunta);
         
+
+        $datos["pregunta"] = $pregunta;
+        $datos["usuario"] = $usuarioPregunta;
+  
+
         return $datos;
 
     }
