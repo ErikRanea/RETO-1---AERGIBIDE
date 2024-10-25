@@ -4,7 +4,11 @@
             <?php
             $temas = $dataToView["temas"] ?? [];
             foreach ($temas as $tema): ?>
-                <div class="tema"><?php echo htmlspecialchars($tema['nombre'] ?? ''); ?></div>
+                <div class="tema">
+                    <a href="index.php?controller=pregunta&action=list&id_tema=<?= $tema['id'] ?>">
+                        <?php echo htmlspecialchars($tema['nombre'] ?? ''); ?>
+                    </a>
+                </div>
             <?php endforeach; ?>
         </div>
 
@@ -36,6 +40,8 @@
 
             <div class="estadisticas">
                 <h3>Estadísticas</h3>
+                <p>Total de publicaciones: <?= htmlspecialchars($dataToView['totalPublicaciones'] ?? 0) ?></p>
+                <p>Total de usuarios: <?= htmlspecialchars($dataToView['totalUsuarios'] ?? 0) ?></p>
             </div>
         </div>
     </div>

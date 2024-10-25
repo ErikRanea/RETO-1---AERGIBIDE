@@ -17,4 +17,16 @@ class PublicacionController {
         // Pasamos las preguntas al array dataToView
         return ['Publicaciones' => $Publicaciones];
     }
+
+    public function mostrarEstadisticas() {
+        $modelPublicacion = new Publicacion();
+        $publicaciones = $modelPublicacion->getPublicaciones();
+        $totalPublicaciones = $modelPublicacion->getTotalPublicaciones();
+
+        return [
+            'publicaciones' => $publicaciones,
+            'totalPublicaciones' => $totalPublicaciones
+        ];
+    }
+
 }

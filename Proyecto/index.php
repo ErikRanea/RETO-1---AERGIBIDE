@@ -4,6 +4,8 @@ require_once "config/config.php";
 require_once "model/db.php";
 
 
+
+
 //Se toman los valores de la sesion
 
 
@@ -37,6 +39,13 @@ $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_RE
 
 if (!isset($_GET["controller"])) $_GET["controller"] = constant("DEFAULT_CONTROLLER");
 if (!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");
+
+// Comprobar si hay una búsqueda
+if (isset($_GET['action']) && $_GET['action'] === 'buscar') {
+    $_GET["controller"] = 'Busqueda';  // Cambia al controlador de búsqueda
+}
+
+// ...
 
 
 $controller_path = "controller/" . $_GET["controller"] . "Controller.php";

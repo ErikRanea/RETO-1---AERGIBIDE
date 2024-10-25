@@ -1,7 +1,7 @@
 <?php
 require_once 'model/Usuario.php';
 class UsuarioController{
-    
+
     public $view;
     public $model;
 
@@ -42,11 +42,11 @@ class UsuarioController{
     {
         header('Content-Type: application/json');  // Establecer el tipo de contenido como JSON
 
-        if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in']) 
+        if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in'])
         {
             $row = $this->model->login($_POST);
 
-            if (isset($row)) 
+            if (isset($row))
             {
                 $_SESSION['is_logged_in'] = true;
                 $_SESSION['user_data'] = array(
@@ -62,8 +62,8 @@ class UsuarioController{
                     "redirect" => "index.php?controller=tema&action=mostrarTemas"
                 ]);
                 exit();
-            } 
-            else 
+            }
+            else
             {
                 //Si el 
                 echo json_encode([
@@ -72,8 +72,8 @@ class UsuarioController{
                 ]);
                 exit();
             }
-        } 
-            else 
+        }
+            else
         {
             echo json_encode([
                 "status" => "error",
@@ -93,7 +93,13 @@ class UsuarioController{
         // Obtenemos el ID del usuario desde la sesión
 
         $this -> view = "datosUsuario";
-        
+
     }
+
+    public function obtenerTotalUsuarios() {
+        $totalUsuarios = $this->model->getTotalUsuarios();
+        return ["totalUsuarios" => $totalUsuarios];
+    }
+
 
 }

@@ -24,7 +24,7 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
-        $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(); 
     }
@@ -140,6 +140,13 @@ class Usuario{
 
     }
 
+    public function getTotalUsuarios() {
+        $sql = "SELECT COUNT(*) as total FROM Usuarios";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
 
 
 }

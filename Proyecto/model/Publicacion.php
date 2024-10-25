@@ -1,4 +1,5 @@
 <?php
+require_once 'Db.php';
 class Publicacion {
     private $connection;
 
@@ -41,6 +42,41 @@ class Publicacion {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getTotalPublicaciones() {
+        $sql = "SELECT 
+                (SELECT COUNT(*) FROM Preguntas) + (SELECT COUNT(*) FROM Respuestas) as total";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    public function buscarPublicaciones($termino) {
+        $conn = $this->connection;  // Usa la conexión establecida en el constructor
+
+        // Prepara la consulta para buscar en la vista
+        $stmt = $conn->prepare("
+        SELECT 
+           *
+        FROM 
+            vw_publicaciones
+        WHERE 
+            pregunta_titulo LIKE :termino
+    ");
+        $stmt->execute(['termino' => '%' . $termino . '%']);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Devuelve los resultados
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

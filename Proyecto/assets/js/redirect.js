@@ -9,9 +9,10 @@ function addRedirectToElement(elementId, url) {
     }
 }
 
-addRedirectToElement('logoBtn', '/index.php?controller=tema&action=mostrarTemas&pagina=1');
+addRedirectToElement('logoBtn', 'index.php?controller=tema&action=mostrarTemas&pagina=1');
 addRedirectToElement('instaBtn', 'https://www.instagram.com/erikranea');
 addRedirectToElement('twitterBtn', 'https://x.com/aadriiianlopezz?s=09');
 addRedirectToElement('facebookBtn', 'https://www.facebook.com/p/SALA-Bar-Santiago-61558760548080/?_rdr');
+addRedirectToElement('person', 'index.php?controller=usuario&action=mostrardatosusuario');
 
 
