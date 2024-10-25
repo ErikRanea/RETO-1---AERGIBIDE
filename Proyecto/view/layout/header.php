@@ -40,12 +40,33 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
                         </button>
                     </div>
 
-                    <input class="barra-busq" type="text" name="termino" placeholder="Busqueda...">
+                    <input class="barra-busq" type="text" name="termino" placeholder="Busqueda..." value="<?= isset($_GET['termino']) ? htmlspecialchars($_GET['termino']) : '' ?>">
 
                     <div class="filtro">
-                        <button id="btnFiltro" class="iconos">
+                        <button id="btnFiltro" type="button" class="iconos" onclick="toggleFiltro()">
                             <i class="bi bi-funnel-fill"></i>
                         </button>
+                    </div>
+
+                    <div id="filtroMenu" style="display:none;">
+                        <p class="filtro-titulo">Tipo de búsqueda:</p>
+                        <label>
+                            <input type="radio" name="filtro" value="titulo" <?= (isset($_GET['filtro']) && $_GET['filtro'] === 'titulo') ? 'checked' : '' ?>>
+                            Solo en el título
+                        </label>
+                        <label>
+                            <input type="radio" name="filtro" value="todo" <?= (isset($_GET['filtro']) && $_GET['filtro'] === 'todo') ? 'checked' : '' ?>>
+                            En todo el post
+                        </label>
+
+                        <p class="filtro-titulo">Ordenar por:</p>
+                        <label>
+                            <label>
+                                <input type="radio" name="orden" value="reciente" <?= (isset($_GET['orden']) && $_GET['orden'] === 'reciente') ? 'checked' : '' ?>> Más reciente
+                            </label>
+                            <label>
+                                <input type="radio" name="orden" value="antiguo" <?= (isset($_GET['orden']) && $_GET['orden'] === 'antiguo') ? 'checked' : '' ?>> Más antiguo
+                            </label>
                     </div>
 
                     <button type="submit" style="display: none;"></button> <!-- Este botón se usará para enviar el formulario -->

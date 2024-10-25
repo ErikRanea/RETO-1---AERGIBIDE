@@ -302,3 +302,38 @@ a:hover {
     background-color: #4DBAD9;
     border-radius: 10px;
 }
+
+
+/* assets/css/darkFiltroMenu.css */
+.filtro {
+    position: relative;
+}
+
+#filtroMenu {
+    position: absolute;
+    top: 40px; /* Ajusta según la posición deseada */
+    right: 0;
+    background-color: #1A1A1A; /* Fondo negro */
+    border: none; /* Borde gris oscuro */
+    border-radius: 10px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+    padding: 10px;
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+#filtroMenu label {
+    display: block; /* Cada opción en una línea separada */
+    margin: 5px 0; /* Espaciado entre opciones */
+    color: #ffffff; /* Color de texto blanco */
+}
+
+#filtroMenu input {
+    margin-right: 5px; /* Espacio entre el checkbox y el texto */
+    accent-color: #4DBAD9;
+}
+
+/* Opcional: Cambiar el color del texto al pasar el mouse */
+#filtroMenu label:hover {
+    color: #4DBAD9; /* Cambiar a un color azul al pasar el mouse */
+}
+

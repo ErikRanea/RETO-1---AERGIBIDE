@@ -52,17 +52,41 @@ class Publicacion {
         return $result['total'] ?? 0;
     }
 
-    public function buscarPublicaciones($termino) {
+
+
+    // Buscar publicaciones (título y texto de la última respuesta)
+    public function buscarPublicaciones($termino, $filtro, $orden) {
         $conn = $this->connection;  // Usa la conexión establecida en el constructor
+
+        // Determinar la cláusula ORDER BY según el filtro de orden
+        $orderBy = $orden === 'reciente' ? 'fecha_ultima_publicacion DESC' : 'fecha_ultima_publicacion ASC';
 
         // Prepara la consulta para buscar en la vista
         $stmt = $conn->prepare("
-        SELECT 
-           *
-        FROM 
-            vw_publicaciones
-        WHERE 
-            pregunta_titulo LIKE :termino
+        SELECT *
+        FROM vw_publicaciones
+        WHERE pregunta_titulo LIKE :termino OR 
+              texto_ultima_respuesta LIKE :termino
+        ORDER BY $orderBy
+    ");
+        $stmt->execute(['termino' => '%' . $termino . '%']);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Devuelve los resultados
+    }
+
+// Buscar publicaciones solo en el título
+    public function buscarPublicacionesPorTitulo($termino, $orden) {
+        $conn = $this->connection;  // Usa la conexión establecida en el constructor
+
+        // Determinar la cláusula ORDER BY según el filtro de orden
+        $orderBy = $orden === 'reciente' ? 'fecha_ultima_publicacion DESC' : 'fecha_ultima_publicacion ASC';
+
+        // Prepara la consulta para buscar solo en el título
+        $stmt = $conn->prepare("
+        SELECT *
+        FROM vw_publicaciones
+        WHERE pregunta_titulo LIKE :termino
+        ORDER BY $orderBy
     ");
         $stmt->execute(['termino' => '%' . $termino . '%']);
 
@@ -70,14 +94,4 @@ class Publicacion {
     }
 
 
-
-
-
-
-
-
-
-
-
 }
-

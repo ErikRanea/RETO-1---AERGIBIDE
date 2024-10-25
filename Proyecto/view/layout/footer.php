@@ -14,5 +14,11 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/menuDesplegable.js"></script>
 <script src="assets/js/redirect.js"></script>
+<script>
+    function toggleFiltro() {
+        var filtroMenu = document.getElementById("filtroMenu");
+        filtroMenu.style.display = filtroMenu.style.display === "none" ? "block" : "none";
+    }
+</script>
 </body>
 </html>
