@@ -42,11 +42,11 @@ class UsuarioController{
     {
         header('Content-Type: application/json');  // Establecer el tipo de contenido como JSON
 
-        if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in'])
+        if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in']) 
         {
             $row = $this->model->login($_POST);
 
-            if (isset($row))
+            if (isset($row)) 
             {
                 $_SESSION['is_logged_in'] = true;
                 $_SESSION['user_data'] = array(
@@ -62,8 +62,8 @@ class UsuarioController{
                     "redirect" => "index.php?controller=tema&action=mostrarTemas"
                 ]);
                 exit();
-            }
-            else
+            } 
+            else 
             {
                 //Si el 
                 echo json_encode([
@@ -72,8 +72,8 @@ class UsuarioController{
                 ]);
                 exit();
             }
-        }
-            else
+        } 
+            else 
         {
             echo json_encode([
                 "status" => "error",
@@ -93,7 +93,7 @@ class UsuarioController{
         // Obtenemos el ID del usuario desde la sesión
 
         $this -> view = "datosUsuario";
-
+        
     }
 
     public function obtenerTotalUsuarios() {
@@ -101,5 +101,20 @@ class UsuarioController{
         return ["totalUsuarios" => $totalUsuarios];
     }
 
+
+    public function update() {
+        if (isset($_POST)) {
+            $usuarioId = $_SESSION['user_data']['id'];
+            $usuario = $this->model->getUsuarioById($usuarioId);
+            $usuario->nombre = $_POST['nombre'];
+            $usuario->apellido = $_POST['apellido'];
+            $usuario->username = $_POST['username'];
+            $usuario->email = $_POST['email'];
+            $usuario->password = $_POST['password'];
+            $this->model->updateUsuario($usuario);
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+            exit();
+        }
+    }
 
 }
