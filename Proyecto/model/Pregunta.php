@@ -34,7 +34,7 @@ class Pregunta{
         $stmt = $this -> connection ->prepare($sql);
 
         $stmt->execute([$id]);
-        return $stmt ->fetchAll();
+        return $stmt ->fetch();
     }
 
     public function getPreguntasPaginated($id_tema, $pagination, $page = 1){

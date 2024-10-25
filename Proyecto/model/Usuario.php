@@ -7,6 +7,7 @@ class Usuario{
     public $nombre;
     public $email;
     public $username;
+    public $foto_perfil;
 
 
     public function __construct()
