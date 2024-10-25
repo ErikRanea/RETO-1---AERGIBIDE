@@ -1,10 +1,13 @@
 <?php
 require_once "model/Pregunta.php";
 
+
 class PreguntasController{
     //public $page_title;
     public $view;
     public $model;
+
+    
 
     public function __construct(){
         //$this->page_title = "";
@@ -64,11 +67,7 @@ class PreguntasController{
         $this->view = "create";
     }
 
-    public function view()
-    {
-        $this ->view = "view";
-    }
-
+   
 
 
 

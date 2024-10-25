@@ -6,6 +6,8 @@ class Usuario{
     public $id;
     public $nombre;
     public $email;
+    public $username;
+    public $foto_perfil;
 
 
     public function __construct()
@@ -22,8 +24,9 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
-        $stmt->execute([$id_usuario]);     
-        return $stmt->fetch(); 
+        $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        $stmt->execute([$id_usuario]);
+        return $stmt ->fetch(); 
     }
 
 
@@ -67,7 +70,8 @@ class Usuario{
                 ':password' => isset($passwordHaseada) ? $passwordHaseada : "",
                 ':username' => isset($post['username']) ? $post['username'] : "",
                 ':rol' => isset($post['rol']) ? $post['rol'] : "",
-                ':foto_perfil' => isset($post['foto_perfil']) ? $post['foto_perfil'] : ""
+                ':foto_perfil' => isset($post['foto_perfil']) ? $post['foto_perfil'] : "",
+                ':apellido' => isset($post['apellido']) ? $post['apellido'] : "",
             ]);
 
 
@@ -135,8 +139,6 @@ class Usuario{
         }
 
     }
-
-
 
 
 

@@ -3,6 +3,23 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Mulish-Regular;
+}
+
+@font-face {
+    /*Fuente del tipo de letra regular*/
+    font-family: Mulish-Regular;
+    src: url("../fonts/Mulish/static/Mulish-Regular.ttf");
+}
+
+@font-face {
+    font-family: Mulish-Bold;
+    src: url("../fonts/Mulish/static/Mulish-Bold.ttf");
+    font-weight: bold;
+}
+
+strong{
+    font-family: Mulish-Bold;
 }
 
 html, body {
@@ -108,6 +125,184 @@ html, body {
     display: flex;
     gap: .5em;
     cursor: pointer;
+}
+
+/* DATOS USUARIO */
+
+.estiloTabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 0.625em;
+    overflow: hidden;
+}
+
+.estiloTabla tr {
+    border-bottom: 0.09375em solid #4DBAD9;
+}
+
+.estiloTabla tr:first-child th {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:first-child td {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:last-child {
+    border-bottom: none;
+}
+
+.estiloTabla th {
+    font-weight: bold;
+    text-align: right;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
+}
+
+.estiloTabla td {
+    font-weight: bold;
+    text-align: left;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
+}
+
+.listaDatos {
+    margin: 0 auto;
+}
+
+.listaDatos h2 {
+    margin-bottom: 1em;
+}
+
+.perfil {
+    margin: 0 auto;
+    text-align: center;
+    font-family: Mulish-Regular;
+}
+
+.actualizarFoto {
+    background-color: #4DBAD9;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
+}
+
+.sinFoto {
+    width: 10em;
+    border-radius: 3.13em;
+    border: 2px solid #4DBAD9;
+}
+
+.divFoto {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.containerPerfil {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+
+/* DATOS USUARIO BLACK */
+
+.estiloTablaBlack {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1A1A1A;
+    border-radius: 0.625em;
+    overflow: hidden;
+}
+
+.estiloTablaBlack tr {
+    border-bottom: 0.09375em solid #4DBAD9;
+    color: white;
+}
+
+.estiloTablaBlack tr:first-child th {
+    padding-top: 2.5em;
+}
+
+.estiloTablaBlack tr:first-child td {
+    padding-top: 2.5em;
+}
+
+.estiloTablaBlack tr:last-child {
+    border-bottom: none;
+}
+
+.estiloTablaBlack th {
+    font-weight: bold;
+    text-align: right;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
+}
+
+.estiloTablaBlack td {
+    font-weight: bold;
+    text-align: left;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
+}
+
+.actualizarFotoBlack {
+    background-color: #4DBAD9;
+    border: none;
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
+}
+
+.containerPerfilBlack {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    background-color: #1F1F1F;
+}
+
+.perfilBlack {
+    margin: 0 auto;
+    text-align: center;
+    font-family: Mulish-Regular;
+    color: white;
+}
+
+.listaDatosBlack {
+    margin: 0 auto;
+}
+
+.listaDatosBlack h2 {
+    margin-bottom: 1em;
+    color: white;
+}
+
+/* PANEL LATERAL */
+
+.panelLateral {
+    background-color: #EAFBFF;
+    height: 100%;
+    width: 17em;
+    align-content: center;
+    text-align: center;
+    padding: 2em;
+}
+
+.panelLateral p {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.panelLateral a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* PAGINACIÓN */
