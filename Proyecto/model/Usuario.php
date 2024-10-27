@@ -28,6 +28,11 @@ class Usuario{
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(); 
     }
+    public function getAllUsuarios() {
+        $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
     public function insertUsuario($param)
@@ -88,10 +93,18 @@ class Usuario{
         son los atributos del mismo */
         $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute();
-        return $stmt ->fetchAll(); 
+        return $stmt ->fetchAll();
     }
 
-    public function getUsuarioByEmail($email)
+    public function getUsuariosChat()
+    {
+        $sql = "SELECT id, username FROM Usuarios";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Usar fetchAll con PDO::FETCH_ASSOC
+    }
+
+        public function getUsuarioByEmail($email)
     {
         $sql = "SELECT * FROM ".$this->tabla." WHERE email = ?";
         $stmt = $this-> connection ->prepare($sql);

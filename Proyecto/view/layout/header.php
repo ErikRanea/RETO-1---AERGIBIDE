@@ -75,7 +75,7 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
 
 
             <div class="iconos panel-botones">
-                <i class="bi bi-chat-left-fill"></i>
+                <i id="chat" class="bi bi-chat-left-fill"></i>
                 <i class="bi bi-bell-fill"></i>
                 <i id="person" class="bi bi-person-fill"></i>
 

@@ -47,7 +47,7 @@
     </div>
 
     <!-- Paginación -->
-    <div class="pagination">
+    <div class="paginacion">
         <?php for ($i = 1; $i <= $dataToView['totalPaginas']; $i++): ?>
             <a href="?controller=tema&action=mostrarTemas&pagina=<?= $i ?>" class="page-btn <?= ($i == $dataToView['paginaActual']) ? 'active' : '' ?>">
                 <?= $i ?>

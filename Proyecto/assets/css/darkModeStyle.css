@@ -128,7 +128,7 @@ main {
 }
 
 /* Paginación */
-.pagination {
+.paginacion {
     display: flex;
     justify-content: center;
     padding: 10px 0; /* Espaciado alrededor de la paginación */
@@ -335,5 +335,121 @@ a:hover {
 /* Opcional: Cambiar el color del texto al pasar el mouse */
 #filtroMenu label:hover {
     color: #4DBAD9; /* Cambiar a un color azul al pasar el mouse */
+}
+
+.content {
+    padding: 0 5%; /* Padding horizontal del 5% */
+}
+
+h2 {
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+ul {
+    list-style-type: none; /* Elimina los puntos de la lista */
+    padding: 0; /* Elimina el padding por defecto */
+}
+
+li {
+    margin-bottom: 20px; /* Espacio entre cada elemento de la lista */
+    border-bottom: 1px solid #4DBAD9;
+    padding: 15px; /* Padding interno del elemento */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #1A1A1A; /* Fondo claro */
+}
+
+strong {
+    font-size: 1.2em; /* Tamaño de fuente del título */
+    display: block; /* Hace que el título ocupe toda la línea */
+}
+
+.resultado-detalles {
+    display: flex; /* Usamos flexbox para alinear los elementos */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: flex-start; /* Alinea los elementos al inicio */
+    margin-top: 10px; /* Espacio arriba del bloque de detalles */
+}
+
+.izquierda {
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.derecha {
+    text-align: right; /* Alinea el texto a la derecha */
+}
+
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+.contact-list {
+    width: 25%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    background-color: #ffffff;
+}
+.contact-list button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.contact-list ul {
+    list-style: none;
+    padding: 0;
+}
+.contact-list ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+.contact-list ul li:hover {
+    background-color: #f1f1f1;
+}
+.chat-area {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #ffffff;
+}
+.chat-header {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.chat-box {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 70vh;
+    overflow-y: scroll;
+    background-color: #ffffff;
+}
+.chat-form {
+    display: flex;
+    align-items: center;
+}
+.chat-form input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.chat-form button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
