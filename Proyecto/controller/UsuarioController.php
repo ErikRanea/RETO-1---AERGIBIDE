@@ -27,8 +27,8 @@ class UsuarioController{
         exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
     }
 
-    public function datosUsuarioBlack(){
-        $this -> view = "datosUsuarioBlack";
+    public function CambiarPassword(){
+        $this -> view = "cambiarPassword";
     }
 
     /* 

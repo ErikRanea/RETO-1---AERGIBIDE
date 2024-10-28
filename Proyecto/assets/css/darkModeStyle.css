@@ -184,7 +184,7 @@ footer span {
 }
 
 /* Tabla de Datos */
-.estiloTabla, .estiloTablaBlack {
+.estiloTabla {
     width: 100%;
     border-collapse: collapse;
     border-radius: 0.625em;
@@ -195,12 +195,11 @@ footer span {
     background-color: #333333; /* Fondo de la tabla */
 }
 
-.estiloTabla tr, .estiloTablaBlack tr {
+.estiloTabla tr {
     border-bottom: 0.09375em solid #4DBAD9; /* Color de la línea inferior */
 }
 
-.estiloTabla th, .estiloTablaBlack th,
-.estiloTabla td, .estiloTablaBlack td {
+.estiloTabla td, .estiloTabla th {
     padding: 1.25em 1.875em;
     font-weight: bold;
     font-size: 1em;
@@ -209,14 +208,6 @@ footer span {
 
 .estiloTabla th {
     text-align: right;
-}
-
-.estiloTablaBlack {
-    background-color: #1A1A1A; /* Fondo oscuro para la tabla negra */
-}
-
-.estiloTablaBlack td {
-    color: white; /* Texto blanco para la tabla negra */
 }
 
 .diseñoBoton {
@@ -229,6 +220,28 @@ footer span {
     height: 2.1875em;
     font-size: 1em;
 }
+
+.botonPassword {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.botonPassword:hover {
+    background-color: #4DBAD9;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Cambiar contraseña */
 
 /* Panel Lateral */
 .panelLateral {
