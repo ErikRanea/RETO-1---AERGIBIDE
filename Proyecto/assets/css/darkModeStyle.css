@@ -219,6 +219,17 @@ footer span {
     color: white; /* Texto blanco para la tabla negra */
 }
 
+.diseñoBoton {
+    background-color: #4DBAD9;
+    border: none;
+    color: black;
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
+}
+
 /* Panel Lateral */
 .panelLateral {
     background-color: #1A1A1A; /* Mantén el color de la barra lateral o ajusta si lo deseas */
@@ -238,6 +249,18 @@ footer span {
     color: white; /* Texto blanco para los enlaces */
     text-decoration: none;
     font-weight: bold;
+}
+
+.lateralBoton.active {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
 }
 
 /* Botones de Paginación */

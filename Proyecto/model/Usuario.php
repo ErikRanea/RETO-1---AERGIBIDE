@@ -26,7 +26,7 @@ class Usuario{
         $stmt = $this -> connection ->prepare($sql);
         //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(); 
+        return $stmt ->fetch(PDO::FETCH_OBJ); 
     }
     public function getAllUsuarios() {
         $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
