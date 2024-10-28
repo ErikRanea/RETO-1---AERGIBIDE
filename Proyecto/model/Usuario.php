@@ -32,12 +32,12 @@ class Usuario{
 
     public function insertUsuario($param)
     {
-
+/*
         // Sanitize POST
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
             /* Validación del token para prevenir inyección SQL */
-        $listaSQL = ["WHERE", "where", "AND", "and"];
+     /*   $listaSQL = ["WHERE", "where", "AND", "and"];
         $limpio = true; // Cambié a true para evitar invertir la lógica después
         foreach($listaSQL as $strSQL) {
             foreach($post as $elementoPost)
@@ -50,9 +50,13 @@ class Usuario{
             }
             
         }
+*/
 
-        if (isset($post) && $limpio)
+        $post = $param;
+        if (isset($post) )
         {
+  
+       
             if ($post['email'] == '' ||
             $post['password'] == '') {
             return;
@@ -61,8 +65,8 @@ class Usuario{
             $passwordHaseada = password_hash($post["password"], PASSWORD_DEFAULT);
             
             $stmt = $this -> connection -> prepare("INSERT INTO ".$this->tabla." ( email,
-            nombre, password, username, rol, foto_perfil ) VALUES (:email, :nombre, :password,
-            :username, :rol, :foto_perfil)");
+            nombre, password, username, rol, foto_perfil, apellido) VALUES (:email, :nombre, :password,
+            :username, :rol, :foto_perfil , :apellido)");
 
             $stmt -> execute([
                 ':email' => isset($post['email']) ? $post['email'] : "",
