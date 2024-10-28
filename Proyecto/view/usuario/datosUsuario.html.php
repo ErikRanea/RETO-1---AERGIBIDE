@@ -61,6 +61,7 @@
 </div>
 
 <script>
+    // Script para poder editar los campos
 document.getElementById('editarUsuario').addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById("username").readOnly = false;

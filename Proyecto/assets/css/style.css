@@ -278,6 +278,13 @@ footer span {
     padding-top: 1em;
 }
 
+input[readonly] {
+    background-color: #f0f8ff;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+
 /* Panel Lateral */
 
 .panelLateral {
