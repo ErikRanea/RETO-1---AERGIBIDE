@@ -18,10 +18,19 @@
         } elseif ($diferencia->d === 1) {
             return 'Ayer a las ' . $fechaObj->format('H:i');
         } else {
-            $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
-            return $formatter->format($fechaObj);
+            // Formato de fecha sin usar strftime ni IntlDateFormatter
+            $meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+            $dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+
+            $diaSemana = $dias[$fechaObj->format('w')];
+            $dia = $fechaObj->format('d');
+            $mes = $meses[$fechaObj->format('n') - 1];
+            $año = $fechaObj->format('Y');
+
+            return "$diaSemana, $dia de $mes de $año";
         }
     }
+
     ?>
 
     <h2>Resultados de búsqueda para: <?= htmlspecialchars($termino) ?></h2>

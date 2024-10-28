@@ -1,29 +1,59 @@
 <?php
-require_once __DIR__ . '/../model/Chat.php';
+require_once 'model/Usuario.php';
+class ChatController
+{
+    public $model;
+    public $view = "view";
 
-class ChatController {
-    public $view = "chat/view";
-
-    public function __construct() {
-        // Se puede agregar lógica de inicialización aquí si es necesario
+    public function __construct()
+    {
+        $this->model = new Usuario(); // Modelo Usuario
     }
+
+    public function obtenerUsuarios()
+    {
+        // Obtener todos los usuarios
+        $usuarios = $this->model->ObtenerUsuarios();
+
+        // Asignar los usuarios a $dataToView
+        $dataToView["usuarios"] = $usuarios;
+
+        // Retornar los datos a la vista
+        return $dataToView;
+    }
+
+
+public function mostrarChat() {
+    $usuarioModel = new Usuario();
+    $usuarios = $usuarioModel->ObtenerUsuarios();
+
+    // Preparar los datos para la vista
+    $dataToView = [];
+    $dataToView['usuarios'] = $usuarios;
+
+    // Retornar los datos para que el index.php los reciba
+    return $dataToView;
+}
 
     public function enviarMensaje() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $chat = new Chat();
-            $emisor = $_SESSION['user_data']['id'];
-            $receptor = $_POST['receptor'];
-            $mensaje = $_POST['mensaje'];
-            $chat->enviarMensaje($emisor, $receptor, $mensaje);
-            echo json_encode(['success' => true]);
+        // Obtener datos de la solicitud AJAX
+        $input = json_decode(file_get_contents('php://input'), true);
+        $mensaje = $input['mensaje'] ?? '';
+        $receptorId = $input['receptorId'] ?? '';
+
+        if (!empty($mensaje) && !empty($receptorId)) {
+            $chatModel = new Chat();
+            $emisorId = $_SESSION['user_id']; // Obtener el ID del usuario logueado
+
+            $success = $chatModel->guardarMensaje($emisorId, $receptorId, $mensaje);
+
+            // Responder con JSON
+            echo json_encode(['success' => $success]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Datos inválidos']);
         }
+        exit();
     }
 
-    public function obtenerMensajes() {
-        $chat = new Chat();
-        $id_usuario = $_SESSION['user_data']['id'];
-        $receptor = $_GET['receptor']; // Suponiendo que se pasa el ID del receptor
-        $mensajes = $chat->obtenerMensajes($id_usuario, $receptor);
-        echo json_encode($mensajes);
-    }
+
 }

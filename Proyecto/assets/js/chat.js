@@ -1,28 +1,49 @@
-document.getElementById('chat-form').onsubmit = function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    fetch('index.php?controller=Chat&action=enviarMensaje', {
+console.log("Script de chat activado.");
+document.getElementById('enviarMensaje').addEventListener('click', function() {
+    const mensaje = document.getElementById('mensajeInput').value;
+    const contactoId = document.getElementById('contactoId').value; // Obtener el ID del contacto desde el input oculto
+
+    // Verificar si el mensaje y el contactoId no están vacíos
+    if (mensaje.trim() === "" || contactoId.trim() === "") {
+        console.error("El mensaje y el ID de contacto son obligatorios.");
+        return; // No continuar si no hay mensaje o contacto
+    }
+
+    fetch('index.php?controller=chat&action=enviarMensaje', {
         method: 'POST',
-        body: formData
-    }).then(response => response.json()).then(data => {
-        // Manejar la respuesta
-        console.log(data);
-        // Lógica para actualizar la vista con el nuevo mensaje, si es necesario
-    });
-};
-
-function obtenerMensajes() {
-    fetch('index.php?controller=Chat&action=obtenerMensajes', {
-        method: 'GET'
-    }).then(response => response.json()).then(data => {
-        // Lógica para mostrar los mensajes en el chat
-        var messagesContainer = document.getElementById('messages');
-        messagesContainer.innerHTML = ''; // Limpiar mensajes existentes
-        data.forEach(msg => {
-            messagesContainer.innerHTML += `<div>${msg.mensaje} <span>${msg.timestamp}</span></div>`;
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `contacto_id=${contactoId}&mensaje=${mensaje}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Comprobar si el envío fue exitoso
+            if (data.status === 'success') {
+                console.log("Mensaje enviado correctamente");
+                cargarMensajes(contactoId); // Actualiza los mensajes después de enviar
+            } else {
+                console.error("Error al enviar el mensaje:", data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Error en la solicitud:", error);
         });
-    });
-}
+});
 
-// Llamar a obtenerMensajes en intervalos regulares
-setInterval(obtenerMensajes, 5000); // Cada 5 segundos
+function cargarMensajes(contactoId) {
+    fetch(`index.php?controller=chat&action=obtenerMensajes&contacto_id=${contactoId}`)
+        .then(response => response.json())
+        .then(mensajes => {
+            const mensajesContainer = document.getElementById('mensajes');
+            mensajesContainer.innerHTML = ''; // Limpia los mensajes actuales
+            mensajes.forEach(m => {
+                const mensajeElement = document.createElement('div');
+                mensajeElement.textContent = `${m.fecha}: ${m.mensaje}`; // Cambié `m.fecha_envio` a `m.fecha` según tu estructura
+                mensajesContainer.appendChild(mensajeElement);
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar mensajes:", error);
+        });
+}

@@ -31,7 +31,7 @@ class UsuarioController{
         $this -> view = "datosUsuarioBlack";
     }
 
-    /* 
+    /*
     Metodo -> logear
     From -> Erik
     Descripción -> Esta función está pensada para que se utilice tras un Fetch desde Javascript,
@@ -42,11 +42,11 @@ class UsuarioController{
     {
         header('Content-Type: application/json');  // Establecer el tipo de contenido como JSON
 
-        if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in']) 
+        if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in'])
         {
             $row = $this->model->login($_POST);
 
-            if (isset($row)) 
+            if (isset($row))
             {
                 $_SESSION['is_logged_in'] = true;
                 $_SESSION['user_data'] = array(
@@ -62,18 +62,18 @@ class UsuarioController{
                     "redirect" => "index.php?controller=tema&action=mostrarTemas"
                 ]);
                 exit();
-            } 
-            else 
+            }
+            else
             {
-                //Si el 
+                //Si el
                 echo json_encode([
                     "status" => "error",
                     "message" => "Usuario o password no válido"
                 ]);
                 exit();
             }
-        } 
-            else 
+        }
+            else
         {
             echo json_encode([
                 "status" => "error",
@@ -93,7 +93,7 @@ class UsuarioController{
         // Obtenemos el ID del usuario desde la sesión
 
         $this -> view = "datosUsuario";
-        
+
     }
 
     public function obtenerTotalUsuarios() {
@@ -127,6 +127,29 @@ class UsuarioController{
         header("Location: index.php?controller=usuario&action=login");
         exit();
     }
+
+    public function mostrarNombreUsuario() {
+        $usuarioId = $_SESSION['user_data']['id']; // Obtiene el ID del usuario de la sesión
+
+        // Obtener los datos del usuario
+        $usuario = $this->model->getUsuarioById($usuarioId);
+
+        // Verifica si el usuario fue encontrado
+        if ($usuario) {
+            // Asigna los datos del usuario a $dataToView
+            $dataToView["nombre"] = $usuario['nombre']; // Asegúrate de que el nombre esté disponible en el resultado
+
+            // Establece la vista
+            $this->view = 'nombreUsuario'; // Nombre de la vista donde se mostrará el nombre
+
+            // Devuelve los datos a la vista
+            return $dataToView;
+        } else {
+            // Manejo de error si el usuario no se encuentra
+            return ['error' => 'Usuario no encontrado'];
+        }
+    }
+
 
 
 

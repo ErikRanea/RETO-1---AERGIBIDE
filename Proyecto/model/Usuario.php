@@ -177,4 +177,10 @@ class Usuario{
         return;
     }
 
+    public function ObtenerUsuarios() {
+        $sql = "SELECT id, nombre FROM " . $this->tabla; // Aquí seleccionamos solo 'id' y 'nombre'
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
+    }
 }
