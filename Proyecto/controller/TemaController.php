@@ -1,9 +1,7 @@
 <?php
 require_once 'model/Tema.php';
 require_once 'model/Publicacion.php';
-
-require_once 'model/Tema.php';
-require_once 'model/Publicacion.php';
+require_once 'model/Usuario.php';
 
 class TemaController {
     public $view;
@@ -35,11 +33,18 @@ class TemaController {
         $publicacionModel = new Publicacion();
         $publicaciones = $publicacionModel->getPubliaciones();
 
+        $totalPublicaciones = $publicacionModel->getTotalPublicaciones();
+
+        $usuarioModel = new Usuario();
+        $totalUsuarios = $usuarioModel->getTotalUsuarios();
+
         // Asignar los temas, publicaciones y datos de paginación a $dataToView
         $dataToView["temas"] = $temas;
         $dataToView["publicaciones"] = $publicaciones;
         $dataToView["totalPaginas"] = $totalPaginas;
         $dataToView["paginaActual"] = $paginaActual;
+        $dataToView["totalPublicaciones"] = $totalPublicaciones;
+        $dataToView["totalUsuarios"] = $totalUsuarios;
 
         $this->view = 'view';  // Asigna la vista
         return $dataToView;  // Devuelve los datos a la vista
