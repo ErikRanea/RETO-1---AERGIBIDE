@@ -191,42 +191,95 @@ footer span {
 }
 
 /* Tabla de Datos */
-.estiloTabla, .estiloTablaBlack {
+
+.estiloTabla {
     width: 100%;
     border-collapse: collapse;
+    background-color: white;
     border-radius: 0.625em;
     overflow: hidden;
 }
 
-.estiloTabla {
-    background-color: white;
-}
-
-.estiloTabla tr, .estiloTablaBlack tr {
+.estiloTabla tr {
     border-bottom: 0.09375em solid #4DBAD9;
 }
 
-.estiloTabla th, .estiloTablaBlack th,
-.estiloTabla td, .estiloTablaBlack td {
-    padding: 1.25em 1.875em;
-    font-weight: bold;
-    font-size: 1em;
-    text-align: left;
+.estiloTabla tr:first-child th {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:first-child td {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:last-child {
+    border-bottom: none;
 }
 
 .estiloTabla th {
+    font-weight: bold;
     text-align: right;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
 }
 
-.estiloTablaBlack {
-    background-color: #1A1A1A;
+.estiloTabla td {
+    font-weight: bold;
+    text-align: left;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
 }
 
-.estiloTablaBlack td {
+.listaDatos {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.listaDatos h2 {
+    margin-bottom: 1em;
+}
+
+.perfil {
+    margin: 0 auto;
+    text-align: center;
+    font-family: Mulish-Regular;
+    align-items: center;
+}
+
+.diseñoBoton {
+    background-color: #4DBAD9;
+    border: none;
     color: white;
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
+}
+
+.sinFoto {
+    width: 10em;
+    border-radius: 3.13em;
+    border: 2px solid #4DBAD9;
+}
+
+.divFoto {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.containerPerfil {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+
+.divBotonGuardar {
+    padding-top: 1em;
 }
 
 /* Panel Lateral */
+
 .panelLateral {
     background-color: #EAFBFF;
     height: 100%;
@@ -247,7 +300,25 @@ footer span {
     font-weight: bold;
 }
 
+.panelLateral a:hover {
+    color: #4DBAD9;
+}
+
+/* PAGINACIÓN */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0; /* Espaciado alrededor de la paginación */
+    position: absolute; /* Posición absoluta para que quede fija pero respetando el footer */
+    bottom: 135px; /* Ajusta la posición para que quede justo por encima del footer */
+    left: 0;
+    width: 100%;
+    background-color: #F6F4F8;
+    z-index: 100; /* Asegura que esté encima de otros elementos */
+}
+
 /* Botones de Paginación */
+
 .page-btn {
     background-color: #4DBAD9;
     border: none;
