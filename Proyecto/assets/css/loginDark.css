@@ -21,11 +21,12 @@
 
 .fondoAzulFrozono{
     background-color: #4DBAD9  !important; /* Sobrescribe el color de fondo */;
-    color:white;
+    color:black;
 }
 
-strong{
+strong {
     font-family: Mulish-Bold;
+    color: white; /* Cambiar color de texto en strong a blanco */
 }
 
 
@@ -42,7 +43,7 @@ body{
 }
 .containerLogo{
     width: 60%;
-    background-color: #F6F4F8;
+    background-color: #1F1F1F;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,7 +54,7 @@ body{
 }
 .containerLogin{
     width: 40%;
-    background-color: #FFFFFF;
+    background-color: #1A1A1A;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,6 +92,8 @@ body{
     border: #4DBAD9 solid .1em;
     border-radius: .5em;
     text-align:left;
+    color: white;
+    background-color: #1A1A1A;
 }
 
 
@@ -104,18 +107,22 @@ body{
     border: #4DBAD9 solid .1em;
     border-radius: .5em;
     text-align:left;
+    color: white;
+    background-color: #1A1A1A;
 } 
 .password a {
+
     margin-left: 29em;
     text-decoration: none !important; /* Forzar la eliminación del subrayado */
-    color: inherit !important; /* Forzar el color heredado */
+    color: white !important; /* Forzar el color heredado */
+
 }
 .password a:visited {
     color: inherit; /* Mantén el mismo color después de haber sido clicado */
 }
 
 .password a:hover {
-    color: #555; 
+    color: white;
 }
 
 .password a:focus {
@@ -132,6 +139,7 @@ body{
     border: #4DBAD9 solid .1em;
     border-radius: .5em;
     width: 100%;
+    color: white;
 }
 
 /* Estilos del mensaje emergente */
@@ -140,8 +148,9 @@ body{
     position: absolute;
     top: 50%; /* Centrar verticalmente */
     right: 7%; /* Ajustar según sea necesario */
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #1A1A1A;
     border: 1px solid #4DBAD9;
+    color: white;
     border-radius: 8px;
     padding: 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
