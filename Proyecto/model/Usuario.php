@@ -24,9 +24,14 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
-        $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(); 
+    }
+    public function getAllUsuarios() {
+        $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -88,10 +93,18 @@ class Usuario{
         son los atributos del mismo */
         $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute();
-        return $stmt ->fetchAll(); 
+        return $stmt ->fetchAll();
     }
 
-    public function getUsuarioByEmail($email)
+    public function getUsuariosChat()
+    {
+        $sql = "SELECT id, username FROM Usuarios";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Usar fetchAll con PDO::FETCH_ASSOC
+    }
+
+        public function getUsuarioByEmail($email)
     {
         $sql = "SELECT * FROM ".$this->tabla." WHERE email = ?";
         $stmt = $this-> connection ->prepare($sql);
@@ -140,6 +153,13 @@ class Usuario{
 
     }
 
+    public function getTotalUsuarios() {
+        $sql = "SELECT COUNT(*) as total FROM Usuarios";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
 
     public function updateUsuario($objeto){
 

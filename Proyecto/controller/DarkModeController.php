@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggleDarkMode'])) {
         setcookie('darkMode', 'enabled', time() + (7 * 24 * 60 * 60), '/'); // Habilitar por 7 días
     }
 
-    // Redirigir para evitar reenvío del formulario al recargar
-    header('Location: ' . $_SERVER['PHP_SELF']);
+    // Redirigir a la página anterior
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php')); // Redirige a la página anterior o a index.php si no hay referencia
     exit();
 }
 ?>

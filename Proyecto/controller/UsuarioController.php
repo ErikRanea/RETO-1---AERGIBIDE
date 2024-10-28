@@ -1,7 +1,7 @@
 <?php
 require_once 'model/Usuario.php';
 class UsuarioController{
-    
+
     public $view;
     public $model;
 
@@ -96,6 +96,12 @@ class UsuarioController{
         
     }
 
+    public function obtenerTotalUsuarios() {
+        $totalUsuarios = $this->model->getTotalUsuarios();
+        return ["totalUsuarios" => $totalUsuarios];
+    }
+
+
     public function update() {
         if (isset($_POST)) {
             $usuarioId = $_SESSION['user_data']['id'];
@@ -110,5 +116,18 @@ class UsuarioController{
             exit();
         }
     }
+
+    public function cerrarSesion() {
+        // Aquí destruyes la sesión y rediriges al usuario
+        session_start(); // Asegúrate de que la sesión esté iniciada
+        session_unset(); // Limpia todas las variables de sesión
+        session_destroy(); // Destruye la sesión
+
+        // Redirige al usuario a la página de inicio de sesión
+        header("Location: index.php?controller=usuario&action=login");
+        exit();
+    }
+
+
 
 }

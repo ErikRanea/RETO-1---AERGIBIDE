@@ -1,42 +1,29 @@
 /* General */
 * {
-    padding: 0;
     margin: 0;
-    box-sizing: border-box;
-    font-family: Mulish-Regular;
+    padding: 0;
+    box-sizing: border-box; /* Asegura que paddings y márgenes no afecten el ancho total */
 }
 
-@font-face {
-    /*Fuente del tipo de letra regular*/
-    font-family: Mulish-Regular;
-    src: url("../fonts/Mulish/static/Mulish-Regular.ttf");
-}
-
-@font-face {
-    font-family: Mulish-Bold;
-    src: url("../fonts/Mulish/static/Mulish-Bold.ttf");
-    font-weight: bold;
-}
-
-strong{
-    font-family: Mulish-Bold;
-}
-
-html, body {
-    height: 100%; /* Asegura que el body cubra toda la página */
+body {
+    font-family: Mulish-Regular, Arial, sans-serif; /* Combina ambas fuentes */
+    background-color: #f4f4f9; /* Color de fondo unificado */
+    min-height: 100vh; /* Asegura que el body cubra toda la altura de la ventana */
     display: flex;
-    flex-direction: column;
-    margin-bottom: 50px;
+    flex-direction: column; /* Organiza el contenido en columnas */
 }
 
-/* HEADER */
+/* Header */
 .header {
     background-color: #EAFBFF;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 100%;
+    width: 100%; /* Asegura que el header ocupe todo el ancho */
     padding: 1em;
+    position: sticky; /* Hace que el header sea fijo al desplazarse */
+    top: 0; /* Asegura que el header esté siempre en la parte superior */
+    z-index: 1000; /* Mantiene el header por encima de otros elementos */
 }
 
 .logo {
@@ -57,13 +44,9 @@ html, body {
 
 .barra-busq {
     width: 100%;
-    padding-left: 3em;
-    padding-right: 2em;
-    padding-top: .5em;
-    padding-bottom: .5em;
+    padding: 0.5em 2em;
     border: 1px solid #ccc;
     border-radius: 5px;
-
 }
 
 .lupa {
@@ -78,6 +61,16 @@ html, body {
     right: 10px;
 }
 
+#btnLupa {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#btnLupa:hover {
+    background-color: #EAFBFF;
+}
+
 #btnFiltro {
     background-color: transparent;
     border: none;
@@ -90,7 +83,7 @@ html, body {
 
 .panel-botones {
     display: flex;
-    gap: .5em;
+    gap: 0.5em;
     cursor: pointer;
 }
 
@@ -102,193 +95,138 @@ html, body {
     font-size: 1.5em;
 }
 
-/* FOOTER */
-.footer {
+/* Main */
+main {
+    display: flex;
+    padding: 20px;
+    flex-grow: 1; /* Permite que main ocupe el espacio restante */
+    flex-direction: column; /* Asegura que los hijos de main se apilen verticalmente */
+    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+}
+
+.containerTema {
+    display: flex;
+    width: 100%; /* Asegura que el contenedor no exceda el ancho */
+    margin-left: 0; /* Ajusta el margen izquierdo para evitar desbordamiento */
+    gap: 10px;
+    flex-grow: 1; /* Permitir que el contenedor crezca */
+}
+
+.temas {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.tema {
+    background-color: transparent;
+    padding: 15px;
+    font-size: 30px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #4DBAD9;
+    cursor: pointer;
+}
+
+.sidebar {
+    width: 300px; /* Mantiene un ancho fijo para la sidebar */
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Paginación */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0; /* Espaciado alrededor de la paginación */
+    margin: 20px 0; /* Margen para separar de otros elementos */
+    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+}
+
+/* Footer */
+footer {
     background-color: #EAFBFF;
     display: flex;
     justify-content: space-between;
     padding: 4em 2em;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border: none;
-    box-shadow: none;
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+    margin-top: auto; /* Empuja el footer al final */
 }
 
-.footer > span {
+footer span {
     color: #4DBAD9;
     font-size: 2em;
 }
 
 .redes, .panel-botones {
     display: flex;
-    gap: .5em;
+    gap: 0.5em;
     cursor: pointer;
 }
 
-/* DATOS USUARIO */
+/* Últimas Publicaciones */
+.ultimas-publicaciones h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
 
-.estiloTabla {
+.publicacion {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.icono img {
+    margin-right: 10px;
+}
+
+.texto p {
+    margin: 0;
+    color: #333;
+}
+
+.estadisticas {
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Tabla de Datos */
+.estiloTabla, .estiloTablaBlack {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
     border-radius: 0.625em;
     overflow: hidden;
 }
 
-.estiloTabla tr {
+.estiloTabla {
+    background-color: white;
+}
+
+.estiloTabla tr, .estiloTablaBlack tr {
     border-bottom: 0.09375em solid #4DBAD9;
 }
 
-.estiloTabla tr:first-child th {
-    padding-top: 2.5em;
-}
-
-.estiloTabla tr:first-child td {
-    padding-top: 2.5em;
-}
-
-.estiloTabla tr:last-child {
-    border-bottom: none;
+.estiloTabla th, .estiloTablaBlack th,
+.estiloTabla td, .estiloTablaBlack td {
+    padding: 1.25em 1.875em;
+    font-weight: bold;
+    font-size: 1em;
+    text-align: left;
 }
 
 .estiloTabla th {
-    font-weight: bold;
     text-align: right;
-    padding: 1.25em 1.875em;
-    font-size: 1em;
 }
-
-.estiloTabla td {
-    font-weight: bold;
-    text-align: left;
-    padding: 1.25em 1.875em;
-    font-size: 1em;
-}
-
-.listaDatos {
-    margin: 0 auto;
-}
-
-.listaDatos h2 {
-    margin-bottom: 1em;
-}
-
-.perfil {
-    margin: 0 auto;
-    text-align: center;
-    font-family: Mulish-Regular;
-}
-
-.diseñoBoton {
-    background-color: #4DBAD9;
-    border: none;
-    color: white;
-    font-weight: bold;
-    border-radius: 0.5em;
-    width: 8.125em;
-    height: 2.1875em;
-    font-size: 1em;
-}
-
-.sinFoto {
-    width: 10em;
-    border-radius: 3.13em;
-    border: 2px solid #4DBAD9;
-}
-
-.divFoto {
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-.containerPerfil {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-}
-
-.divBotonGuardar {
-    padding-top: 1em;
-}
-
-/* DATOS USUARIO BLACK */
 
 .estiloTablaBlack {
-    width: 100%;
-    border-collapse: collapse;
     background-color: #1A1A1A;
-    border-radius: 0.625em;
-    overflow: hidden;
-}
-
-.estiloTablaBlack tr {
-    border-bottom: 0.09375em solid #4DBAD9;
-    color: white;
-}
-
-.estiloTablaBlack tr:first-child th {
-    padding-top: 2.5em;
-}
-
-.estiloTablaBlack tr:first-child td {
-    padding-top: 2.5em;
-}
-
-.estiloTablaBlack tr:last-child {
-    border-bottom: none;
-}
-
-.estiloTablaBlack th {
-    font-weight: bold;
-    text-align: right;
-    padding: 1.25em 1.875em;
-    font-size: 1em;
 }
 
 .estiloTablaBlack td {
-    font-weight: bold;
-    text-align: left;
-    padding: 1.25em 1.875em;
-    font-size: 1em;
-}
-
-.actualizarFotoBlack {
-    background-color: #4DBAD9;
-    border: none;
-    font-weight: bold;
-    border-radius: 0.5em;
-    width: 8.125em;
-    height: 2.1875em;
-    font-size: 1em;
-}
-
-.containerPerfilBlack {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-    background-color: #1F1F1F;
-}
-
-.perfilBlack {
-    margin: 0 auto;
-    text-align: center;
-    font-family: Mulish-Regular;
     color: white;
 }
 
-.listaDatosBlack {
-    margin: 0 auto;
-}
-
-.listaDatosBlack h2 {
-    margin-bottom: 1em;
-    color: white;
-}
-
-/* PANEL LATERAL */
-
+/* Panel Lateral */
 .panelLateral {
     background-color: #EAFBFF;
     height: 100%;
@@ -309,19 +247,7 @@ html, body {
     font-weight: bold;
 }
 
-/* PAGINACIÓN */
-.pagination {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0; /* Espaciado alrededor de la paginación */
-    position: absolute; /* Posición absoluta para que quede fija pero respetando el footer */
-    bottom: 135px; /* Ajusta la posición para que quede justo por encima del footer */
-    left: 0;
-    width: 100%;
-    background-color: #F6F4F8;
-    z-index: 100; /* Asegura que esté encima de otros elementos */
-}
-
+/* Botones de Paginación */
 .page-btn {
     background-color: #4DBAD9;
     border: none;
@@ -342,10 +268,160 @@ html, body {
     background-color: #379BB3;
 }
 
-.iconosDark{
+.iconosDark {
     background: transparent;
     border: none;
     color: #4DBAD9;
     cursor: pointer;
     font-size: 1.5em;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #4DBAD9;
+    text-decoration: none;
+}
+
+/* Estilos para el menú desplegable */
+.dropdown-content {
+    display: none; /* Ocultar por defecto */
+    position: absolute;
+    background-color: white; /* Cambia esto si usas modo oscuro */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Asegúrate de que esté encima del contenido */
+    right: 10px; /* Alineación a la derecha */
+    top: 80px; /* Mueve el menú 50px hacia abajo desde el icono */
+    width: 200px; /* Cambia el ancho del menú a 200px */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.dropdown-content a {
+    color: black; /* Cambia el color si usas modo oscuro */
+    padding: 12px 16px; /* Aumenta el padding para hacer el menú más grande */
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #4DBAD9;
+    border-radius: 10px;
+}
+
+.content {
+    padding: 0 5%; /* Padding horizontal del 5% */
+}
+
+h2 {
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+ul {
+    list-style-type: none; /* Elimina los puntos de la lista */
+    padding: 0; /* Elimina el padding por defecto */
+}
+
+li {
+    margin-bottom: 20px; /* Espacio entre cada elemento de la lista */
+    border-bottom: 1px solid #4DBAD9;
+    padding: 15px; /* Padding interno del elemento */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #ffffff; /* Fondo claro */
+}
+
+strong {
+    font-size: 1.2em; /* Tamaño de fuente del título */
+    display: block; /* Hace que el título ocupe toda la línea */
+}
+
+.resultado-detalles {
+    display: flex; /* Usamos flexbox para alinear los elementos */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: flex-start; /* Alinea los elementos al inicio */
+    margin-top: 10px; /* Espacio arriba del bloque de detalles */
+}
+
+.izquierda {
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.derecha {
+    text-align: right; /* Alinea el texto a la derecha */
+}
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+.contact-list {
+    width: 25%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    background-color: #ffffff;
+}
+.contact-list button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.contact-list ul {
+    list-style: none;
+    padding: 0;
+}
+.contact-list ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+.contact-list ul li:hover {
+    background-color: #f1f1f1;
+}
+.chat-area {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #ffffff;
+}
+.chat-header {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.chat-box {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 70vh;
+    overflow-y: scroll;
+    background-color: #ffffff;
+}
+.chat-form {
+    display: flex;
+    align-items: center;
+}
+.chat-form input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.chat-form button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
