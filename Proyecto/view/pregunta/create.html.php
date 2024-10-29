@@ -10,12 +10,6 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
 <div class="contenedorForm">
     <div class="crearPregunta">
         <h1>Crear Pregunta</h1>
-        <?php
-        if(isset($_GET["response"]) and $_GET["response"] === true): ?>
-            <div class="alert alert-success">
-                Operación realizada correctamente. <a href="index.php?controller=pregunta&action=list&id_tema=<?= $id_tema ?>">Volver al listado</a>
-            </div>
-        <?php endif; ?>
 
         <form class="formPregunta" action="index.php?controller=pregunta&action=save" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="id_usuario" value="<?= $usuario["id"] ?>">
