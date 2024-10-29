@@ -68,6 +68,7 @@ $dataToView = array();
 
 
 if ($isAjaxRequest) {
+    $dataToView = $controller->{$_GET["action"]}();
     echo json_encode($dataToView);
     exit; // Importante: salir del script para evitar cargar las vistas
 }

@@ -648,3 +648,11 @@ strong {
 }
 
 
+.textAreaRespuesta
+{
+    font-family: Mulish-Regular, Arial, sans-serif; 
+    border: 0;
+    color: #FFFFFF;
+    background-color: #1A1A1A;
+    width: 100%; height:50%;
+}

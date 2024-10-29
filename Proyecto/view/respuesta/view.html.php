@@ -25,6 +25,8 @@
         <div class="preguntaTitulo">
             <?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?>
         </div>
+    
+
         <div class="descripcionPregunta">
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
         </div>
@@ -95,7 +97,7 @@
                     <img src="<?php echo file_exists($_SESSION["user_data"]["foto_perfil"]) ? $_SESSION["user_data"]["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
                 <div class="respuesta">
-                    <textarea name="texto" id=""  style="width: 100%; height:50%;"></textarea>
+                    <textarea class="textAreaRespuesta"name="texto" id=""></textarea>
                     <input type="file" name="imagen" id="" accept="image/*">
                 </div>
                 <div class="panelDeBotones">
