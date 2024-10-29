@@ -42,11 +42,12 @@ class Respuesta
 
         $pregunta = $this-> pregunta -> getPreguntaById($id);
         $usuarioPregunta = $this-> usuario -> getUsuarioById($pregunta["id_usuario"]);
-        print_r($usuarioPregunta["nombre"]);
-        die();
+
 
         $objetosPregunta["datosPregunta"] = $pregunta;
         $objetosPregunta["usuarioPregunta"] = $usuarioPregunta;
+
+
 
         //Luego consigo las respuestas con sus respectivo usuarios
 
@@ -55,10 +56,12 @@ class Respuesta
 
         $usuariosRespuestas = array();
 
-        foreach ($respuestas as $respuesta["id_usuario"] => $idUsuario) {
-            $usuarioRespuesta=  $this -> usuario -> getUsuarioById($idUsuario);
-            array_push($usuariosRespuestas,$usuarioRespuesta);
+        for ($i=0; $i < count($respuestas) ; $i++) { 
+
+            $usuarioRespuesta = $this->usuario -> getUsuarioById($respuestas[$i]["id_usuario"]);
+            array_push($usuariosRespuestas, $usuarioRespuesta);
         }
+  
 
 
         $objetosRespuestas["datosRespuestas"] = $respuestas;
@@ -75,6 +78,26 @@ class Respuesta
     }
 
 
+    public function insertRespuesta($param)
+    {
+        try{
+            $texto = $param["texto"];
+            $imagen = $param["file_path"];
+            $fecha_hora = date("Y-m-d H:i:s");
+            $id_pregunta = $param["id_pregunta"];
+            $id_usuario  = $_SESSION["user_data"]["id"];
+
+            $sql = "INSERT INTO ".$this->tabla." (texto,imagen,fecha_hora,id_pregunta,id_usuario) VALUES (?,?,?,?,?)";
+            $stmt = $this-> connection-> prepare($sql);
+            $stmt->execute([$texto,$imagen,$fecha_hora,$id_pregunta,$id_usuario]);
+            return true;
+        }
+        catch(error)
+        {
+            return false;
+        }
+
+    }
 
 
 }
