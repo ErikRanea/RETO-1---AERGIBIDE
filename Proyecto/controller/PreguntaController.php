@@ -51,7 +51,7 @@ class PreguntaController{
 
     /* Create the note */
     public function save(){
-        $this->view = 'create';
+        $this->view = 'mensaje';
 
         // Primero, verificamos si se ha subido un archivo
         $filePath = null;
@@ -84,9 +84,11 @@ class PreguntaController{
         $param['file_path'] = $filePath;
 
         $id = $this->model->save($param);
+
         $result = $this->model->getPreguntaById($id);
+
         $_GET["response"] = true;
-        return $result;
+        return ["pregunta" => $result];
     }
 
 
