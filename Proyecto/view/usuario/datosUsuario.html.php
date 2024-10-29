@@ -7,11 +7,9 @@
         <div class="divFoto">
             <img class="sinFoto" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Foto de perfil default">
         </div>
-        <br>
-        <input type="submit" value="Actualizar foto" class="diseñoBoton"><br>
-        <br>
-        <a href="index.php?controller=usuario&action=cambiarPassword"
-            class="botonPassword">Cambiar Contraseña</a>
+        <div class="botonesPerfil">
+            <input type="submit" value="Actualizar foto" class="diseñoBoton"><br>
+        </div>
     </div>
     
     <div class="listaDatos">
@@ -43,6 +41,22 @@
                     <th>Email:</th>
                     <td><input type="text" name="email" id="email" value="" readonly /></td>
                     <td></td>
+                </tr>
+                <tr>
+                    <th>
+                        Contraseña actual:
+                    </th>
+                    <td>
+                        <input type="text" name="actualPassword" id="actualPassword" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Nueva contraseña:
+                    </th>
+                    <td>
+                        <input type="text" name="nuevaPassword" id="nuevaPassword" value="">
+                    </td>
                 </tr>
             </table>
             <div class="divBotonGuardar">

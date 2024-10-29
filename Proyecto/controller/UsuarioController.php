@@ -27,10 +27,6 @@ class UsuarioController{
         exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
     }
 
-    public function CambiarPassword(){
-        $this -> view = "cambiarPassword";
-    }
-
     /* 
     Metodo -> logear
     From -> Erik
@@ -110,7 +106,13 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-            $usuario->password = $_POST['password'];
+
+            $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
+            if (password_verify($_POST["actualPassword"] , $usuarioAlmacenado->password)) {
+                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+            } else {
+                echo "La contraseña actual es incorrecta";
+            }
             $this->model->updateUsuario($usuario);
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
             exit();

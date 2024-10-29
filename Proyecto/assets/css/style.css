@@ -303,6 +303,10 @@ input[readonly] {
     cursor: pointer;
 }
 
+.botonesPerfil {
+    margin: 1em;
+}
+
 /* Cambiar Contraseña */
 
 .paginaPassword {
