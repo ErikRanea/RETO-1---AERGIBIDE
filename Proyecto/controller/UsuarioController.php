@@ -49,7 +49,7 @@ class UsuarioController{
                     "id" => $row->id,
                     "nombre" => $row->nombre,
                     "email" => $row->email,
-                    ""
+                    "foto_perfil" => $row->foto_perfil
                 );
                 //Si todo va bien y entra
                 echo json_encode([
@@ -83,6 +83,11 @@ class UsuarioController{
     {
         $this -> view = "login";
         isset($_POST) ? $this -> model -> insertUsuario($_POST) : print_r("error");
+        echo json_encode([
+            "status" => "success",
+            "message" => "Usuario creado correctamente"
+        ]);
+        exit();
     }
 
     public function mostrarDatosUsuario() {

@@ -39,10 +39,10 @@ class Usuario{
     {
 
         // Sanitize POST
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+       // $param = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
             /* Validación del token para prevenir inyección SQL */
-        $listaSQL = ["WHERE", "where", "AND", "and"];
+     /*   $listaSQL = ["WHERE", "where", "AND", "and"];
         $limpio = true; // Cambié a true para evitar invertir la lógica después
         foreach($listaSQL as $strSQL) {
             foreach($post as $elementoPost)
@@ -55,19 +55,22 @@ class Usuario{
             }
             
         }
+*/
 
-        if (isset($post) && $limpio)
+        $post = $param;
+        if (isset($post) )
         {
+       
             if ($post['email'] == '' ||
             $post['password'] == '') {
             return;
             }
 
             $passwordHaseada = password_hash($post["password"], PASSWORD_DEFAULT);
-            
+
             $stmt = $this -> connection -> prepare("INSERT INTO ".$this->tabla." ( email,
-            nombre, password, username, rol, foto_perfil ) VALUES (:email, :nombre, :password,
-            :username, :rol, :foto_perfil)");
+            nombre, password, username, rol, foto_perfil, apellido) VALUES (:email, :nombre, :password,
+            :username, :rol, :foto_perfil , :apellido)");
 
             $stmt -> execute([
                 ':email' => isset($post['email']) ? $post['email'] : "",
@@ -78,6 +81,9 @@ class Usuario{
                 ':foto_perfil' => isset($post['foto_perfil']) ? $post['foto_perfil'] : "",
                 ':apellido' => isset($post['apellido']) ? $post['apellido'] : "",
             ]);
+
+            return;
+
 
 
         }
@@ -141,6 +147,7 @@ class Usuario{
         {
             $usuarioAlmacenado = $this->getUsuarioByEmail($post['email']);
           
+
             if(isset($usuarioAlmacenado->email) && password_verify($post["password"] , $usuarioAlmacenado->password))
             {
               
