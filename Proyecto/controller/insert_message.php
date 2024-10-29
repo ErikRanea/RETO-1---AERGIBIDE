@@ -1,24 +1,25 @@
 <?php
-session_start();
-require_once "../model/Chat.php"; // Asegúrate de que la ruta sea correcta
+// Asegúrate de incluir tu clase Db y Chat
+require_once '../model/Db.php';
+require_once '../model/Chat.php';
 
-header('Content-Type: application/json'); // Asegúrate de establecer el tipo de contenido
+// Inicializa la conexión a la base de datos
+$db = new Db();
+$conexion = $db->connection; // Obtén la conexión
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_emisor = $_POST['id_emisor'];
-    $id_receptor = $_POST['id_receptor'];
-    $mensaje = $_POST['mensaje'];
+// Instancia la clase Chat con la conexión
+$chat = new Chat($conexion);
 
-    // Aquí deberías tener la lógica para insertar el mensaje en la base de datos
-    $chatModel = new Chat();
-    $success = $chatModel->guardarMensaje($id_emisor, $id_receptor, $mensaje);
+// Obtiene los datos del mensaje desde POST
+$id_emisor = $_POST['id_emisor'];
+$id_receptor = $_POST['id_receptor'];
+$mensaje = $_POST['mensaje'];
 
-    if ($success) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'No se pudo enviar el mensaje.']);
-    }
-} else {
-    echo json_encode(['success' => false, 'error' => 'Método no permitido.']);
+// Intenta insertar el mensaje
+try {
+    $resultado = $chat->insertarMensaje($id_emisor, $id_receptor, $mensaje);
+    echo $resultado ? "Mensaje insertado correctamente" : "Error al insertar el mensaje";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
 ?>

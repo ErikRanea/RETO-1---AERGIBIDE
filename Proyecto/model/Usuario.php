@@ -183,4 +183,6 @@ class Usuario{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
+
+
 }

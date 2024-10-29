@@ -352,76 +352,36 @@ strong {
     text-align: right; /* Alinea el texto a la derecha */
 }
 
-.chat-container {
+/* Estilos para el contenedor del chat */
+.chat-wrapper {
     display: flex;
-    height: 100vh;
+    flex-direction: column; /* Organiza los mensajes verticalmente */
+    max-width: 600px; /* Limita el ancho del contenedor del chat */
+    margin: 0 auto; /* Centra el contenedor en la página */
+    border: 1px solid #ccc; /* Agrega un borde para distinguir el área de chat */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta desbordamientos */
 }
-.contact-list {
-    width: 25%;
-    border-right: 1px solid #ccc;
-    padding: 10px;
-    background-color: #ffffff;
-}
-.contact-list button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-.contact-list ul {
-    list-style: none;
-    padding: 0;
-}
-.contact-list ul li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-}
-.contact-list ul li:hover {
-    background-color: #f1f1f1;
-}
-.chat-area {
-    width: 75%;
+
+/* Estilos para los mensajes */
+#msgBox {
     display: flex;
     flex-direction: column;
+}
+
+.message {
+    max-width: 70%; /* Ancho máximo del mensaje */
     padding: 10px;
-    background-color: #ffffff;
+    margin: 5px 0;
+    border-radius: 8px;
 }
-.chat-header {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    font-size: 1.2em;
-    font-weight: bold;
+
+.sent {
+    align-self: flex-end; /* Alinea a la derecha */
+    background-color: #e1ffc7; /* Color de fondo para mensajes enviados */
 }
-.chat-box {
-    flex: 1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    height: 70vh;
-    overflow-y: scroll;
-    background-color: #ffffff;
-}
-.chat-form {
-    display: flex;
-    align-items: center;
-}
-.chat-form input {
-    flex: 1;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.chat-form button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+
+.received {
+    align-self: flex-start; /* Alinea a la izquierda */
+    background-color: #c7e1ff; /* Color de fondo para mensajes recibidos */
 }

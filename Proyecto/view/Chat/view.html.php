@@ -1,29 +1,32 @@
 <?php
+
+$id_emisor = $_SESSION['user_data']['id'];
+$user_emisor = $_SESSION['user_data']['username'];// Obtén el ID de sesión del usuario
 $colors = array('#007AFF','#FF7000','#FF7000','#15E25F','#CFC700','#CFC700','#CF1100','#CF00BE','#F00');
 $color_pick = array_rand($colors);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-        /* Estilos del chat (igual que antes) */
-        .chat-wrapper { font: bold 11px/normal 'lucida grande', tahoma, verdana, arial, sans-serif; background: #00a6bb; padding: 20px; margin: 20px auto; box-shadow: 2px 2px 2px 0px #00000017; max-width:700px; min-width:500px; }
-        #message-box { width: 97%; display: inline-block; height: 300px; background: #fff; box-shadow: inset 0px 0px 2px #00000017; overflow: auto; padding: 10px; }
-        .user-panel{ margin-top: 10px; }
-        input[type=text]{ border: none; padding: 5px 5px; box-shadow: 2px 2px 2px #0000001c; }
-        input[type=text]#name{ width:20%; }
-        input[type=text]#message{ width:60%; }
-        button#send-message { border: none; padding: 5px 15px; background: #11e0fb; box-shadow: 2px 2px 2px #0000001c; }
-    </style>
-</head>
-<body>
-
 <div class="chat-wrapper">
-    <div id="message-box"></div>
+    <div id="msgBox">
+        <?php if (!empty($mensajes)): ?>
+            <?php foreach ($mensajes as $mensaje): ?>
+                <?php
+                // Asegúrate de que el ID esté definido
+                $mensajeId = isset($mensaje['id']) ? htmlspecialchars($mensaje['id']) : 'undefined';
+                ?>
+                <div id="mensaje_<?= $mensajeId ?>" class="message <?= (htmlspecialchars($mensaje['id_emisor']) == $id_emisor) ? 'sent' : 'received'; ?>">
+                    <strong><?= htmlspecialchars($mensaje['emisor']); ?>:</strong>
+                    <?= htmlspecialchars($mensaje['mensaje']); ?>
+                    <em><?= htmlspecialchars($mensaje['fecha']); ?></em>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div>No hay mensajes aún.</div>
+        <?php endif; ?>
+    </div>
+
     <div class="user-panel">
-        <select name="usuarios">
+        <select id="user-combobox" name="usuarios">
             <?php foreach ($dataToView['usuarios'] as $usuario): ?>
                 <option value="<?= htmlspecialchars($usuario['id']) ?>">
                     <?= htmlspecialchars($usuario['nombre']) ?>
@@ -37,27 +40,58 @@ $color_pick = array_rand($colors);
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script language="javascript" type="text/javascript">
-    var msgBox = $('#message-box');
+<script type="text/javascript">
+    $(document).ready(function() {
+        loadMessages(); // Cargar mensajes iniciales
+    });
+
+    // Define el ID del emisor desde la sesión PHP
+    var id_emisor = <?= json_encode($id_emisor) ?>; // ID del emisor desde la sesión
+    var user_emisor = <?= json_encode($user_emisor) ?>;
+    var msgBox = $('#msgBox'); // Cambia a '#msgBox' para coincidir con el ID de tu contenedor
+
+    $('#user-combobox').change(function() {
+        loadMessages(); // Cargar mensajes cuando se cambia el usuario
+    });
 
     function loadMessages() {
-        var id_emisor = $('#user-combobox').val();
-        var id_receptor = 'ID_DEL_RECEPTOR_AQUI'; // Reemplaza con el ID del receptor
-
+        var id_receptor = $('#user-combobox').val(); // Obtener ID del receptor seleccionado
+        console.log("ID Emisor:", id_emisor, "Nombre Emisor:", user_emisor, "ID Receptor:", id_receptor); // Log de ID emisor y receptor
         $.ajax({
-            url: 'controller/get_messages.php',
-            type: 'GET',
+            url: 'index.php?controller=chat&action=get_messages',
+            method: 'GET',
             data: { id_emisor: id_emisor, id_receptor: id_receptor },
-            success: function(response) {
-                msgBox.html('');
-                var messages = JSON.parse(response);
-                messages.forEach(function(message) {
-                    msgBox.append('<div><span class="user_name" style="color:' + message.color + '">' + message.name + '</span> : <span class="user_message">' + message.message + '</span></div>');
-                });
-                msgBox[0].scrollTop = msgBox[0].scrollHeight;
+            success: function (data) {
+                console.log("Respuesta del servidor:", data); // Verificar la respuesta del servidor
+                try {
+                    const mensajes = JSON.parse(data); // Intenta analizar el JSON
+                    console.log("Mensajes:", mensajes); // Log de mensajes
+
+                    msgBox.empty(); // Limpiar mensajes antes de mostrar nuevos
+                    // Verificar si hay mensajes
+                    if (Array.isArray(mensajes) && mensajes.length > 0) {
+                        mensajes.forEach(function (mensaje) {
+                            console.log("Mensaje ID Emisor:", mensaje.emisor, user_emisor); // Log del ID del emisor del mensaje
+
+                            // Asegúrate de que id_emisor sea un número antes de comparar
+                            var messageClass = (Number(mensaje.emisor) === user_emisor) ? 'sent' : 'received'; // Ajustar las clases
+                            msgBox.append(`<div class="message ${messageClass}"><strong>${mensaje.emisor}:</strong> ${mensaje.mensaje}<em>${mensaje.fecha}</em></div>`);
+                        });
+                    } else {
+                        msgBox.html("No hay mensajes aún."); // Mensaje cuando no hay mensajes
+                    }
+                } catch (error) {
+                    console.error("Error en la respuesta JSON:", error);
+                    msgBox.html("Error al cargar mensajes."); // Mensaje de error en la interfaz
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error("Error en la petición AJAX:", textStatus, errorThrown);
+                msgBox.html("Error en la conexión."); // Mensaje de error en la interfaz
             }
         });
     }
+
 
     $('#send-message').click(function() {
         sendMessage();
@@ -71,13 +105,9 @@ $color_pick = array_rand($colors);
 
     function sendMessage() {
         var messageInput = $('#message');
-        var id_emisor = $('select[name="usuarios"]').val(); // Cambié esto para obtener el ID del emisor directamente del select
-        var id_receptor = 'ID_DEL_RECEPTOR_AQUI'; // Reemplaza con el ID del receptor
+        var id_receptor = $('#user-combobox').val(); // Obtener ID del receptor seleccionado
 
-        console.log("ID Emisor: ", id_emisor); // Para verificar el ID del emisor
-        console.log("Mensaje: ", messageInput.val()); // Para verificar el contenido del mensaje
-
-        if (id_emisor === "") {
+        if (!id_receptor) {
             alert("Selecciona un usuario para enviar el mensaje");
             return;
         }
@@ -95,24 +125,19 @@ $color_pick = array_rand($colors);
                 mensaje: messageInput.val()
             },
             success: function(response) {
-                console.log("Respuesta del servidor:", response); // Imprimir la respuesta del servidor
-                // Maneja la respuesta aquí
-                if (response.success) {
+                if (response.trim() === "Mensaje insertado correctamente") {
                     messageInput.val(''); // Limpiar el campo de mensaje
                     loadMessages(); // Cargar los mensajes después de enviar
                 } else {
-                    alert("Error al enviar el mensaje: " + response.error);
+                    console.error("Error en la inserción:", response);
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error("Error en la solicitud:", textStatus, errorThrown); // Imprimir el error si falla la solicitud
+            error: function(xhr, status, error) {
+                console.error("Error en la solicitud:", error);
             }
         });
     }
 
-    // Recargar mensajes cada 3 segundos
-    setInterval(loadMessages, 3000);
-
+    // Recargar mensajes cada 9 segundos
+    setInterval(loadMessages, 9000);
 </script>
-</body>
-</html>
