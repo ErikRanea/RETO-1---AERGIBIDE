@@ -502,6 +502,7 @@ strong {
 }
 
 .contenedorPregunta {
+
     width: 100%;
     display: grid;
     grid-template-columns: 200px 4fr 4fr 1fr;
@@ -517,7 +518,6 @@ strong {
 
 .fotoUsuarioPregunta {
     grid-area: fotoUsuarioPregunta;
-    background-color: blue;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -530,8 +530,8 @@ strong {
 }
 
 .preguntaTitulo {
+    background-color: #1A1A1A;
     grid-area: preguntaTitulo;
-    background-color: green;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -540,8 +540,8 @@ strong {
 }
 
 .descripcionPregunta {
+    background-color: #1A1A1A;
     grid-area: descripcionPregunta;
-    background-color: red;
     padding: 10px;
     font-size: 1rem;
     line-height: 1.5;
@@ -549,17 +549,20 @@ strong {
 
 .panelDeBotones {
     grid-area: panelDeBotones;
-    background-color: chartreuse;
     display: flex;
-    
     align-items: center;
     justify-content: flex-end;
     padding: 10px;
 }
 
+.panel-botones button{
+    border: 0;
+}
+
 
 .panelDeBotones .bi {
     font-size: 24px; 
+    border: 0;
 }
 
 
@@ -571,15 +574,35 @@ strong {
     font-size: 2rem;
 }
 
-.contenedorRespuesta
-{
 
-
+.airplane-down {
+    display: inline-block !important;
+    transform: rotate(180deg) !important;
+    transition: transform 0.2s;
 }
+
+
+
+.botonPanel
+{
+    background-color: #1F1F1F;
+    border: 0px;
+    padding: .5em;
+}
+
+.panelDeBotones .bi {
+    color: #4dabf7;
+    transition: color 0.2s ease;
+}
+.panelDeBotones .bi:hover {
+    color: #ffffff; 
+    cursor: pointer;
+}
+
+
 
 .contenedorRespuestaDivididor
 {
-    background-color: aliceblue;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 100px 4.75fr 1fr ;
@@ -596,7 +619,6 @@ strong {
 .fotoUsuarioRespuesta
 {
     grid-area: fotoUsuarioRespuesta;
-    background-color: blue;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -609,61 +631,13 @@ strong {
 .respuesta
 {
     grid-area: respuesta;
-    background-color: grey;
     padding: 10px;
     font-size: 1rem;
     line-height: 1.5;
-}
-
-.airplane-down {
-    display: inline-block !important;
-    transform: rotate(180deg) !important;
-    transition: transform 0.2s;
-}
-
-
-
-.botonPanel
-{
     background-color: #1A1A1A;
 }
 
 
-.panelDeBotones .bi-airplane {
-    color: #4dabf7; 
-    transition: color 0.2s ease;
-}
-
-
-.panelDeBotones .bi-airplane:hover {
-    color: #ffffff; 
-    cursor: pointer;
-}
-
-
-.panelDeBotones .bi-airplane.voted {
-    color: #4dabf7;
-}
-
-
-
-.panelDeBotones .bi-bookmark-fill {
-    color: #4dabf7;
-    transition: color 0.2s ease;
-}
-.panelDeBotones .bi-bookmark-fill:hover {
-    color: #ffffff; 
-    cursor: pointer;
-}
-
-.panelDeBotones .bi {
-    color: #4dabf7;
-    transition: color 0.2s ease;
-}
-.panelDeBotones .bi:hover {
-    color: #ffffff; 
-    cursor: pointer;
-}
 
 
 .imagenRespuesta {

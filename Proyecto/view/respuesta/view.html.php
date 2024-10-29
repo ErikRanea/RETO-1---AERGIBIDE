@@ -1,5 +1,6 @@
 <?php
 
+
     $pregunta = $dataToView["pregunta"]["datosPregunta"];
     $usuarioPregunta = $dataToView["pregunta"]["usuarioPregunta"];
 
@@ -14,17 +15,18 @@
         <div class="fotoUsuarioPregunta">
             <?php
 
-
                 $fotoUsuarioPorDefecto = "assets/img/fotoPorDefecto.png";
+               
                 
             ?>
             <img src="<?php echo file_exists($usuarioPregunta["foto_perfil"]) ? $usuarioPregunta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
         </div>
+
         <div class="preguntaTitulo">
             <?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?>
         </div>
         <div class="descripcionPregunta">
-            <?php echo isset($pregunta["texto"]) ? $pregunta["texto"] : "Texto no encontrado";?>
+            <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
         </div>
         <div class="panelDeBotones">
             <button class="botonPanel">
@@ -41,6 +43,7 @@
             </button>
         </div>
     </div>
+    
     <div class="contenedorRespuesta">
 
     

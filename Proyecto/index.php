@@ -66,9 +66,6 @@ $controller = new $controllerName();
 $dataToView = array();
 
 
-if (method_exists($controller, $_GET["action"])) {
-    $dataToView = $controller->{$_GET["action"]}();
-}
 
 if ($isAjaxRequest) {
     echo json_encode($dataToView);
