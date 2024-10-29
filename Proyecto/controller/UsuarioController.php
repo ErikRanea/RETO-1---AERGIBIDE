@@ -100,15 +100,19 @@ class UsuarioController{
 
     public function update() {
         if (isset($_POST)) {
+            // Guardamos el id de la sesión
             $usuarioId = $_SESSION['user_data']['id'];
+            // Mediante el id obtenemos el usuario y lo guardamos
             $usuario = $this->model->getUsuarioById($usuarioId);
+            // Guardamos los campos editados
             $usuario->nombre = $_POST['nombre'];
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-
             $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
+            // Comprobamos que las contraseñas coincidan
             if (password_verify($_POST["actualPassword"] , $usuarioAlmacenado->password)) {
+                // Hasheamos la contraseña
                 $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
             } else {
                 echo "La contraseña actual es incorrecta";

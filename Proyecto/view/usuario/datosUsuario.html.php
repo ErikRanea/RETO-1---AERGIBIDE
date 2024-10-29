@@ -61,6 +61,8 @@
             </table>
             <div class="divBotonGuardar">
                 <button type="submit" id="guardarDatosUsuario" class="diseñoBoton">Guardar</button>
+                <button type="button" class="diseñoBoton" onclick="location.reload();">Cancelar</button>
+
             </div>
         </form>
     </div>
