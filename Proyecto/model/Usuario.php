@@ -26,8 +26,18 @@ class Usuario{
         $stmt = $this -> connection ->prepare($sql);
         //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
+        return $stmt ->fetch(); 
+    }
+
+    public function getUsuarioByIdObj($id_usuario)
+    {
+        $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
+        $stmt = $this -> connection ->prepare($sql);
+        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        $stmt->execute([$id_usuario]);
         return $stmt ->fetch(PDO::FETCH_OBJ); 
     }
+
     public function getAllUsuarios() {
         $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
         $stmt->execute();
@@ -171,13 +181,14 @@ class Usuario{
     public function updateUsuario($objeto){
 
         $sql =  "UPDATE " .$this-> tabla.
-        " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password WHERE id = :id";
+        " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, foto_perfil = :foto_perfil, password = :password WHERE id = :id";
         $stmt = $this -> connection ->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
         $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
+        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
         $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
         $stmt->execute();
         return;
