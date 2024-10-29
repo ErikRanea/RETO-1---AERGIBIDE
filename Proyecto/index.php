@@ -66,11 +66,10 @@ $controller = new $controllerName();
 $dataToView = array();
 
 
-if (method_exists($controller, $_GET["action"])) {
-    $dataToView = $controller->{$_GET["action"]}();
-}
+
 
 if ($isAjaxRequest) {
+    $dataToView = $controller->{$_GET["action"]}();
     echo json_encode($dataToView);
     exit; // Importante: salir del script para evitar cargar las vistas
 }

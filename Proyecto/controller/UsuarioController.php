@@ -109,26 +109,53 @@ class UsuarioController{
             $usuarioId = $_SESSION['user_data']['id'];
             // Mediante el id obtenemos el usuario y lo guardamos
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
+            
             // Guardamos los campos editados
             $usuario->nombre = $_POST['nombre'];
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-            $usuario->foto_perfil = $_POST['nuevaFoto'];
-
+    
+            // Verificar contraseña
             $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
-            // Comprobamos que las contraseñas coincidan
-            if (password_verify($_POST["actualPassword"] , $usuarioAlmacenado->password)) {
-                // Hasheamos la contraseña
+            if (password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
                 $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
             } else {
-                echo "La contraseña actual es incorrecta";
+                echo "La contraseña actual es incorrecta.";
             }
+    
+            // Actualizar usuario
             $this->model->updateUsuario($usuario);
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
             exit();
         }
     }
+
+    public function updateFoto() {
+        if (isset($_FILES['nuevaFoto']) && $_FILES['nuevaFoto']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['nuevaFoto']['tmp_name'];
+            $fileMimeType = mime_content_type($fileTmpPath);
+            $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+
+            if (in_array($fileMimeType, $allowedMimeTypes)) {
+                $fileName = uniqid() . '-' . $_FILES['nuevaFoto']['name'];
+                $uploadFileDir = 'assets/img/';
+                $destPath = $uploadFileDir . $fileName;
+
+                // Movemos el archivo a la carpeta deseada
+                if (move_uploaded_file($fileTmpPath, $destPath)) {
+                    $usuario->foto_perfil = $destPath; // Asignamos la nueva ruta a la foto
+                } else {
+                    echo "No se pudo subir la imagen.";
+                    return;
+                }
+            } else {
+                echo "Tipo de archivo no permitido.";
+                return;
+            }
+        }
+    }
+    
 
     public function cerrarSesion() {
         // Aquí destruyes la sesión y rediriges al usuario
