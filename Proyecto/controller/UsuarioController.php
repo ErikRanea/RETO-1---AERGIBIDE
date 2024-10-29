@@ -27,10 +27,6 @@ class UsuarioController{
         exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
     }
 
-    public function datosUsuarioBlack(){
-        $this -> view = "datosUsuarioBlack";
-    }
-
     /* 
     Metodo -> logear
     From -> Erik
@@ -53,7 +49,7 @@ class UsuarioController{
                     "id" => $row->id,
                     "nombre" => $row->nombre,
                     "email" => $row->email,
-                    ""
+                    "foto_perfil" => $row->foto_perfil
                 );
                 //Si todo va bien y entra
                 echo json_encode([
@@ -87,6 +83,11 @@ class UsuarioController{
     {
         $this -> view = "login";
         isset($_POST) ? $this -> model -> insertUsuario($_POST) : print_r("error");
+        echo json_encode([
+            "status" => "success",
+            "message" => "Usuario creado correctamente"
+        ]);
+        exit();
     }
 
     public function mostrarDatosUsuario() {
@@ -110,7 +111,13 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-            $usuario->password = $_POST['password'];
+
+            $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
+            if (password_verify($_POST["actualPassword"] , $usuarioAlmacenado->password)) {
+                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+            } else {
+                echo "La contraseña actual es incorrecta";
+            }
             $this->model->updateUsuario($usuario);
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
             exit();
