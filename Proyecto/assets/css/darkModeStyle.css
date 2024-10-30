@@ -537,6 +537,7 @@ strong {
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
+    justify-content: space-between;
 }
 
 .descripcionPregunta {
@@ -601,20 +602,46 @@ strong {
 
 
 
-.contenedorRespuestaDivididor
-{
+.contenedorRespuestaDivididor {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 100px 4.75fr 1fr ;
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 100px 4.75fr 1fr; /* Mantenemos las columnas originales */
+    grid-template-rows: auto 1fr auto;
     gap: 10px;
     padding: 20px;
-    /*box-sizing: border-box;*/
     grid-template-areas: 
-        ". fotoUsuarioRespuesta  respuesta ."
-        ". .  respuesta ."
-        ". .  panelDeBotones .";
+        ". fotoUsuarioRespuesta respuesta ."
+        ". . respuesta ."
+        ". . panelDeBotones .";
+    position: relative; /* Añadimos posición relativa para poder posicionar la estrella */
 }
+
+.respuesta {
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #1A1A1A;
+    position: relative; /* Para el posicionamiento de la estrella */
+}
+
+.estrella-respuesta {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.estrella-respuesta .bi-star {
+    color: #4dabf7;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.estrella-respuesta .bi-star:hover {
+    color: #ffffff;
+}
+
 
 .fotoUsuarioRespuesta
 {
@@ -628,14 +655,7 @@ strong {
     height: 100px;
     border-radius: 50%;
 }
-.respuesta
-{
-    grid-area: respuesta;
-    padding: 10px;
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #1A1A1A;
-}
+
 
 
 
@@ -647,12 +667,48 @@ strong {
     align-items: center;
 }
 
-
+.publicarRespuestaContenido
+{
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #1A1A1A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em ;
+}
 .textAreaRespuesta
 {
     font-family: Mulish-Regular, Arial, sans-serif; 
     border: 0;
     color: #FFFFFF;
     background-color: #1A1A1A;
-    width: 100%; height:50%;
+    width: 100%; height:60%;
+    padding: 2em;
+}
+
+.botonSubirArchivo
+{
+    
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+}
+
+.botonSubirArchivo:hover
+{
+    cursor: pointer;
+    background-color: #4DBAD9;
+    margin-bottom: 5em;
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    color: #FFFFFF;
 }
