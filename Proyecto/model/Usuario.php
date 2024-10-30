@@ -178,19 +178,23 @@ class Usuario{
         return $result['total'] ?? 0;
     }
 
-    public function updateUsuario($objeto){
-
-        $sql =  "UPDATE " .$this-> tabla.
-        " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password WHERE id = :id";
-        $stmt = $this -> connection ->prepare($sql);
+    public function updateUsuario($objeto) {
+        $sql = "UPDATE " . $this->tabla .
+               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password, foto_perfil = :foto_perfil WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
         $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
-        $stmt->execute();
-        return;
-    }
+        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
+    
+        if ($stmt->execute()) {
+            echo "Foto guardada: " . $objeto->foto_perfil;
+        } else {
+            echo "Error al actualizar la foto";
+        }
+    }    
 
 }
