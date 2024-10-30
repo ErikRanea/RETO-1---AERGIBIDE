@@ -1,5 +1,6 @@
 <div class="content">
     <?php
+
     $termino = $dataToView['termino'] ?? ''; // Si no está definido, usa un string vacío
     $resultados = $dataToView['resultados'] ?? []; // Usar un array vacío si no hay resultados
     $pagina = $dataToView['pagina'] ?? 1; // Página actual
@@ -30,7 +31,6 @@
             return "$diaSemana, $dia de $mes de $año";
         }
     }
-
     ?>
 
     <h2>Resultados de búsqueda para: <?= htmlspecialchars($termino) ?></h2>

@@ -28,6 +28,14 @@ class Usuario{
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(); 
     }
+
+    public function getUsuarioByIdObj($id_usuario)
+    {
+        $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$id_usuario]);
+        return $stmt ->fetch(PDO::FETCH_OBJ);
+    }
     public function getAllUsuarios() {
         $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
         $stmt->execute();
@@ -39,10 +47,10 @@ class Usuario{
     {
 
         // Sanitize POST
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+       // $param = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
             /* Validación del token para prevenir inyección SQL */
-        $listaSQL = ["WHERE", "where", "AND", "and"];
+     /*   $listaSQL = ["WHERE", "where", "AND", "and"];
         $limpio = true; // Cambié a true para evitar invertir la lógica después
         foreach($listaSQL as $strSQL) {
             foreach($post as $elementoPost)
@@ -55,19 +63,22 @@ class Usuario{
             }
             
         }
+*/
 
-        if (isset($post) && $limpio)
+        $post = $param;
+        if (isset($post) )
         {
+
             if ($post['email'] == '' ||
             $post['password'] == '') {
             return;
             }
 
             $passwordHaseada = password_hash($post["password"], PASSWORD_DEFAULT);
-            
+
             $stmt = $this -> connection -> prepare("INSERT INTO ".$this->tabla." ( email,
-            nombre, password, username, rol, foto_perfil ) VALUES (:email, :nombre, :password,
-            :username, :rol, :foto_perfil)");
+            nombre, password, username, rol, foto_perfil, apellido) VALUES (:email, :nombre, :password,
+            :username, :rol, :foto_perfil , :apellido)");
 
             $stmt -> execute([
                 ':email' => isset($post['email']) ? $post['email'] : "",
@@ -78,6 +89,9 @@ class Usuario{
                 ':foto_perfil' => isset($post['foto_perfil']) ? $post['foto_perfil'] : "",
                 ':apellido' => isset($post['apellido']) ? $post['apellido'] : "",
             ]);
+
+            return;
+
 
 
         }
@@ -141,6 +155,7 @@ class Usuario{
         {
             $usuarioAlmacenado = $this->getUsuarioByEmail($post['email']);
           
+
             if(isset($usuarioAlmacenado->email) && password_verify($post["password"] , $usuarioAlmacenado->password))
             {
               
@@ -177,12 +192,13 @@ class Usuario{
         return;
     }
 
-    public function ObtenerUsuarios() {
-        $sql = "SELECT id, nombre FROM " . $this->tabla; // Aquí seleccionamos solo 'id' y 'nombre'
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
-    }
+    public function getPreguntasFav($username){
+        $sql = "SELECT * FROM Preguntas_Usu_Fav WHERE username=?";
 
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$username]);
+        return $stmt ->fetchAll();
+
+    }
 
 }

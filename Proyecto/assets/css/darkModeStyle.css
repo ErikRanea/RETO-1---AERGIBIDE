@@ -184,7 +184,7 @@ footer span {
 }
 
 /* Tabla de Datos */
-.estiloTabla, .estiloTablaBlack {
+.estiloTabla {
     width: 100%;
     border-collapse: collapse;
     border-radius: 0.625em;
@@ -195,12 +195,11 @@ footer span {
     background-color: #333333; /* Fondo de la tabla */
 }
 
-.estiloTabla tr, .estiloTablaBlack tr {
+.estiloTabla tr {
     border-bottom: 0.09375em solid #4DBAD9; /* Color de la línea inferior */
 }
 
-.estiloTabla th, .estiloTablaBlack th,
-.estiloTabla td, .estiloTablaBlack td {
+.estiloTabla td, .estiloTabla th {
     padding: 1.25em 1.875em;
     font-weight: bold;
     font-size: 1em;
@@ -211,17 +210,42 @@ footer span {
     text-align: right;
 }
 
-.estiloTablaBlack {
-    background-color: #1A1A1A; /* Fondo oscuro para la tabla negra */
+.diseñoBoton {
+    background-color: #4DBAD9;
+    border: none;
+    color: black;
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
 }
 
-.estiloTablaBlack td {
-    color: white; /* Texto blanco para la tabla negra */
+.botonPassword {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
 }
+
+.botonPassword:hover {
+    background-color: #4DBAD9;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Cambiar contraseña */
 
 /* Panel Lateral */
 .panelLateral {
-    background-color: #1A1A1A; /* Mantén el color de la barra lateral o ajusta si lo deseas */
+    background-color: #162F3B; /* Mantén el color de la barra lateral o ajusta si lo deseas */
     height: 100%;
     width: 17em;
     align-content: center;
@@ -238,6 +262,18 @@ footer span {
     color: white; /* Texto blanco para los enlaces */
     text-decoration: none;
     font-weight: bold;
+}
+
+.lateralBoton.active {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
 }
 
 /* Botones de Paginación */
@@ -453,3 +489,226 @@ strong {
     border-radius: 5px;
 }
 
+
+
+
+
+/*PREGUNTA Y RESPUESTA*/
+
+.contenedorPreguntasYRespuestas
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedorPregunta {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 200px 4fr 4fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+    gap: 10px;
+    padding: 20px;
+    /*box-sizing: border-box;*/
+    grid-template-areas: 
+        "fotoUsuarioPregunta preguntaTitulo preguntaTitulo ."
+        ". descripcionPregunta descripcionPregunta ."
+        ". . panelDeBotones .";
+}
+
+.fotoUsuarioPregunta {
+    grid-area: fotoUsuarioPregunta;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.fotoUsuarioPregunta img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.preguntaTitulo {
+    background-color: #1A1A1A;
+    grid-area: preguntaTitulo;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+.descripcionPregunta {
+    background-color: #1A1A1A;
+    grid-area: descripcionPregunta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.panelDeBotones {
+    grid-area: panelDeBotones;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.panel-botones button{
+    border: 0;
+}
+
+
+.panelDeBotones .bi {
+    font-size: 24px; 
+    border: 0;
+}
+
+
+.bi-lg {
+    font-size: 1.5rem;
+}
+
+.bi-xl {
+    font-size: 2rem;
+}
+
+
+.airplane-down {
+    display: inline-block !important;
+    transform: rotate(180deg) !important;
+    transition: transform 0.2s;
+}
+
+
+
+.botonPanel
+{
+    background-color: #1F1F1F;
+    border: 0px;
+    padding: .5em;
+}
+
+.panelDeBotones .bi {
+    color: #4dabf7;
+    transition: color 0.2s ease;
+}
+.panelDeBotones .bi:hover {
+    color: #ffffff; 
+    cursor: pointer;
+}
+
+
+
+.contenedorRespuestaDivididor {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 100px 4.75fr 1fr; /* Mantenemos las columnas originales */
+    grid-template-rows: auto 1fr auto;
+    gap: 10px;
+    padding: 20px;
+    grid-template-areas: 
+        ". fotoUsuarioRespuesta respuesta ."
+        ". . respuesta ."
+        ". . panelDeBotones .";
+    position: relative; /* Añadimos posición relativa para poder posicionar la estrella */
+}
+
+.respuesta {
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #1A1A1A;
+    position: relative; /* Para el posicionamiento de la estrella */
+}
+
+.estrella-respuesta {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.estrella-respuesta .bi-star {
+    color: #4dabf7;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.estrella-respuesta .bi-star:hover {
+    color: #ffffff;
+}
+
+
+.fotoUsuarioRespuesta
+{
+    grid-area: fotoUsuarioRespuesta;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.fotoUsuarioRespuesta img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+
+
+
+
+.imagenRespuesta {
+    max-width: 300px; /* Ancho máximo fijo */
+    height: auto; /* Mantiene la proporción */
+    display: block; /* Permite que otros elementos se alineen */
+    align-items: center;
+}
+
+.publicarRespuestaContenido
+{
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #1A1A1A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em ;
+}
+.textAreaRespuesta
+{
+    font-family: Mulish-Regular, Arial, sans-serif; 
+    border: 0;
+    color: #FFFFFF;
+    background-color: #1A1A1A;
+    width: 100%; height:60%;
+    padding: 2em;
+}
+
+.botonSubirArchivo
+{
+    
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+}
+
+.botonSubirArchivo:hover
+{
+    cursor: pointer;
+    background-color: #4DBAD9;
+    margin-bottom: 5em;
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    color: #FFFFFF;
+}

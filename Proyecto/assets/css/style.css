@@ -191,42 +191,137 @@ footer span {
 }
 
 /* Tabla de Datos */
-.estiloTabla, .estiloTablaBlack {
+
+.estiloTabla {
     width: 100%;
     border-collapse: collapse;
+    background-color: white;
     border-radius: 0.625em;
     overflow: hidden;
 }
 
-.estiloTabla {
-    background-color: white;
-}
-
-.estiloTabla tr, .estiloTablaBlack tr {
+.estiloTabla tr {
     border-bottom: 0.09375em solid #4DBAD9;
 }
 
-.estiloTabla th, .estiloTablaBlack th,
-.estiloTabla td, .estiloTablaBlack td {
-    padding: 1.25em 1.875em;
-    font-weight: bold;
-    font-size: 1em;
-    text-align: left;
+.estiloTabla tr:first-child th {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:first-child td {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:last-child {
+    border-bottom: none;
 }
 
 .estiloTabla th {
+    font-weight: bold;
     text-align: right;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
 }
 
-.estiloTablaBlack {
-    background-color: #1A1A1A;
+.estiloTabla td {
+    font-weight: bold;
+    text-align: left;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
 }
 
-.estiloTablaBlack td {
+.listaDatos {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.listaDatos h2 {
+    margin-bottom: 1em;
+}
+
+.perfil {
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+}
+
+.diseñoBoton {
+    background-color: #4DBAD9;
+    border: none;
     color: white;
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
+}
+
+.sinFoto {
+    width: 10em;
+    border-radius: 3.13em;
+    border: 2px solid #4DBAD9;
+}
+
+.divFoto {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.containerPerfil {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+
+.divBotonGuardar {
+    padding-top: 1em;
+}
+
+input[readonly] {
+    background-color: #f0f8ff;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+.botonPassword {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.botonPassword:hover {
+    background-color: #4DBAD9;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.botonesPerfil {
+    margin: 1em;
+}
+
+/* Cambiar Contraseña */
+
+.paginaPassword {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.formPassword {
+    padding: 2em;
 }
 
 /* Panel Lateral */
+
 .panelLateral {
     background-color: #EAFBFF;
     height: 100%;
@@ -245,6 +340,18 @@ footer span {
     color: black;
     text-decoration: none;
     font-weight: bold;
+}
+
+.lateralBoton.active {
+    background-color: #4DBAD9;
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
 }
 
 /* Botones de Paginación */
@@ -385,3 +492,226 @@ strong {
     align-self: flex-start; /* Alinea a la izquierda */
     background-color: #c7e1ff; /* Color de fondo para mensajes recibidos */
 }
+
+
+
+
+/*PREGUNTA Y RESPUESTA*/
+
+.contenedorPreguntasYRespuestas
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedorPregunta {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 200px 4fr 4fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+    gap: 10px;
+    padding: 20px;
+    /*box-sizing: border-box;*/
+    grid-template-areas: 
+        "fotoUsuarioPregunta preguntaTitulo preguntaTitulo ."
+        ". descripcionPregunta descripcionPregunta ."
+        ". . panelDeBotones .";
+}
+
+.fotoUsuarioPregunta {
+    grid-area: fotoUsuarioPregunta;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.fotoUsuarioPregunta img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.preguntaTitulo {
+    background-color: #f8f9fa;
+    grid-area: preguntaTitulo;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+.descripcionPregunta {
+    background-color: #f8f9fa;
+    grid-area: descripcionPregunta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.panelDeBotones {
+    grid-area: panelDeBotones;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.panel-botones button{
+    border: 0;
+}
+
+
+.panelDeBotones .bi {
+    font-size: 24px; 
+    border: 0;
+}
+
+
+.bi-lg {
+    font-size: 1.5rem;
+}
+
+.bi-xl {
+    font-size: 2rem;
+}
+
+
+.airplane-down {
+    display: inline-block !important;
+    transform: rotate(180deg) !important;
+    transition: transform 0.2s;
+}
+
+
+
+.botonPanel
+{
+    background-color: #f4f4f9;
+    border: 0px;
+    padding: .5em;
+}
+
+.panelDeBotones .bi {
+    color: #4dabf7;
+    transition: color 0.2s ease;
+}
+.panelDeBotones .bi:hover {
+    color: #ffffff; 
+    cursor: pointer;
+}
+
+
+
+.contenedorRespuestaDivididor {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 100px 4.75fr 1fr; /* Mantenemos las columnas originales */
+    grid-template-rows: auto 1fr auto;
+    gap: 10px;
+    padding: 20px;
+    grid-template-areas: 
+        ". fotoUsuarioRespuesta respuesta ."
+        ". . respuesta ."
+        ". . panelDeBotones .";
+    position: relative; /* Añadimos posición relativa para poder posicionar la estrella */
+}
+
+.respuesta {
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #f8f9fa;
+    position: relative; /* Para el posicionamiento de la estrella */
+}
+
+.estrella-respuesta {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.estrella-respuesta .bi-star {
+    color: #4dabf7;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.estrella-respuesta .bi-star:hover {
+    color: #ffffff;
+}
+
+
+.fotoUsuarioRespuesta
+{
+    grid-area: fotoUsuarioRespuesta;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.fotoUsuarioRespuesta img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+
+
+
+
+.imagenRespuesta {
+    max-width: 300px; /* Ancho máximo fijo */
+    height: auto; /* Mantiene la proporción */
+    display: block; /* Permite que otros elementos se alineen */
+    align-items: center;
+}
+
+.publicarRespuestaContenido
+{
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em ;
+}
+.textAreaRespuesta
+{
+    font-family: Mulish-Regular, Arial, sans-serif; 
+    border: 0;
+    color: #1A1A1A;
+    background-color: #f8f9fa;
+    width: 100%; height:60%;
+    padding: 2em;
+}
+
+.botonSubirArchivo
+{
+    
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+}
+
+.botonSubirArchivo:hover
+{
+    cursor: pointer;
+    background-color: #4DBAD9;
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    color: #FFFFFF;
+}
+
