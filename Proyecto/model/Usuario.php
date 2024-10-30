@@ -26,7 +26,7 @@ class Usuario{
         $stmt = $this -> connection ->prepare($sql);
         //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(); 
+        return $stmt ->fetch();
     }
 
     public function getUsuarioByIdObj($id_usuario)
@@ -61,7 +61,7 @@ class Usuario{
                     break;
                 }
             }
-            
+
         }
 */
 
@@ -154,11 +154,11 @@ class Usuario{
         if (isset($post))
         {
             $usuarioAlmacenado = $this->getUsuarioByEmail($post['email']);
-          
+
 
             if(isset($usuarioAlmacenado->email) && password_verify($post["password"] , $usuarioAlmacenado->password))
             {
-              
+
                 return $usuarioAlmacenado;
             }
             else
@@ -199,6 +199,13 @@ class Usuario{
         $stmt->execute([$username]);
         return $stmt ->fetchAll();
 
+    }
+
+    public function ObtenerUsuarios() {
+        $sql = "SELECT id, nombre FROM " . $this->tabla; // Aquí seleccionamos solo 'id' y 'nombre'
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
 
 }
