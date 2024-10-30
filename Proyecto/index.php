@@ -6,6 +6,7 @@ require_once "model/db.php";
 
 
 
+
 //Se toman los valores de la sesion
 
 
@@ -15,6 +16,9 @@ if (!isset($_SESSION['user_data']['id']) && !isset($_SESSION['is_logged_in']))
     header("Location: index.php?controller=usuario&action=login");
     exit(0);
 }
+
+
+
 
 if(!isset($_SESSION['tout']))
 {
@@ -33,6 +37,9 @@ else
   $_SESSION['tout'] = time();
 }
 
+
+
+
 //cerrar la sesion
 
 // Verificar si la solicitud es AJAX
@@ -45,6 +52,7 @@ if (!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");
 if (isset($_GET['action']) && $_GET['action'] === 'buscar') {
     $_GET["controller"] = 'Busqueda';  // Cambia al controlador de búsqueda
 }
+
 
 // ...
 
