@@ -81,7 +81,7 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
 
                 <!-- Menú desplegable -->
                 <div id="dropdown" class="dropdown-content">
-                    <a id="person1" href="index.php?controller=usuario&action=mostrardatosusuario">Configuración</a>
+                    <a id="person1" href="index.php?controller=usuario&action=mostrarDatosUsuario">Configuración</a>
                     <a href="index.php?controller=usuario&action=cerrarSesion">Cerrar sesión</a>
                 </div>
 

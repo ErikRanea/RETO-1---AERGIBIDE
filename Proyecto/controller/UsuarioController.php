@@ -27,6 +27,10 @@ class UsuarioController{
         exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
     }
 
+    public function nuevoUsuario(){
+        $this -> view = "nuevoUsuario";
+    }
+
     /* 
     Metodo -> logear
     From -> Erik
@@ -92,7 +96,6 @@ class UsuarioController{
 
     public function mostrarDatosUsuario() {
         // Obtenemos el ID del usuario desde la sesión
-
         $this -> view = "datosUsuario";
         
     }
@@ -105,22 +108,94 @@ class UsuarioController{
 
     public function update() {
         if (isset($_POST)) {
+            // Guardamos el id de la sesión
             $usuarioId = $_SESSION['user_data']['id'];
-            $usuario = $this->model->getUsuarioById($usuarioId);
+            // Mediante el id obtenemos el usuario y lo guardamos
+            $usuario = $this->model->getUsuarioByIdObj($usuarioId);
+            
+            // Guardamos los campos editados
             $usuario->nombre = $_POST['nombre'];
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
 
+            // Verificar contraseña
             $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
-            if (password_verify($_POST["actualPassword"] , $usuarioAlmacenado->password)) {
+            if (password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
                 $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
             } else {
-                echo "La contraseña actual es incorrecta";
+                echo "La contraseña actual es incorrecta.";
             }
+    
+            // Actualizar usuario
             $this->model->updateUsuario($usuario);
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
             exit();
+        }
+    }
+
+    public function create() {
+        if (isset($_POST)) {
+            $usuario = new stdClass();
+            $usuario->nombre = $_POST['nombre'];
+            $usuario->apellido = $_POST['apellido'];
+            $usuario->username = $_POST['username'];
+            $usuario->email = $_POST['email'];
+    
+            // Capturamos el rol
+            $usuario->rol = $_POST['rol']; // Asegúrate de tener un campo "rol" en tu formulario
+    
+            // Confirmar contraseña
+            if ($_POST["nuevaPassword"] === $_POST["repetirPassword"]) {
+                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+            } else {
+                echo "Las contraseñas no coinciden.";
+                return;
+            }
+    
+            // Crear usuario
+            $this->model->createUsuario($usuario);
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+            exit();
+        }
+    }
+    
+    
+
+    public function updateFoto() {
+
+        if (isset($_POST)) {
+            // Guardamos el id de la sesión
+            $usuarioId = $_SESSION['user_data']['id'];
+            // Mediante el id obtenemos el usuario y lo guardamos
+            $usuario = $this->model->getUsuarioByIdObj($usuarioId);
+
+            if (isset($_FILES['nuevaFoto']) && $_FILES['nuevaFoto']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['nuevaFoto']['tmp_name'];
+                $fileMimeType = mime_content_type($fileTmpPath);
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+
+                if (in_array($fileMimeType, $allowedMimeTypes)) {
+                    $fileName = uniqid() . '-' . $_FILES['nuevaFoto']['name'];
+                    $uploadFileDir = 'assets/img/';
+                    $destPath = $uploadFileDir . $fileName;
+
+                    // Movemos el archivo a la carpeta deseada
+                    if (move_uploaded_file($fileTmpPath, $destPath)) {
+                        $usuario->foto_perfil = $destPath; // Asignamos la nueva ruta a la foto
+                    } else {
+                        echo "No se pudo subir la imagen.";
+                        return;
+                    }
+                } else {
+                    echo "Tipo de archivo no permitido.";
+                    return;
+                }
+
+                $this->model->updateUsuario($usuario);
+                header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+                exit();
+            }
         }
     }
 
@@ -134,7 +209,5 @@ class UsuarioController{
         header("Location: index.php?controller=usuario&action=login");
         exit();
     }
-
-
 
 }
