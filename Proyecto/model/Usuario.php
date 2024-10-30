@@ -190,4 +190,13 @@ class Usuario{
         return;
     }
 
+    public function getPreguntasFav($username){
+        $sql = "SELECT * FROM Preguntas_Usu_Fav WHERE username=?";
+
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$username]);
+        return $stmt ->fetchAll();
+
+    }
+    
 }
