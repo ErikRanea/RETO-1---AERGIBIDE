@@ -62,7 +62,7 @@ class Usuario{
             }
             
         }
-*/
+        */
 
         $post = $param;
         if (isset($post) )
@@ -190,13 +190,36 @@ class Usuario{
         return;
     }
 
-    public function getPreguntasFav($username){
-        $sql = "SELECT * FROM Preguntas_Usu_Fav WHERE username=?";
-
+    public function getPreguntasSave($idUsuario){
+        $sql = "SELECT * FROM Preguntas_Usu_Save WHERE id_usuario=?";
         $stmt = $this -> connection ->prepare($sql);
-        $stmt->execute([$username]);
+        $stmt->execute([$idUsuario]);
         return $stmt ->fetchAll();
+    }
 
+    public function getRespuestasSave($idUsuario){
+        $sql = "SELECT * FROM Respuestas_Usu_Save WHERE id_usuario=?";
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$idUsuario]);
+        return $stmt ->fetchAll();
+    }
+
+
+    public function getPreguntasLike($idUsuario)
+    {
+        $sql = "SELECT * FROM Preguntas_Usu_Like WHERE id_usuario = ?";
+        $stmt = $this -> connection -> prepare($sql);
+        $stmt-> execute([$idUsuario]);
+        return $stmt -> fetchAll();
+    }
+
+    public function getRespuestasLike($idUsuario)
+    {
+        
+        $sql = "SELECT * FROM Respuestas_Usu_Like WHERE id_usuario = ?";
+        $stmt = $this -> connection -> prepare($sql);
+        $stmt-> execute([$idUsuario]);
+        return $stmt -> fetchAll();
     }
 
 }

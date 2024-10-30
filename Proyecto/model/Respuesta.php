@@ -68,10 +68,34 @@ class Respuesta
         $objetosRespuestas["usuariosRespuestas"] = $usuariosRespuestas;
     
 
-
+        // Almaceno tanto los datos de la preguntas y de las respuestas en un array de respuesta
         $datosDePreguntaYRespuestas = array();
         $datosDePreguntaYRespuestas["pregunta"] =$objetosPregunta;
         $datosDePreguntaYRespuestas["respuestas"] = $objetosRespuestas;
+
+
+        //Recojo las preguntas y respuestas guardadas por el usuario de la sesion para verificar si ha guardado alguna
+        $respuestasGuardadasUsuarioSesion = $this-> usuario-> getRespuestasSave($_SESSION["user_data"]["id"]);
+        $preguntasGuardadasUsuarioSesion = $this -> usuario -> getPreguntasSave($_SESSION["user_data"]["id"]);
+
+        //Almaceno los guardados en la respuesta
+        $guardadosUsuarioSesion = array();
+        $guardadosUsuarioSesion["preguntasGuardadas"] = $preguntasGuardadasUsuarioSesion;
+        $guardadosUsuarioSesion["respuestasGuardadas"] = $respuestasGuardadasUsuarioSesion;
+
+        $datosDePreguntaYRespuestas["guardados"] = $guardadosUsuarioSesion;
+
+
+
+        //Recojo las preguntas y respuestas donde el usuario ha dado like para verificar si le ha gustado alguna
+        $respuestasConLikesUsuarioSesion = $this -> usuario ->getRespuestasLike($_SESSION["user_data"]["id"]);
+        $preguntasConLikesUsuarioSesion = $this -> usuario ->getPreguntasLike($_SESSION["user_data"]["id"]);
+
+        $likesUsuarioSesion = array();
+        $likesUsuarioSesion["preguntasLikes"] = $preguntasConLikesUsuarioSesion;
+        $likesUsuarioSesion["respuestasLikes"] = $respuestasConLikesUsuarioSesion;
+
+        $datosDePreguntaYRespuestas["likes"] = $likesUsuarioSesion;
 
         return $datosDePreguntaYRespuestas;
 
@@ -106,7 +130,7 @@ class Respuesta
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$param["id_usuario"]],[$param["id_respuesta"]]);
             return true;
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -120,7 +144,7 @@ class Respuesta
             $stmt = $this-> connection->prepare($sql);
             $stmt->execute([$param["id_usuario"]],[$param["id_respuesta"]]);
             return true;
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return false;
         }
     }

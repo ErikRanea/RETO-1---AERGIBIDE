@@ -12,3 +12,4 @@ document.getElementById('cargadorDeImagenRespuesta').addEventListener('change', 
 
 
 /* Guardar las respuestas o preguntas */
+document.getElementById()

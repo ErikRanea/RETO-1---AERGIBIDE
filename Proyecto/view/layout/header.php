@@ -12,7 +12,7 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
     <title>AERGIBIDE</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/tema.css">
-    <link rel="stylesheet" href="assets/css/pregunta.css">
+    <link rel="stylesheet" href="assets/css/preguntaAcciones.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Cargar los estilos de modo oscuro si la cookie está habilitada -->
