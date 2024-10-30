@@ -27,6 +27,10 @@ class UsuarioController{
         exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
     }
 
+    public function nuevoUsuario(){
+        $this -> view = "nuevoUsuario";
+    }
+
     /* 
     Metodo -> logear
     From -> Erik
@@ -92,7 +96,6 @@ class UsuarioController{
 
     public function mostrarDatosUsuario() {
         // Obtenemos el ID del usuario desde la sesión
-
         $this -> view = "datosUsuario";
         
     }
@@ -130,7 +133,35 @@ class UsuarioController{
             exit();
         }
     }
+
+    public function create() {
+        if (isset($_POST)) {
+            $usuario = new stdClass();
+            $usuario->nombre = $_POST['nombre'];
+            $usuario->apellido = $_POST['apellido'];
+            $usuario->username = $_POST['username'];
+            $usuario->email = $_POST['email'];
     
+            // Capturamos el rol
+            $usuario->rol = $_POST['rol']; // Asegúrate de tener un campo "rol" en tu formulario
+    
+            // Confirmar contraseña
+            if ($_POST["nuevaPassword"] === $_POST["repetirPassword"]) {
+                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+            } else {
+                echo "Las contraseñas no coinciden.";
+                return;
+            }
+    
+            // Crear usuario
+            $this->model->createUsuario($usuario);
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+            exit();
+        }
+    }
+    
+    
+
     public function updateFoto() {
 
         if (isset($_POST)) {
@@ -178,7 +209,5 @@ class UsuarioController{
         header("Location: index.php?controller=usuario&action=login");
         exit();
     }
-
-
 
 }

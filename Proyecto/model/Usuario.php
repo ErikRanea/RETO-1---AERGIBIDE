@@ -32,14 +32,6 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
-        $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(); 
-    }
-
-    public function getUsuarioByIdObj($id_usuario)
-    {
-        $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
-        $stmt = $this -> connection ->prepare($sql);
         //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(PDO::FETCH_OBJ); 
@@ -202,7 +194,28 @@ class Usuario{
         } else {
             echo "Error al actualizar la foto";
         }
-    }    
+    }
+
+    public function createUsuario($objeto) {
+        $sql = "INSERT INTO " . $this->tabla . " (nombre, apellido, username, email, password, foto_perfil, rol) 
+                VALUES (:nombre, :apellido, :username, :email, :password, :foto_perfil, :rol)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
+        $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
+        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
+        $stmt->bindParam(':rol', $objeto->rol, PDO::PARAM_STR); // Agrega esta línea
+    
+        if ($stmt->execute()) {
+            echo "Usuario creado exitosamente.";
+        } else {
+            echo "Error al crear el usuario.";
+        }
+    }
+    
+    
 
     public function getPreguntasFav($username){
         $sql = "SELECT * FROM Preguntas_Usu_Fav WHERE username=?";
