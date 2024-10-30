@@ -222,5 +222,6 @@ class Usuario{
 
         //$total=$this->connection->query("SELECT COUNT(*) FROM ".$this->tabla. " WHERE id_tema=?")->fetchColumn();
         return ceil($total/$limit);
+
     }
 }

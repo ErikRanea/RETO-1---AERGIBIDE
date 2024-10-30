@@ -28,6 +28,7 @@ $usuario = $_SESSION["user_data"];
                     <?= $i; ?>
                 </a>
             <?php endfor; ?>
+
         </div>
     </div>
 </div>

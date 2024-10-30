@@ -121,6 +121,7 @@ class UsuarioController{
 
     }
 
+
     public function obtenerTotalUsuarios() {
         $totalUsuarios = $this->model->getTotalUsuarios();
         return ["totalUsuarios" => $totalUsuarios];

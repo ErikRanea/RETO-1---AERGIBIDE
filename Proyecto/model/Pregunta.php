@@ -88,6 +88,7 @@ class Pregunta{
 
         return $id;
     }
+    
 
     public function contarVotos($tipo, $id){
 
