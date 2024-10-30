@@ -2,142 +2,57 @@
 
 $id_emisor = $_SESSION['user_data']['id'];
 $user_emisor = $_SESSION['user_data']['username'];// Obtén el ID de sesión del usuario
-$colors = array('#007AFF','#FF7000','#FF7000','#15E25F','#CFC700','#CFC700','#CF1100','#CF00BE','#F00');
-$color_pick = array_rand($colors);
+
 ?>
 
-<div class="chat-wrapper">
-    <div id="msgBox">
-        <?php if (!empty($mensajes)): ?>
-            <?php foreach ($mensajes as $mensaje): ?>
-                <?php
-                // Asegúrate de que el ID esté definido
-                $mensajeId = isset($mensaje['id']) ? htmlspecialchars($mensaje['id']) : 'undefined';
-                ?>
-                <div id="mensaje_<?= $mensajeId ?>" class="message <?= (htmlspecialchars($mensaje['id_emisor']) == $id_emisor) ? 'sent' : 'received'; ?>">
-                    <strong><?= htmlspecialchars($mensaje['emisor']); ?>:</strong>
-                    <?= htmlspecialchars($mensaje['mensaje']); ?>
-                    <em><?= htmlspecialchars($mensaje['fecha']); ?></em>
-                </div>
+<div class="chat-container">
+    <!-- Users Sidebar -->
+    <div class="users-sidebar">
+        <div class="sidebar-header">
+            <h2>Usuarios</h2>
+        </div>
+        <div class="users-list">
+            <?php foreach ($dataToView['usuarios'] as $usuario): ?>
+                <button class="user-item" data-user-id="<?= htmlspecialchars($usuario['id']) ?>">
+                    <div class="user-avatar">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 0v0a3 3 0 0 1 3 3v1H5v-1a3 3 0 0 1 3-3z"/>
+                        </svg>
+                    </div>
+                    <span><?= htmlspecialchars($usuario['nombre']) ?></span>
+                </button>
             <?php endforeach; ?>
-        <?php else: ?>
-            <div>No hay mensajes aún.</div>
-        <?php endif; ?>
+        </div>
     </div>
 
-    <div class="user-panel">
-        <select id="user-combobox" name="usuarios">
-            <?php foreach ($dataToView['usuarios'] as $usuario): ?>
-                <option value="<?= htmlspecialchars($usuario['id']) ?>">
-                    <?= htmlspecialchars($usuario['nombre']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <input type="text" name="message" id="message" placeholder="Escribe tu mensaje aquí..." maxlength="100" />
-        <button id="send-message">Enviar</button>
+    <!-- Chat Area -->
+    <div class="chat-area">
+        <div class="chat-header">
+            <h2 id="selected-user">Selecciona un usuario</h2>
+        </div>
+        <div id="msgBox">
+            <!-- Messages will be loaded here -->
+        </div>
+        <div class="user-panel">
+            <select id="user-combobox" name="usuarios" style="display: none;"> <!-- Ocultamos el combobox -->
+                <option value="">Seleccionar usuario</option>
+                <?php foreach ($dataToView['usuarios'] as $usuario): ?>
+                    <option value="<?= htmlspecialchars($usuario['id']) ?>">
+                        <?= htmlspecialchars($usuario['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <input type="text" id="message" placeholder="Escribe tu mensaje aquí..." maxlength="100" />
+            <button id="send-message">Enviar</button>
+        </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        loadMessages(); // Cargar mensajes iniciales
-    });
 
-    // Define el ID del emisor desde la sesión PHP
-    var id_emisor = <?= json_encode($id_emisor) ?>; // ID del emisor desde la sesión
-    var user_emisor = <?= json_encode($user_emisor) ?>;
-    var msgBox = $('#msgBox'); // Cambia a '#msgBox' para coincidir con el ID de tu contenedor
-
-    $('#user-combobox').change(function() {
-        loadMessages(); // Cargar mensajes cuando se cambia el usuario
-    });
-
-    function loadMessages() {
-        var id_receptor = $('#user-combobox').val(); // Obtener ID del receptor seleccionado
-        console.log("ID Emisor:", id_emisor, "Nombre Emisor:", user_emisor, "ID Receptor:", id_receptor); // Log de ID emisor y receptor
-        $.ajax({
-            url: 'index.php?controller=chat&action=get_messages',
-            method: 'GET',
-            data: { id_emisor: id_emisor, id_receptor: id_receptor },
-            success: function (data) {
-                console.log("Respuesta del servidor:", data); // Verificar la respuesta del servidor
-                try {
-                    const mensajes = JSON.parse(data); // Intenta analizar el JSON
-                    console.log("Mensajes:", mensajes); // Log de mensajes
-
-                    msgBox.empty(); // Limpiar mensajes antes de mostrar nuevos
-                    // Verificar si hay mensajes
-                    if (Array.isArray(mensajes) && mensajes.length > 0) {
-                        mensajes.forEach(function (mensaje) {
-                            console.log("Mensaje ID Emisor:", mensaje.emisor, user_emisor); // Log del ID del emisor del mensaje
-
-                            // Asegúrate de que id_emisor sea un número antes de comparar
-                            var messageClass = (Number(mensaje.emisor) === user_emisor) ? 'sent' : 'received'; // Ajustar las clases
-                            msgBox.append(`<div class="message ${messageClass}"><strong>${mensaje.emisor}:</strong> ${mensaje.mensaje}<em>${mensaje.fecha}</em></div>`);
-                        });
-                    } else {
-                        msgBox.html("No hay mensajes aún."); // Mensaje cuando no hay mensajes
-                    }
-                } catch (error) {
-                    console.error("Error en la respuesta JSON:", error);
-                    msgBox.html("Error al cargar mensajes."); // Mensaje de error en la interfaz
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error("Error en la petición AJAX:", textStatus, errorThrown);
-                msgBox.html("Error en la conexión."); // Mensaje de error en la interfaz
-            }
-        });
-    }
-
-
-    $('#send-message').click(function() {
-        sendMessage();
-    });
-
-    $("#message").on("keydown", function(event) {
-        if (event.which === 13) {
-            sendMessage();
-        }
-    });
-
-    function sendMessage() {
-        var messageInput = $('#message');
-        var id_receptor = $('#user-combobox').val(); // Obtener ID del receptor seleccionado
-
-        if (!id_receptor) {
-            alert("Selecciona un usuario para enviar el mensaje");
-            return;
-        }
-        if (messageInput.val() === "") {
-            alert("Escribe algún mensaje");
-            return;
-        }
-
-        $.ajax({
-            url: 'controller/insert_message.php',
-            type: 'POST',
-            data: {
-                id_emisor: id_emisor,
-                id_receptor: id_receptor,
-                mensaje: messageInput.val()
-            },
-            success: function(response) {
-                if (response.trim() === "Mensaje insertado correctamente") {
-                    messageInput.val(''); // Limpiar el campo de mensaje
-                    loadMessages(); // Cargar los mensajes después de enviar
-                } else {
-                    console.error("Error en la inserción:", response);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error en la solicitud:", error);
-            }
-        });
-    }
-
-    // Recargar mensajes cada 9 segundos
-    setInterval(loadMessages, 9000);
+<script>
+    var id_emisor = <?= json_encode($id_emisor) ?>;
+    var user_emisor = <?= json_encode($user_emisor) ?>;a
 </script>
+
+
+<script src="assets/js/chat.js"></script>

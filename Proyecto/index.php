@@ -17,9 +17,7 @@ if (!isset($_SESSION['user_data']['id']) && !isset($_SESSION['is_logged_in']))
     exit(0);
 }
 
-if (isset($_SESSION['user_data']['id'])) {
-    $_SESSION['user_id'] = $_SESSION['user_data']['id']; // Guarda el ID del usuario logueado
-}
+
 
 
 if(!isset($_SESSION['tout']))

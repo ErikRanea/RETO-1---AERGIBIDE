@@ -1,7 +1,7 @@
 <?php
 require_once 'model/Chat.php';
 require_once 'model/Usuario.php';
-require_once 'model/Db.php'; // Asegúrate de incluir la clase Db
+require_once 'model/Db.php';
 
 class ChatController
 {
@@ -19,7 +19,7 @@ class ChatController
 
     public function mostrarChat() {
         // Verificar que la sesión tenga el id_usuario
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['user_data']['id'])) {
             return ['error' => 'Usuario no autenticado'];
         }
 
@@ -37,27 +37,6 @@ class ChatController
         return $dataToView;
     }
 
-    public function enviarMensaje() {
-        // Obtener datos de la solicitud AJAX
-        $input = json_decode(file_get_contents('php://input'), true);
-        $mensaje = $input['mensaje'] ?? '';
-        $receptorId = $input['receptorId'] ?? '';
-
-        if (!empty($mensaje) && !empty($receptorId)) {
-            $emisorId = $_SESSION['user_id']; // Obtener el ID del usuario logueado
-            $success = $this->chatModel->guardarMensaje($emisorId, $receptorId, $mensaje);
-
-            // Responder con JSON
-            echo json_encode(['success' => $success]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Datos inválidos']);
-        }
-        exit();
-    }
-
-    public function obtenerMensajesPorUsuario($id_emisor, $id_receptor) {
-        return $this->chatModel->getMessages($id_emisor, $id_receptor);
-    }
 
     public function get_messages() {
         $id_emisor = $_GET['id_emisor'] ?? null;
@@ -79,23 +58,8 @@ class ChatController
         exit(); // Agrega un exit() para detener la ejecución del script
     }
 
-    public function getIdEmisorMensaje($idMensaje) {
-        $idEmisor = $this->chatModel->getIdEmisorByIdMensaje($idMensaje);
-        return $idEmisor;
-    }
 
-    // controller/ChatController.php
-    // controller/ChatController.php
-    public function fetchMessages() {
-        $id_emisor = $_GET['id_emisor'];
-        $id_receptor = $_GET['id_receptor'];
 
-        // Aquí debes obtener los mensajes desde la base de datos
-        $mensajes = $this->chatModel->getMessages($id_emisor, $id_receptor); // Ajusta esto según tu lógica
-
-        header('Content-Type: application/json');
-        echo json_encode($mensajes); // Asegúrate de que esto sea un JSON válido
-    }
 
 
 }
