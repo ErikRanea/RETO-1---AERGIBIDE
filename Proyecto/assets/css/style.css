@@ -243,6 +243,7 @@ footer span {
     margin: 0 auto;
     text-align: center;
     align-items: center;
+    justify-content: center;
 }
 
 .diseñoBoton {
@@ -305,6 +306,13 @@ input[readonly] {
 
 .botonesPerfil {
     margin: 1em;
+}
+
+.botonEditar {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 /* Cambiar Contraseña */

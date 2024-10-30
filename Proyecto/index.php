@@ -73,8 +73,6 @@ $controller = new $controllerName();
 
 $dataToView = array();
 
-
-
 if ($isAjaxRequest) {
     $dataToView = $controller->{$_GET["action"]}();
     echo json_encode($dataToView);
