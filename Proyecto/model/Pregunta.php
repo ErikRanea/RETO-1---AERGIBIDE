@@ -26,7 +26,7 @@ class Pregunta{
         $stmt->execute([$id_tema]);
         return $stmt ->fetchAll();
     }
-    /*Esta linéa del FetchMode lo que hace es convertilo en objetos Usuario donde las columnas de la tabla son los atributos del mismo */
+    /*Esta linéa del FetchMode lo que hace es convertilo en objetos donde las columnas de la tabla son los atributos del mismo */
     //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Pregunta');
 
     public function getPreguntaById($id){
@@ -89,8 +89,17 @@ class Pregunta{
         return $id;
     }
 
+    public function contarVotos($tipo, $id){
 
+        $votos = 0;
 
+        // Llamada a la función `contarVotos`
+        $query = "SELECT contarVotos(?, ?) AS votos";
+        $stmt = $this->connection->prepare($query);
+        //$stmt->bind_param("is", $id_pregunta, $tipo);
+        $stmt->execute([$tipo, $id]);
+        //$stmt->bind_result($votos);
 
-
+        return $stmt ->fetch();
+    }
 }

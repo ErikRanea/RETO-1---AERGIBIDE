@@ -198,5 +198,29 @@ class Usuario{
         return $stmt ->fetchAll();
 
     }
-    
+
+    public function getActividadPaginated($username, $pagination, $page=1){
+        $limit=$pagination;
+        $offset = ($page - 1) * $limit; // Calcula el desplazamiento
+        $sql = "SELECT * FROM Preguntas_Usuario WHERE username= :username LIMIT :limit OFFSET :offset";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $totalPages = $this->getNumberPages($username, $pagination); //ceil($this->getNumperPages()/$limit);
+        return [$stmt->fetchAll(), $page, $totalPages];
+
+    }
+
+    public function getNumberPages($username, $pagination){
+        $limit=$pagination;
+        $sql = "SELECT COUNT(*) FROM Preguntas_Usuario WHERE username=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$username]);
+        $total = $stmt->fetchColumn();
+
+        //$total=$this->connection->query("SELECT COUNT(*) FROM ".$this->tabla. " WHERE id_tema=?")->fetchColumn();
+        return ceil($total/$limit);
+    }
 }

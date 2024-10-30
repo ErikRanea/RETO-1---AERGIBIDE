@@ -38,9 +38,11 @@ class UsuarioController{
     {
         header('Content-Type: application/json');  // Establecer el tipo de contenido como JSON
 
+
         if (!isset($_SESSION['is_logged_in']) || !$_SESSION['is_logged_in']) 
         {
             $row = $this->model->login($_POST);
+
 
             if (isset($row)) 
             {
@@ -49,9 +51,10 @@ class UsuarioController{
                     "id" => $row->id,
                     "nombre" => $row->nombre,
                     "email" => $row->email,
-                    "foto_perfil" => $row->foto_perfil
+                    "foto_perfil" => $row->foto_perfil,
+                    "username" => $row->username
                 );
-                //Si todo va bien y entra
+                //Si
                 echo json_encode([
                     "status" => "success",
                     "message" => "Login exitoso",
@@ -69,11 +72,12 @@ class UsuarioController{
                 exit();
             }
         } 
-            else 
+        else
         {
             echo json_encode([
                 "status" => "error",
-                "message" => "No ha entrado en la condición de la sesión"
+                "message" => "sesion",
+                "redirect" => "index.php?controller=tema&action=mostrarTemas"
             ]);
             exit();
         }
@@ -97,11 +101,30 @@ class UsuarioController{
         
     }
 
+    public function mostrarActividad(){
+        $this->view = "actividad";
+        $usuario = $_SESSION["user_data"];
+
+        $page = isset($_GET["page"]) ? $_GET["page"]:1;
+        $pagination = 2;
+
+        $preguntas_pag = $this->model->getActividadPaginated("Usuario1", $pagination, $page);
+
+        $preguntas = $preguntas_pag[0];
+        $paginas = [$preguntas_pag[1], $preguntas_pag[2]];
+
+        return[
+            "preguntas_pag" => $preguntas_pag,
+            "preguntas" => $preguntas,
+            "paginas" => $paginas
+        ];
+
+    }
+
     public function obtenerTotalUsuarios() {
         $totalUsuarios = $this->model->getTotalUsuarios();
         return ["totalUsuarios" => $totalUsuarios];
     }
-
 
     public function update() {
         if (isset($_POST)) {

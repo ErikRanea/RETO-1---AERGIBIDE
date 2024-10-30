@@ -28,6 +28,9 @@ class PreguntaController{
         foreach ($preguntas as &$pregunta) {
             $usuario = $this->model->usuario->getUsuarioById($pregunta["id_usuario"]);
             $pregunta["usuario"] = $usuario;
+
+            $votos = $this->model->contarVotos("pregunta", $pregunta["id"]);
+            $pregunta["votos"] = $votos["votos"];
         }
         unset($pregunta);
 
