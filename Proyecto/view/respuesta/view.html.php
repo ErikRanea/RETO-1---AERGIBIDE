@@ -7,6 +7,7 @@
 
     $respuestas = $dataToView["respuestas"];
 
+    
 ?>
 
 
@@ -23,7 +24,8 @@
         </div>
 
         <div class="preguntaTitulo">
-            <?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?>
+           <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
+           <label id="editarPregunta" class="botonDeEditar" <?php if($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>><i class="bi bi-pencil-square"></i></label>
         </div>
     
 
@@ -40,8 +42,8 @@
             <button class="botonPanel">
                 <i class="bi bi-airplane airplane-down"></i>
             </button>
-            <button class="botonPanel">
-                <i class="bi bi-bookmark-fill"></i>
+            <button class="botonPanel" id="botonGuardarPregunta" value="<?php echo $pregunta["id"];?>">
+                <i class="bi bi-bookmark"></i>
             </button>
         </div>
     </div>
@@ -62,6 +64,9 @@
                     <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
                 <div class="respuesta">
+                    <div class="estrella-respuesta">
+                        <i class="bi bi-star"></i>
+                    </div>
                     <?php echo $datosRespuesta["texto"]; ?>
                     <?php if($datosRespuesta["imagen"] != null){?>
                         <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
@@ -78,7 +83,7 @@
                         <i class="bi bi-airplane airplane-down"></i>
                     </button>
                     <button class="botonPanel">
-                        <i class="bi bi-bookmark-fill"></i>
+                        <i class="bi bi-bookmark"></i>
                     </button>
                 </div>
             </div>
@@ -96,9 +101,16 @@
                 <div class="fotoUsuarioRespuesta">
                     <img src="<?php echo file_exists($_SESSION["user_data"]["foto_perfil"]) ? $_SESSION["user_data"]["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
-                <div class="respuesta">
+                <div class="publicarRespuestaContenido">
                     <textarea class="textAreaRespuesta"name="texto" id=""></textarea>
-                    <input type="file" name="imagen" id="" accept="image/*">
+                    <label class="botonSubirArchivo">
+                        Subir Archivo
+                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta" accept="image/*" hidden>
+                        <label id="archivoSubidoRespuesta" hidden>
+                            <i class="bi bi-check-circle-fill"></i>
+                        </label>
+                    </label>
+                    
                 </div>
                 <div class="panelDeBotones">
                     <button class="botonPanel" type="submit">
@@ -108,6 +120,6 @@
             </div>
         </form>
     </div>
-
+<script src="assets/js/respuestas.js"></script>
 
 </div>
