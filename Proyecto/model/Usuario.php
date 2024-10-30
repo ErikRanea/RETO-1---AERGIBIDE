@@ -24,7 +24,14 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
-        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        $stmt->execute([$id_usuario]);
+        return $stmt ->fetch(); 
+    }
+
+    public function getUsuarioByIdObj($id_usuario)
+    {
+        $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
+        $stmt = $this -> connection ->prepare($sql);
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(); 
     }
@@ -196,5 +203,14 @@ class Usuario{
             echo "Error al actualizar la foto";
         }
     }    
+
+    public function getPreguntasFav($username){
+        $sql = "SELECT * FROM Preguntas_Usu_Fav WHERE username=?";
+
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$username]);
+        return $stmt ->fetchAll();
+
+    }
 
 }

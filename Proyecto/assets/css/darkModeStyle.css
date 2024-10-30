@@ -502,6 +502,7 @@ strong {
 }
 
 .contenedorPregunta {
+
     width: 100%;
     display: grid;
     grid-template-columns: 200px 4fr 4fr 1fr;
@@ -517,7 +518,6 @@ strong {
 
 .fotoUsuarioPregunta {
     grid-area: fotoUsuarioPregunta;
-    background-color: blue;
     display: flex;
     align-items: center;
     justify-content: right;
@@ -530,18 +530,19 @@ strong {
 }
 
 .preguntaTitulo {
+    background-color: #1A1A1A;
     grid-area: preguntaTitulo;
-    background-color: green;
     padding: 10px;
     display: flex;
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
+    justify-content: space-between;
 }
 
 .descripcionPregunta {
+    background-color: #1A1A1A;
     grid-area: descripcionPregunta;
-    background-color: red;
     padding: 10px;
     font-size: 1rem;
     line-height: 1.5;
@@ -549,17 +550,20 @@ strong {
 
 .panelDeBotones {
     grid-area: panelDeBotones;
-    background-color: chartreuse;
     display: flex;
-    
     align-items: center;
     justify-content: flex-end;
     padding: 10px;
 }
 
+.panel-botones button{
+    border: 0;
+}
+
 
 .panelDeBotones .bi {
     font-size: 24px; 
+    border: 0;
 }
 
 
@@ -571,49 +575,6 @@ strong {
     font-size: 2rem;
 }
 
-.contenedorRespuesta
-{
-
-
-}
-
-.contenedorRespuestaDivididor
-{
-    background-color: aliceblue;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 100px 4.75fr 1fr ;
-    grid-template-rows: 1fr 2fr 1fr;
-    gap: 10px;
-    padding: 20px;
-    /*box-sizing: border-box;*/
-    grid-template-areas: 
-        ". fotoUsuarioRespuesta  respuesta ."
-        ". .  respuesta ."
-        ". .  panelDeBotones .";
-}
-
-.fotoUsuarioRespuesta
-{
-    grid-area: fotoUsuarioRespuesta;
-    background-color: blue;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-}
-.fotoUsuarioRespuesta img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-.respuesta
-{
-    grid-area: respuesta;
-    background-color: grey;
-    padding: 10px;
-    font-size: 1rem;
-    line-height: 1.5;
-}
 
 .airplane-down {
     display: inline-block !important;
@@ -625,35 +586,9 @@ strong {
 
 .botonPanel
 {
-    background-color: #1A1A1A;
-}
-
-
-.panelDeBotones .bi-airplane {
-    color: #4dabf7; 
-    transition: color 0.2s ease;
-}
-
-
-.panelDeBotones .bi-airplane:hover {
-    color: #ffffff; 
-    cursor: pointer;
-}
-
-
-.panelDeBotones .bi-airplane.voted {
-    color: #4dabf7;
-}
-
-
-
-.panelDeBotones .bi-bookmark-fill {
-    color: #4dabf7;
-    transition: color 0.2s ease;
-}
-.panelDeBotones .bi-bookmark-fill:hover {
-    color: #ffffff; 
-    cursor: pointer;
+    background-color: #1F1F1F;
+    border: 0px;
+    padding: .5em;
 }
 
 .panelDeBotones .bi {
@@ -666,6 +601,65 @@ strong {
 }
 
 
+
+.contenedorRespuestaDivididor {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 100px 4.75fr 1fr; /* Mantenemos las columnas originales */
+    grid-template-rows: auto 1fr auto;
+    gap: 10px;
+    padding: 20px;
+    grid-template-areas: 
+        ". fotoUsuarioRespuesta respuesta ."
+        ". . respuesta ."
+        ". . panelDeBotones .";
+    position: relative; /* Añadimos posición relativa para poder posicionar la estrella */
+}
+
+.respuesta {
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #1A1A1A;
+    position: relative; /* Para el posicionamiento de la estrella */
+}
+
+.estrella-respuesta {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.estrella-respuesta .bi-star {
+    color: #4dabf7;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.estrella-respuesta .bi-star:hover {
+    color: #ffffff;
+}
+
+
+.fotoUsuarioRespuesta
+{
+    grid-area: fotoUsuarioRespuesta;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.fotoUsuarioRespuesta img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+
+
+
+
 .imagenRespuesta {
     max-width: 300px; /* Ancho máximo fijo */
     height: auto; /* Mantiene la proporción */
@@ -673,4 +667,48 @@ strong {
     align-items: center;
 }
 
+.publicarRespuestaContenido
+{
+    grid-area: respuesta;
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #1A1A1A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em ;
+}
+.textAreaRespuesta
+{
+    font-family: Mulish-Regular, Arial, sans-serif; 
+    border: 0;
+    color: #FFFFFF;
+    background-color: #1A1A1A;
+    width: 100%; height:60%;
+    padding: 2em;
+}
 
+.botonSubirArchivo
+{
+    
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+}
+
+.botonSubirArchivo:hover
+{
+    cursor: pointer;
+    background-color: #4DBAD9;
+    margin-bottom: 5em;
+    text-align: center;
+    padding: .5em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    color: #FFFFFF;
+}

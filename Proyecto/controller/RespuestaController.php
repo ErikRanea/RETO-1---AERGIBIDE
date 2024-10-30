@@ -87,4 +87,39 @@ class RespuestaController
 
 
     }
+
+
+
+    public function guardarRespuesta()
+    {
+        try 
+        {
+            if(!isset($_POST["id_usuario"]) && !isset($_POST["id_respuesta"]))
+            {
+                throw new Exception("No se han entregado los id usuario y respuesta");
+            }    
+
+            $guardarRespuesta = $this->model->guardarRespuesta($_POST);
+            if(!$guardarRespuesta)
+            {
+                throw new Exception("Ha habido un error en la base de datos al guardar la respuesta");
+            }
+            elseif($guardarRespuesta)
+            {
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Se ha guardado la respuesta correctamente"
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                "status" => "error",
+                "message" => $e,
+            ]);
+            exit();
+        }
+    }
+
+
+
 }

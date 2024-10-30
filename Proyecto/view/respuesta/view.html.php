@@ -1,11 +1,13 @@
 <?php
 
+
     $pregunta = $dataToView["pregunta"]["datosPregunta"];
     $usuarioPregunta = $dataToView["pregunta"]["usuarioPregunta"];
 
 
     $respuestas = $dataToView["respuestas"];
 
+    
 ?>
 
 
@@ -14,17 +16,21 @@
         <div class="fotoUsuarioPregunta">
             <?php
 
-
                 $fotoUsuarioPorDefecto = "assets/img/fotoPorDefecto.png";
+               
                 
             ?>
             <img src="<?php echo file_exists($usuarioPregunta["foto_perfil"]) ? $usuarioPregunta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
         </div>
+
         <div class="preguntaTitulo">
-            <?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?>
+           <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
+           <label id="editarPregunta" class="botonDeEditar" <?php if($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>><i class="bi bi-pencil-square"></i></label>
         </div>
+    
+
         <div class="descripcionPregunta">
-            <?php echo isset($pregunta["texto"]) ? $pregunta["texto"] : "Texto no encontrado";?>
+            <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
         </div>
         <div class="panelDeBotones">
             <button class="botonPanel">
@@ -36,11 +42,12 @@
             <button class="botonPanel">
                 <i class="bi bi-airplane airplane-down"></i>
             </button>
-            <button class="botonPanel">
-                <i class="bi bi-bookmark-fill"></i>
+            <button class="botonPanel" id="botonGuardarPregunta" value="<?php echo $pregunta["id"];?>">
+                <i class="bi bi-bookmark"></i>
             </button>
         </div>
     </div>
+    
     <div class="contenedorRespuesta">
 
     
@@ -57,6 +64,9 @@
                     <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
                 <div class="respuesta">
+                    <div class="estrella-respuesta">
+                        <i class="bi bi-star"></i>
+                    </div>
                     <?php echo $datosRespuesta["texto"]; ?>
                     <?php if($datosRespuesta["imagen"] != null){?>
                         <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
@@ -73,7 +83,7 @@
                         <i class="bi bi-airplane airplane-down"></i>
                     </button>
                     <button class="botonPanel">
-                        <i class="bi bi-bookmark-fill"></i>
+                        <i class="bi bi-bookmark"></i>
                     </button>
                 </div>
             </div>
@@ -91,9 +101,16 @@
                 <div class="fotoUsuarioRespuesta">
                     <img src="<?php echo file_exists($_SESSION["user_data"]["foto_perfil"]) ? $_SESSION["user_data"]["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
-                <div class="respuesta">
-                    <textarea name="texto" id=""  style="width: 100%; height:50%;"></textarea>
-                    <input type="file" name="imagen" id="" accept="image/*">
+                <div class="publicarRespuestaContenido">
+                    <textarea class="textAreaRespuesta"name="texto" id=""></textarea>
+                    <label class="botonSubirArchivo">
+                        Subir Archivo
+                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta" accept="image/*" hidden>
+                        <label id="archivoSubidoRespuesta" hidden>
+                            <i class="bi bi-check-circle-fill"></i>
+                        </label>
+                    </label>
+                    
                 </div>
                 <div class="panelDeBotones">
                     <button class="botonPanel" type="submit">
@@ -103,6 +120,6 @@
             </div>
         </form>
     </div>
-
+<script src="assets/js/respuestas.js"></script>
 
 </div>

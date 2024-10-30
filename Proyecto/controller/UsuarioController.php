@@ -49,7 +49,7 @@ class UsuarioController{
                     "id" => $row->id,
                     "nombre" => $row->nombre,
                     "email" => $row->email,
-                    "foto_perfil" => $row->foto_perfil
+                    "foto_perfil" => $row->foto_perfil  
                 );
                 //Si todo va bien y entra
                 echo json_encode([

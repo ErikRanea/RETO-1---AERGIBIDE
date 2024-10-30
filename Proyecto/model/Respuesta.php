@@ -99,5 +99,31 @@ class Respuesta
 
     }
 
+    public function guardarRespuesta($param)
+    {
+        try {
+            $sql = "INSERT INTO Respuestas_Usu_Fav (id_usuario,id_respuesta) VALUES (?,?)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$param["id_usuario"]],[$param["id_respuesta"]]);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+    }
+
+    public function desGuardarRespuesta($param)
+    {
+        try {
+            
+            $sql = "DELETE FROM Respuestas_Usu_Fav WHERE id_usuario = ? AND id_respuesta = ?";
+            $stmt = $this-> connection->prepare($sql);
+            $stmt->execute([$param["id_usuario"]],[$param["id_respuesta"]]);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
 
 }
