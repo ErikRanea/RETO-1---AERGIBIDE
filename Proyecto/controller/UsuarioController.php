@@ -50,6 +50,7 @@ class UsuarioController{
                     "id" => $row->id,
                     "nombre" => $row->nombre,
                     "email" => $row->email,
+                    "username" => $row->username,
                     "foto_perfil" => $row->foto_perfil
                 );
                 //Si todo va bien y entra

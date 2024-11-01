@@ -3,11 +3,86 @@
 
     $pregunta = $dataToView["pregunta"]["datosPregunta"];
     $usuarioPregunta = $dataToView["pregunta"]["usuarioPregunta"];
-
-
     $respuestas = $dataToView["respuestas"];
 
+
+
+    $respuestasGuardadas = $dataToView["guardados"]["respuestasGuardadas"];
+    $preguntasGuardadas = $dataToView["guardados"]["preguntasGuardadas"];
+
     
+    $respuestasLike = $dataToView["likes"]["respuestasLikes"];
+    $preguntasLike = $dataToView["likes"]["preguntasLikes"];
+
+    function verificarSiPreguntaGuardada($idPregunta, $preguntasGuardadas)
+    {
+        $estaGuardado = false;
+        
+        foreach ($preguntasGuardadas as $objPregunta) {
+
+            if($objPregunta["id_pregunta"] == $idPregunta){ return $estaGuardado = true;}
+        }
+
+        return $estaGuardado;
+    }
+
+    function verificarSiRespuestaGuardada($idRespuesta,$respuestasGuardadas)
+    {
+        $estaGuardado = false;
+        
+        foreach ($respuestasGuardadas as $objRespuesta) {
+
+            if($objRespuesta["id_respuesta"] == $idRespuesta){ return $estaGuardado = true;}
+        }
+
+        return $estaGuardado;
+    }
+
+
+    function verificarSiPreguntaLike($idPregunta,$preguntasLike)
+    {
+        $isLike = false;
+
+        foreach($preguntasLike as $objPregunta)
+        {
+            if($objPregunta["id_pregunta"] == $idPregunta)
+            {
+                if($objPregunta["me_gusta"])
+                {
+                    return "esLike";
+                }
+                else
+                {
+                    return "esDisLike";
+                }
+            }
+        }
+        return $isLike;
+        
+    }
+    
+    function verificarSiRespuestaLike($idRespuesta,$respuestasLike)
+    {
+        $isLike = false;
+
+        foreach($respuestasLike as $objRespuesta)
+        {
+            if($objRespuesta["id_respuesta"] == $idRespuesta)
+            {
+                if($objRespuesta["me_gusta"])
+                {
+                    return "esLike";
+                }
+                else
+                {
+                    return "esDisLike";
+                }
+            }
+        }
+        return $isLike;
+        
+    }
+
 ?>
 
 
@@ -33,17 +108,69 @@
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
         </div>
         <div class="panelDeBotones">
-            <button class="botonPanel">
-                <i class="bi bi-airplane"></i>
-            </button>
-            <p>
-                <?php echo isset($pregunta["votos"]) ? $pregunta["votos"] : 0;?>
-            </p>
-            <button class="botonPanel">
-                <i class="bi bi-airplane airplane-down"></i>
-            </button>
+            <?php
+                $like = verificarSiPreguntaLike($pregunta["id"],$preguntasLike);
+                if(!$like)
+                {
+                    ?>
+                      <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
+                            <i class="bi bi-airplane"></i>
+                        </button>
+                        <p>
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo 0;?>
+                        </p>
+                        <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
+                            <i class="bi bi-airplane airplane-down"></i>
+                        </button>
+                <?php
+                }
+                elseif($like == "esLike")
+                {
+                    ?>
+                    <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
+                          <i class="bi bi-airplane-fill"></i>
+                      </button>
+                      <p>
+                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                          echo 0;?>
+                      </p>
+                      <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
+                          <i class="bi bi-airplane airplane-down"></i>
+                      </button>
+                  <?php
+                }
+                else
+                {
+                    ?>
+                    <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
+                          <i class="bi bi-airplane"></i>
+                      </button>
+                      <p>
+                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                          echo 0;?>
+                      </p>
+                      <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
+                          <i class="bi bi-airplane-fill airplane-down"></i>
+                      </button>
+                  <?php
+                }    
+            
+            ?>
             <button class="botonPanel" id="botonGuardarPregunta" value="<?php echo $pregunta["id"];?>">
-                <i class="bi bi-bookmark"></i>
+                <?php
+                    if(verificarSiPreguntaGuardada($pregunta["id"],$preguntasGuardadas))
+                    {
+                        ?><i class="bi bi-bookmark-fill"></i>
+                    <?php
+                    }
+                    else
+                    {?>
+                        <i class="bi bi-bookmark"></i>
+                    <?php
+                    }
+                ?>
+                
             </button>
         </div>
     </div>
@@ -58,7 +185,7 @@
         for ($i=0; $i < count($respuestas["datosRespuestas"]); $i++) { 
             $usuarioRespuesta = $respuestas["usuariosRespuestas"][$i];
             $datosRespuesta = $respuestas["datosRespuestas"][$i];
-            ?>
+    ?>
             <div class="contenedorRespuestaDivididor">
                 <div class="fotoUsuarioRespuesta">
                     <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
@@ -73,17 +200,68 @@
                     <?php }?>
                 </div>
                 <div class="panelDeBotones">
+                <?php
+                $like = verificarSiPreguntaLike($pregunta["id"],$preguntasLike);
+                if(!$like)
+                {
+                    ?>
+                      <button class="botonPanel" id="botonRespuestaLike" value="<?php echo $datosRespuesta["id"];?>">
+                            <i class="bi bi-airplane"></i>
+                        </button>
+                        <p>
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo 0;?>
+                        </p>
+                        <button class="botonPanel" id="botonRespuestaDisLike" value="<?php echo $datosRespuesta["id"];?>">
+                            <i class="bi bi-airplane airplane-down"></i>
+                        </button>
+                <?php
+                }
+                elseif($like == "esLike")
+                {
+                    ?>
+                    <button class="botonPanel" id="botonRespuestaLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane-fill"></i>
+                      </button>
+                      <p>
+                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                          echo 0;?>
+                      </p>
+                      <button class="botonPanel" id="botonRespuestaDisLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane airplane-down"></i>
+                      </button>
+                  <?php
+                }
+                else
+                {
+                    ?>
+                    <button class="botonPanel" id="botonRespuestaLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane"></i>
+                      </button>
+                      <p>
+                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                          echo 0;?>
+                      </p>
+                      <button class="botonPanel" id="botonRespuestaDisLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane-fill airplane-down"></i>
+                      </button>
+                  <?php
+                }    
+            
+            ?>
                     <button class="botonPanel">
-                        <i class="bi bi-airplane"></i>
-                    </button>
-                    <p>
-                        <?php echo isset($datosRespuesta["votos"]) ? $datosRespuesta["votos"] : 0;?>
-                    </p>
-                    <button class="botonPanel">
-                        <i class="bi bi-airplane airplane-down"></i>
-                    </button>
-                    <button class="botonPanel">
-                        <i class="bi bi-bookmark"></i>
+                    <?php
+                        if(verificarSiRespuestaGuardada($datosRespuesta["id"],$respuestasGuardadas))
+                        {
+                            ?><i class="bi bi-bookmark-fill"></i>
+                        <?php
+                        }
+                        else
+                        {?>
+                            <i class="bi bi-bookmark"></i>
+                        <?php
+                        }
+                    ?>
                     </button>
                 </div>
             </div>

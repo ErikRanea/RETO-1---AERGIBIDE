@@ -24,7 +24,7 @@
                                 <?php if (!empty($publicacion['foto_perfil'])): ?>
                                     <img src="<?= htmlspecialchars($publicacion['foto_perfil']) ?>" alt="Foto de perfil" width="40" height="40" style="border-radius: 50%;">
                                 <?php else: ?>
-                                    <img src="path_to_your_default_icon.png" alt="Icono predeterminado" width="40" height="40">
+                                    <img src="assets/img/fotoPorDefecto.png" alt="Icono predeterminado" width="40" height="40" style="border-radius: 50%;">
                                 <?php endif; ?>
                             </div>
                             <div class="texto">
