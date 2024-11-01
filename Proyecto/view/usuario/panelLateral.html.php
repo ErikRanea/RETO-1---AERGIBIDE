@@ -16,8 +16,8 @@
         </a>
     </p>
 
-    <p><a href="index.php?controller=usuario&action=mostrarPanelDeControl"
-    class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'mostrarPanelDeControl') ? 'active' : ''; ?>">
+    <p><a href="index.php?controller=usuario&action=nuevoUsuario"
+    class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'nuevoUsuario') ? 'active' : ''; ?>">
             Panel de control
         </a>
     </p>

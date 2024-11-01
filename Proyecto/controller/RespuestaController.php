@@ -38,7 +38,7 @@ class RespuestaController
         $post = $_POST["texto"] != "" && $_GET["id_pregunta"] != "" ? $_POST : false;
         if(!$post){header("Location: index.php?controler=tema&action=mostrarTemas");exit();}
         $filePath = null;
-        print_r("Antes de entrar al if");
+    
         if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
             $fileTmpPath = $_FILES['imagen']['tmp_name'];
             $fileMimeType = mime_content_type($fileTmpPath);

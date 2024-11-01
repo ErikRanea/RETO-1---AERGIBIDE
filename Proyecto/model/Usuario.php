@@ -24,17 +24,20 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
+        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(); 
+        return $stmt ->fetch();
     }
 
     public function getUsuarioByIdObj($id_usuario)
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
+        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(PDO::FETCH_OBJ); 
+        return $stmt ->fetch(PDO::FETCH_OBJ);
     }
+
     public function getAllUsuarios() {
         $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
         $stmt->execute();
@@ -60,14 +63,14 @@ class Usuario{
                     break;
                 }
             }
-            
+
         }
         */
 
         $post = $param;
         if (isset($post) )
         {
-       
+
             if ($post['email'] == '' ||
             $post['password'] == '') {
             return;
@@ -153,11 +156,11 @@ class Usuario{
         if (isset($post))
         {
             $usuarioAlmacenado = $this->getUsuarioByEmail($post['email']);
-          
+
 
             if(isset($usuarioAlmacenado->email) && password_verify($post["password"] , $usuarioAlmacenado->password))
             {
-              
+
                 return $usuarioAlmacenado;
             }
             else
@@ -175,20 +178,47 @@ class Usuario{
         return $result['total'] ?? 0;
     }
 
-    public function updateUsuario($objeto){
-
-        $sql =  "UPDATE " .$this-> tabla.
-        " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password WHERE id = :id";
-        $stmt = $this -> connection ->prepare($sql);
+    public function updateUsuario($objeto) {
+        $sql = "UPDATE " . $this->tabla .
+               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password, foto_perfil = :foto_perfil WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
         $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
-        $stmt->execute();
-        return;
+
+        $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
+        $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
+        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
+    
+        if ($stmt->execute()) {
+            echo "Foto guardada: " . $objeto->foto_perfil;
+        } else {
+            echo "Error al actualizar la foto";
+        }
     }
+
+    public function createUsuario($objeto) {
+        $sql = "INSERT INTO " . $this->tabla . " (nombre, apellido, username, email, password, foto_perfil, rol) 
+                VALUES (:nombre, :apellido, :username, :email, :password, :foto_perfil, :rol)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
+        $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
+        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
+        $stmt->bindParam(':rol', $objeto->rol, PDO::PARAM_STR); // Agrega esta línea
+    
+        if ($stmt->execute()) {
+            echo "Usuario creado exitosamente.";
+        } else {
+            echo "Error al crear el usuario.";
+        }
+    }
+    
+    
 
     public function getPreguntasSave($idUsuario){
         $sql = "SELECT * FROM Preguntas_Usu_Save WHERE id_usuario=?";
@@ -220,6 +250,13 @@ class Usuario{
         $stmt = $this -> connection -> prepare($sql);
         $stmt-> execute([$idUsuario]);
         return $stmt -> fetchAll();
+    }
+
+    public function ObtenerUsuarios() {
+        $sql = "SELECT id, nombre FROM " . $this->tabla; // Aquí seleccionamos solo 'id' y 'nombre'
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
 
 }
