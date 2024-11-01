@@ -89,6 +89,12 @@ class Pregunta{
         return $id;
     }
 
+    public function likePregunta($idPregunta)
+    {
+        $sql = "UPDATE ".$this->tabla." SET votos = votos + 1 WHERE id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$idPregunta]);
+    }
 
 
 

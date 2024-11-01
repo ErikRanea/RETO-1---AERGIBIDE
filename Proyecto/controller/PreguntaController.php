@@ -122,4 +122,14 @@ class PreguntaController{
     }
 
 
+    public function like()
+    {
+        $this->view = "mensaje";
+
+        $idPregunta = $_POST["idPregunta"];
+
+        $this->model->likePregunta($idPregunta);
+
+        return ["status" => "success"];
+    }   
 }

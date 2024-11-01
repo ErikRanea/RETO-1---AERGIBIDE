@@ -113,29 +113,29 @@
                 if(!$like)
                 {
                     ?>
-                      <button class="botonPanel" id="botonPreguntaLike-<?php echo $pregunta["id"];?>">
+                      <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
                             <i class="bi bi-airplane"></i>
                         </button>
                         <p>
                             <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
                             echo 0;?>
                         </p>
-                        <button class="botonPanel" id="botonPreguntaDislike-<?php echo $pregunta["id"]?>">
+                        <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
                             <i class="bi bi-airplane airplane-down"></i>
                         </button>
-                    <?php
+                <?php
                 }
                 elseif($like == "esLike")
                 {
                     ?>
-                    <button class="botonPanel" id="botonPreguntaLike-<?php echo $pregunta["id"];?>">
+                    <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane-fill"></i>
                       </button>
                       <p>
                           <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
                           echo 0;?>
                       </p>
-                      <button class="botonPanel" id="botonPreguntaDislike-<?php echo $pregunta["id"]?>">
+                      <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane airplane-down"></i>
                       </button>
                   <?php
@@ -143,14 +143,14 @@
                 else
                 {
                     ?>
-                    <button class="botonPanel" id="botonPreguntaLike-<?php echo $pregunta["id"];?>">
+                    <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane"></i>
                       </button>
                       <p>
                           <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
                           echo 0;?>
                       </p>
-                      <button class="botonPanel" id="botonPreguntaDislike-<?php echo $pregunta["id"]?>">
+                      <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane-fill airplane-down"></i>
                       </button>
                   <?php
@@ -185,7 +185,7 @@
         for ($i=0; $i < count($respuestas["datosRespuestas"]); $i++) { 
             $usuarioRespuesta = $respuestas["usuariosRespuestas"][$i];
             $datosRespuesta = $respuestas["datosRespuestas"][$i];
-            ?>
+    ?>
             <div class="contenedorRespuestaDivididor">
                 <div class="fotoUsuarioRespuesta">
                     <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
@@ -200,15 +200,55 @@
                     <?php }?>
                 </div>
                 <div class="panelDeBotones">
-                    <button class="botonPanel">
-                        <i class="bi bi-airplane"></i>
-                    </button>
-                    <p>
-                        <?php echo isset($datosRespuesta["votos"]) ? $datosRespuesta["votos"] : 0;?>
-                    </p>
-                    <button class="botonPanel">
-                        <i class="bi bi-airplane airplane-down"></i>
-                    </button>
+                <?php
+                $like = verificarSiPreguntaLike($pregunta["id"],$preguntasLike);
+                if(!$like)
+                {
+                    ?>
+                      <button class="botonPanel" id="botonRespuestaLike" value="<?php echo $datosRespuesta["id"];?>">
+                            <i class="bi bi-airplane"></i>
+                        </button>
+                        <p>
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo 0;?>
+                        </p>
+                        <button class="botonPanel" id="botonRespuestaDisLike" value="<?php echo $datosRespuesta["id"];?>">
+                            <i class="bi bi-airplane airplane-down"></i>
+                        </button>
+                <?php
+                }
+                elseif($like == "esLike")
+                {
+                    ?>
+                    <button class="botonPanel" id="botonRespuestaLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane-fill"></i>
+                      </button>
+                      <p>
+                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                          echo 0;?>
+                      </p>
+                      <button class="botonPanel" id="botonRespuestaDisLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane airplane-down"></i>
+                      </button>
+                  <?php
+                }
+                else
+                {
+                    ?>
+                    <button class="botonPanel" id="botonRespuestaLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane"></i>
+                      </button>
+                      <p>
+                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                          echo 0;?>
+                      </p>
+                      <button class="botonPanel" id="botonRespuestaDisLike" value="<?php echo $datosRespuesta["id"];?>">
+                          <i class="bi bi-airplane-fill airplane-down"></i>
+                      </button>
+                  <?php
+                }    
+            
+            ?>
                     <button class="botonPanel">
                     <?php
                         if(verificarSiRespuestaGuardada($datosRespuesta["id"],$respuestasGuardadas))
