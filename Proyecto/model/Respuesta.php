@@ -149,5 +149,65 @@ class Respuesta
         }
     }
 
+    public function getLikeRespuesta($param){
+        $sql = "SELECT * FROM Respuestas_Usu_Like WHERE id_respuesta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
+        return $stmt->fetch();
+    }
+
+    public function updateLikeRespuesta($param)
+    {
+        $sql = "UPDATE Respuestas_Usu_Like SET me_gusta = ? WHERE id_respuesta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["meGusta"], $param["idRespuesta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+    public function insertLikeRespuesta($param)
+    {
+        $sql = "INSERT INTO Respuestas_Usu_Like (id_respuesta, id_usuario, me_gusta) VALUES (?, ?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"], $param["meGusta"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+    public function deleteLikeRespuesta($param){
+        $sql = "DELETE FROM Respuestas_Usu_Like WHERE id_respuesta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+
+    public function saveRespuesta($param){
+        $sql = "INSERT INTO Respuestas_Usu_Save (id_respuesta, id_usuario) VALUES (?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
+        return $this->connection->lastInsertId();
+    }
+    
+    public function deleteSaveRespuesta($param){
+        $sql = "DELETE FROM Respuestas_Usu_Save WHERE id_respuesta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+    public function saveGuardarRespuesta($param){
+        $sql = "INSERT INTO Respuestas_Usu_Save (id_respuesta, id_usuario) VALUES (?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
+        return true;
+    }
+
+    public function deleteGuardarRespuesta($param){
+
+
+        $sql = "DELETE FROM Respuestas_Usu_Save WHERE id_respuesta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
 
 }

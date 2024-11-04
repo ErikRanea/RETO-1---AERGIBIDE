@@ -121,5 +121,131 @@ class RespuestaController
     }
 
 
+    /* Like a pregunta de manera asincrona */
+    public function like()
+    {
+
+        $idRespuesta = $_POST["idRespuesta"];
+        $idUsuario = $_POST["idUsuario"];
+        $meGusta = $_POST["meGusta"];
+
+        //Primero, comprobamos si el usuario ya ha votado la pregunta
+        $like = $this->model->getLikeRespuesta(["idRespuesta" => $idRespuesta, "idUsuario" => $idUsuario]);
+
+        if($like)
+        {
+            //Si ya ha votado, updateamos el voto
+            
+            $result = $this->model->updateLikeRespuesta(["idRespuesta" => $idRespuesta, "idUsuario" => $idUsuario, "meGusta" => $meGusta]);
+
+            if($result)
+            {
+                echo json_encode(["status" => "success","message" => "Votado actualizado correctamente la respuesta"]);
+                exit;
+            }
+            else
+            {
+                $result = $this->model->deleteLikeRespuesta(["idRespuesta" => $idRespuesta, "idUsuario" => $idUsuario]);
+                if($result)
+                {
+                    echo json_encode(["status" => "success","message" => "Voto eliminado correctamente la respuesta"]);
+                    exit;
+                }
+                else
+                {
+                    echo json_encode(["status" => "error","message" => "Error al borrar el voto de la respuesta"]);
+                    exit;
+                }
+            }
+        }
+        else
+        {
+            //Si no ha votado, insertamos el voto
+            $result = $this->model->insertLikeRespuesta(["idRespuesta" => $idRespuesta, "idUsuario" => $idUsuario, "meGusta" => $meGusta]);
+
+            if($result)
+            {
+                echo json_encode(["status" => "success","message" => "Votado correctamente la respuesta"]);
+                exit;
+            }
+            else
+            {
+                echo json_encode(["status" => "error","message" => "Error al votar la respuesta"]);
+                exit;
+            }
+        }
+
+    }   
+
+
+    public function guardados()
+    {
+        try 
+        {
+            $param = $_POST;
+
+            $idRespuesta = $param["idRespuesta"];
+
+
+
+
+            $estaGuardado = false;
+
+
+
+            $listaGuardados = $this->model->usuario->getRespuestasSave($param["idUsuario"]);
+
+
+
+            foreach ($listaGuardados as $guardado) {
+                if($guardado["id_respuesta"] == $idRespuesta)
+                {
+                    $estaGuardado = true;
+                }            
+            }
+
+            
+
+
+            if($estaGuardado)
+            {
+                
+
+                $result = $this -> model -> deleteGuardarRespuesta($param);
+                if($result)
+                {
+                    echo json_encode(["status" => "success","message" => "delete OK"]);
+                    exit;
+                }
+                else
+                {
+                    //No se le añade mensaje para que muestre el error de la base de datos
+                    throw new Error();
+                }
+
+
+            }
+            else
+            {
+                $result =  $this -> model -> saveGuardarRespuesta($param);
+                if($result)
+                {
+                    echo json_encode(["status" => "success","message" => "add OK"]);
+                    exit;
+                }
+                else
+                {
+                    throw new Error();
+                }
+            
+            }
+        }
+        catch (Error $e)
+        {
+           echo json_encode(["status" => "error","message" => "Ha sucedido el siguiente error -> ".$e]);
+           exit();
+            
+        }
+    }
 
 }
