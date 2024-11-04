@@ -24,8 +24,9 @@ class Usuario{
     {
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id=?";
         $stmt = $this -> connection ->prepare($sql);
+        //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(); 
+        return $stmt ->fetch();
     }
 
     public function getUsuarioByIdObj($id_usuario)
@@ -34,7 +35,7 @@ class Usuario{
         $stmt = $this -> connection ->prepare($sql);
         //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
-        return $stmt ->fetch(PDO::FETCH_OBJ); 
+        return $stmt ->fetch(PDO::FETCH_OBJ);
     }
 
     public function getAllUsuarios() {
@@ -62,14 +63,14 @@ class Usuario{
                     break;
                 }
             }
-            
+
         }
-*/
+        */
 
         $post = $param;
         if (isset($post) )
         {
-       
+
             if ($post['email'] == '' ||
             $post['password'] == '') {
             return;
@@ -155,11 +156,11 @@ class Usuario{
         if (isset($post))
         {
             $usuarioAlmacenado = $this->getUsuarioByEmail($post['email']);
-          
+
 
             if(isset($usuarioAlmacenado->email) && password_verify($post["password"] , $usuarioAlmacenado->password))
             {
-              
+
                 return $usuarioAlmacenado;
             }
             else
@@ -186,7 +187,9 @@ class Usuario{
         $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
+
+        $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
+        $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
         $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
     
         if ($stmt->execute()) {
@@ -217,13 +220,43 @@ class Usuario{
     
     
 
-    public function getPreguntasFav($username){
-        $sql = "SELECT * FROM Preguntas_Usu_Fav WHERE username=?";
-
+    public function getPreguntasSave($idUsuario){
+        $sql = "SELECT * FROM Preguntas_Usu_Save WHERE id_usuario=?";
         $stmt = $this -> connection ->prepare($sql);
-        $stmt->execute([$username]);
+        $stmt->execute([$idUsuario]);
         return $stmt ->fetchAll();
+    }
 
+    public function getRespuestasSave($idUsuario){
+        $sql = "SELECT * FROM Respuestas_Usu_Save WHERE id_usuario=?";
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt->execute([$idUsuario]);
+        return $stmt ->fetchAll();
+    }
+
+
+    public function getPreguntasLike($idUsuario)
+    {
+        $sql = "SELECT * FROM Preguntas_Usu_Like WHERE id_usuario = ?";
+        $stmt = $this -> connection -> prepare($sql);
+        $stmt-> execute([$idUsuario]);
+        return $stmt -> fetchAll();
+    }
+
+    public function getRespuestasLike($idUsuario)
+    {
+        
+        $sql = "SELECT * FROM Respuestas_Usu_Like WHERE id_usuario = ?";
+        $stmt = $this -> connection -> prepare($sql);
+        $stmt-> execute([$idUsuario]);
+        return $stmt -> fetchAll();
+    }
+
+    public function ObtenerUsuarios() {
+        $sql = "SELECT id, nombre FROM " . $this->tabla; // Aquí seleccionamos solo 'id' y 'nombre'
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
 
 }

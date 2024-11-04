@@ -78,6 +78,7 @@ body {
     display: flex;
     gap: 0.5em;
     cursor: pointer;
+
 }
 
 .iconos {
@@ -513,7 +514,7 @@ strong {
     grid-template-areas: 
         "fotoUsuarioPregunta preguntaTitulo preguntaTitulo ."
         ". descripcionPregunta descripcionPregunta ."
-        ". . panelDeBotones .";
+        ". panelDeBotones panelDeBotones .";
 }
 
 .fotoUsuarioPregunta {
@@ -554,6 +555,14 @@ strong {
     align-items: center;
     justify-content: flex-end;
     padding: 10px;
+}
+.panelDeBotonesPregunta {
+    grid-area: panelDeBotones;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+    border-left: 1px dashed #ffffff;
 }
 
 .panel-botones button{
@@ -704,7 +713,6 @@ strong {
 {
     cursor: pointer;
     background-color: #4DBAD9;
-    margin-bottom: 5em;
     text-align: center;
     padding: .5em;
     border: #4DBAD9 solid .1em;
