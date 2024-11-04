@@ -37,6 +37,8 @@ class Pregunta{
         return $stmt ->fetch();
     }
 
+
+
     public function getPreguntasPaginated($id_tema, $pagination, $page = 1){
         $limit=$pagination;
         $offset = ($page - 1) * $limit; // Calcula el desplazamiento
@@ -89,14 +91,51 @@ class Pregunta{
         return $id;
     }
 
-    public function likePregunta($idPregunta)
-    {
-        $sql = "UPDATE ".$this->tabla." SET votos = votos + 1 WHERE id = ?";
+    public function getLikePregunta($param){
+        $sql = "SELECT * FROM Preguntas_Usu_Like WHERE id_pregunta = ? and id_usuario = ?";
         $stmt = $this->connection->prepare($sql);
-        $stmt->execute([$idPregunta]);
+        $stmt->execute([$param["idPregunta"], $param["idUsuario"]]);
+        return $stmt->fetch();
     }
 
+    public function updateLikePregunta($param)
+    {
+        $sql = "UPDATE Preguntas_Usu_Like SET me_gusta = ? WHERE id_pregunta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["meGusta"], $param["idPregunta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
 
+    public function insertLikePregunta($param)
+    {
+        $sql = "INSERT INTO Preguntas_Usu_Like (id_pregunta, id_usuario, me_gusta) VALUES (?, ?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idPregunta"], $param["idUsuario"], $param["meGusta"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+    public function deleteLikePregunta($param){
+        $sql = "DELETE FROM Preguntas_Usu_Like WHERE id_pregunta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idPregunta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+    public function saveGuardarPregunta($param){
+        $sql = "INSERT INTO Preguntas_Usu_Save (id_pregunta, id_usuario) VALUES (?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idPregunta"], $param["idUsuario"]]);
+        return true;
+    }
+
+    public function deleteGuardarPregunta($param){
+        $sql = "DELETE FROM Preguntas_Usu_Save WHERE id_pregunta = ? and id_usuario = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$param["idPregunta"], $param["idUsuario"]]);
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
+    }
+
+    
 
 
 }
