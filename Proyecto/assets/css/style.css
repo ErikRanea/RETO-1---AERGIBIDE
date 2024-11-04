@@ -320,6 +320,8 @@ input[readonly] {
 .botonesArriba {
     font-weight: bold;
     color: white;
+    margin-left: 3em;
+    margin-bottom: 5em;
 }
 
 .containerPanel {
@@ -327,7 +329,7 @@ input[readonly] {
     flex-direction: column;
 }
 
-.containerPanel2 {
+.containerCreate {
     display: flex;
     flex-direction: row;
 }
