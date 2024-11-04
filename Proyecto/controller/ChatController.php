@@ -18,22 +18,16 @@ class ChatController
     }
 
     public function mostrarChat() {
-        // Verificar que la sesión tenga el id_usuario
         if (!isset($_SESSION['user_data']['id'])) {
             return ['error' => 'Usuario no autenticado'];
         }
 
-        // Obtener la lista de usuarios
-        $usuarios = $this->usuarioModel->obtenerUsuarios();
+        $usuarios = $this->usuarioModel->getUsuariosChat();
 
-        // Preparar los datos para la vista
         $dataToView = [
             'usuarios' => $usuarios,
-            // Si necesitas mensajes iniciales, puedes incluirlo aquí
-            // 'mensajes' => $this->chatModel->obtenerMensajesIniciales($_SESSION['user_id'])
         ];
 
-        // Retornar los datos para que el index.php los reciba
         return $dataToView;
     }
 
@@ -44,10 +38,19 @@ class ChatController
 
         if ($id_emisor === null || $id_receptor === null) {
             echo json_encode(['error' => 'ID de emisor o receptor no proporcionado.']);
-            exit(); // Agrega un exit() para detener la ejecución del script
+            exit();
         }
 
+        // Establecer la zona horaria
+        date_default_timezone_set('Europe/Madrid');
+
         $mensajes = $this->chatModel->obtenerMensajes($id_emisor, $id_receptor);
+
+        // Formatear la fecha y hora de cada mensaje
+        foreach ($mensajes as &$mensaje) {
+            $fecha = new DateTime($mensaje['fecha']);
+            $mensaje['fecha_formateada'] = $fecha->format('Y-m-d H:i:s');
+        }
 
         // Verificar si hay mensajes
         if (empty($mensajes)) {
@@ -55,7 +58,7 @@ class ChatController
         } else {
             echo json_encode($mensajes);
         }
-        exit(); // Agrega un exit() para detener la ejecución del script
+        exit();
     }
 
 

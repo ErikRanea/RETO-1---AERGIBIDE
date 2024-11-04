@@ -1,58 +1,76 @@
 <?php
+// Ensure $dataToView is available
+if (!isset($dataToView)) {
+    $dataToView = [];
+}
 
-$id_emisor = $_SESSION['user_data']['id'];
-$user_emisor = $_SESSION['user_data']['username'];// Obtén el ID de sesión del usuario
+$id_emisor = $_SESSION['user_data']['id'] ?? null;
+$user_emisor = $_SESSION['user_data']['nombre'] ?? null; // Changed from 'username' to 'nombre'
 
+if (!$id_emisor || !$user_emisor) {
+    // Handle the case where user is not properly logged in
+    echo "Error: Usuario no autenticado correctamente. ";
+    if (!$id_emisor) echo "Falta ID de usuario. ";
+    if (!$user_emisor) echo "Falta nombre de usuario. ";
+    exit;
+}
 ?>
 
 <div class="chat-container">
-    <!-- Users Sidebar -->
+
     <div class="users-sidebar">
         <div class="sidebar-header">
             <h2>Usuarios</h2>
         </div>
         <div class="users-list">
-            <?php foreach ($dataToView['usuarios'] as $usuario): ?>
-                <button class="user-item" data-user-id="<?= htmlspecialchars($usuario['id']) ?>">
+            <?php foreach ($dataToView['usuarios'] ?? [] as $usuario): ?>
+                <button class="user-item" data-user-id="<?= htmlspecialchars($usuario['id']) ?>" data-user-image="<?= htmlspecialchars($usuario['foto_perfil']) ?>">
                     <div class="user-avatar">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 0v0a3 3 0 0 1 3 3v1H5v-1a3 3 0 0 1 3-3z"/>
-                        </svg>
+                        <?php if (!empty($usuario['foto_perfil'])): ?>
+                            <img src="<?= htmlspecialchars($usuario['foto_perfil']) ?>" alt="<?= htmlspecialchars($usuario['username']) ?>">
+                        <?php else: ?>
+                            <img src="assets/img/fotoPorDefecto.png" alt="<?= htmlspecialchars($usuario['username']) ?>">
+                        <?php endif; ?>
                     </div>
-                    <span><?= htmlspecialchars($usuario['nombre']) ?></span>
+                    <span><?= htmlspecialchars($usuario['username']) ?></span>
                 </button>
             <?php endforeach; ?>
         </div>
     </div>
 
-    <!-- Chat Area -->
     <div class="chat-area">
         <div class="chat-header">
+            <div class="user-avatar">
+                <img id="selected-user-avatar" src="assets/img/fotoPorDefecto.png" alt="Avatar del usuario seleccionado">
+            </div>
             <h2 id="selected-user">Selecciona un usuario</h2>
         </div>
         <div id="msgBox">
             <!-- Messages will be loaded here -->
         </div>
         <div class="user-panel">
-            <select id="user-combobox" name="usuarios" style="display: none;"> <!-- Ocultamos el combobox -->
+            <label for="user-combobox" class="visually-hidden"></label>
+            <select id="user-combobox" name="usuarios" style="display: none;">
                 <option value="">Seleccionar usuario</option>
-                <?php foreach ($dataToView['usuarios'] as $usuario): ?>
+                <?php foreach ($dataToView['usuarios'] ?? [] as $usuario): ?>
                     <option value="<?= htmlspecialchars($usuario['id']) ?>">
-                        <?= htmlspecialchars($usuario['nombre']) ?>
+                        <?= htmlspecialchars($usuario['username']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
-            <input type="text" id="message" placeholder="Escribe tu mensaje aquí..." maxlength="100" />
+            <label for="message" class="visually-hidden"></label>
+            <input type="text" id="message" placeholder="Escribe tu mensaje aquí..."  />
             <button id="send-message">Enviar</button>
         </div>
     </div>
 </div>
 
-
-<script>
-    var id_emisor = <?= json_encode($id_emisor) ?>;
-    var user_emisor = <?= json_encode($user_emisor) ?>;a
-</script>
-
-
+    <script>
+        window.id_emisor = <?= json_encode($id_emisor) ?>;
+        window.user_emisor = <?= json_encode($user_emisor) ?>;
+        console.log("PHP set variables:", {
+            id_emisor: window.id_emisor,
+            user_emisor: window.user_emisor
+        });
+    </script>
 <script src="assets/js/chat.js"></script>
