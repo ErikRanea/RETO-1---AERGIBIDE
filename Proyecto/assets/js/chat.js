@@ -1,6 +1,7 @@
 var id_emisor = window.id_emisor; // ID del emisor desde la sesión
 var user_emisor = window.user_emisor;
 var msgBox = document.getElementById('msgBox'); // Contenedor de mensajes
+console.log("Initial user_emisor:", user_emisor);
 
 document.addEventListener("DOMContentLoaded", function() {
     const msgBox = document.getElementById('msgBox');
@@ -12,11 +13,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Update active user in sidebar
     function updateActiveUser(userId) {
+        const userItems = document.querySelectorAll('.user-item');
+        const selectedUserHeader = document.getElementById('selected-user');
+        const selectedUserAvatar = document.getElementById('selected-user-avatar');
+        const defaultImagePath = 'assets/img/fotoPorDefecto.png';
+
         userItems.forEach(item => {
-            item.classList.remove('active');
             if (item.dataset.userId === userId) {
                 item.classList.add('active');
                 selectedUserHeader.textContent = item.querySelector('span').textContent;
+
+                // Update the avatar image
+                const userImageElement = item.querySelector('.user-avatar img');
+                if (userImageElement) {
+                    const userImage = userImageElement.src;
+                    selectedUserAvatar.src = userImage;
+                } else {
+                    console.error('No image element found for user:', userId);
+                    selectedUserAvatar.src = defaultImagePath;
+                }
+            } else {
+                item.classList.remove('active');
             }
         });
     }
@@ -53,40 +70,49 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!response.ok) throw new Error('Error en la solicitud');
 
             const data = await response.json();
+
+            // Guardamos la posición actual del scroll y la altura del contenido
+            const scrollPosition = msgBox.scrollTop;
+            const oldScrollHeight = msgBox.scrollHeight;
+
             msgBox.innerHTML = "";
 
-            let lastDate = ""; // Variable para rastrear la última fecha mostrada
+            let lastDate = "";
 
             if (Array.isArray(data) && data.length > 0) {
                 data.forEach(function(mensaje) {
                     const mensajeFecha = new Date(mensaje.fecha);
-                    const mensajeDia = mensajeFecha.toLocaleDateString(); // Formato de día
-                    const mensajeHora = mensajeFecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Formato de hora
+                    const mensajeFechaLocal = new Date(mensajeFecha.getTime() - mensajeFecha.getTimezoneOffset() * 60000);
+                    const mensajeDia = mensajeFechaLocal.toLocaleDateString();
+                    const mensajeHora = mensajeFechaLocal.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
                     if (mensajeDia !== lastDate) {
                         msgBox.innerHTML += `<div class="message-day">${mensajeDia}</div>`;
-                        lastDate = mensajeDia; // Actualizamos la última fecha
+                        lastDate = mensajeDia;
                     }
 
                     const messageClass = (mensaje.emisor === user_emisor) ? 'sent' : 'received';
                     msgBox.innerHTML += `
-                             <div class="message ${messageClass}">
-                        ${mensaje.mensaje}
-                        <em class="message-time">${mensajeHora}</em>
-                    </div>
-                        `;
+            <div class="message ${messageClass}">
+                ${mensaje.mensaje}
+                <em class="message-time">${mensajeHora}</em>
+            </div>
+            `;
                 });
 
-                // Desplazamos al final solo en la primera carga
+                // Lógica para el desplazamiento
                 if (firstLoad) {
-                    msgBox.scrollTop = msgBox.scrollHeight; // Desplazamos al último mensaje
-                    firstLoad = false; // Marcamos que ya se ha realizado la primera carga
+                    msgBox.scrollTop = msgBox.scrollHeight; // Desplazamos al último mensaje en la primera carga
+                    firstLoad = false;
                 } else {
-                    // Comprobamos si el usuario está cerca del fondo
-                    const isScrolledToBottom = msgBox.scrollHeight - msgBox.clientHeight <= msgBox.scrollTop + 50; // Ajusta el valor '50' según sea necesario
+                    // Calculamos si el usuario estaba cerca del fondo antes de la actualización
+                    const wasNearBottom = oldScrollHeight - scrollPosition <= msgBox.clientHeight + 100;
 
-                    // Desplazamos solo si está cerca del fondo
-                    if (isScrolledToBottom) {
-                        msgBox.scrollTop = msgBox.scrollHeight;
+                    if (wasNearBottom) {
+                        msgBox.scrollTop = msgBox.scrollHeight; // Si estaba cerca del fondo, desplazamos al final
+                    } else {
+                        // Si no estaba cerca del fondo, mantenemos la posición relativa
+                        msgBox.scrollTop = scrollPosition + (msgBox.scrollHeight - oldScrollHeight);
                     }
                 }
             } else {
