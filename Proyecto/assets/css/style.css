@@ -315,6 +315,31 @@ input[readonly] {
     cursor: pointer;
 }
 
+/* Panel de control */
+
+.botonesArriba {
+    font-weight: bold;
+    color: white;
+}
+
+.containerPanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerPanel2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.listaUsers {
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+}
+
 /* Cambiar Contraseña */
 
 .paginaPassword {
@@ -634,7 +659,6 @@ strong {
 .message-day::after {
     right: 0;
 }
-
 
 .message em {
     display: block;

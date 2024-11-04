@@ -3,15 +3,18 @@
         require_once "panelLateral.html.php";
     ?>
 
-    <div class="BotonesPanelUsuarios">
-        <p><a href="index.php?controller=usuario&action=" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'nuevoUsuario') ? 'active' : ''; ?>">
-            Nuevo Usuario
-        </a></p>
-        <br>
-        <p><a href="index.php?controller=usuario&action=" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'gestionUsuarios') ? 'active' : ''; ?>">
+    <div class="containerPanel">
+
+    <div class="botonesArriba">
+        <a href="index.php?controller=usuario&action=mostrarGestionUsuario" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'gestionUsuario') ? 'active' : ''; ?>">
             Gestión Usuarios
-        </a></p>
+        </a>
+        <a href="index.php?controller=usuario&action=nuevoUsuario" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'nuevoUsuario') ? 'active' : ''; ?>">
+            Nuevo Usuario
+        </a>
     </div>
+
+    <div class="containerPanel2">
 
     <div class="perfil">
         <h1>Username</h1>
@@ -79,6 +82,6 @@
             </div>
         </form>
     </div>
-
+    </div>
+    </div>
 </div>
-

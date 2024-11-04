@@ -218,7 +218,13 @@ class Usuario{
         }
     }
     
-    
+    public function getUsers() {
+        $sql = "SELECT * FROM " . $this->tabla . " WHERE rol = 'user'";
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        $stmt->execute();
+        return $stmt ->fetchAll();
+    }
 
     public function getPreguntasSave($idUsuario){
         $sql = "SELECT * FROM Preguntas_Usu_Save WHERE id_usuario=?";
