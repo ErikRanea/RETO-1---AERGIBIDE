@@ -33,13 +33,15 @@ class UsuarioController{
 
     public function gestionUsuario() {
         $users = $this->model->getUsers();
-        return ["users" => $users];
+        header('Content-Type: application/json');
         if ($users) {
-            return ["users" => $users];
+            echo json_encode($users);
         } else {
-            return ['error' => 'Usuarios no encontrados'];
+            echo json_encode(['error' => 'Usuarios no encontrados']);
         }
+        exit;
     }
+    
 
 
     /* 
@@ -113,6 +115,7 @@ class UsuarioController{
     }
 
     public function mostrarGestionUsuario() {
+        $data = $this->gestionUsuario();
         $this -> view = "gestionUsuario";
     }
 

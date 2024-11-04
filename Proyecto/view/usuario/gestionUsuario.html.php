@@ -18,7 +18,7 @@
         <?php if (isset($users) && count($users) > 0): ?>
         <ul>
             <?php foreach ($users as $user): ?>
-                <li><?php echo $user->username; ?></li> <!-- Cambia 'nombre' por el atributo que quieras mostrar -->
+                <li><?php echo $user->username; ?></li>
             <?php endforeach; ?>
         </ul>
         <?php else: ?>

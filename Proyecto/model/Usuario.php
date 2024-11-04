@@ -219,7 +219,7 @@ class Usuario{
     }
     
     public function getUsers() {
-        $sql = "SELECT * FROM " . $this->tabla . " WHERE rol = 'user'";
+        $sql = "SELECT username FROM " . $this->tabla . " WHERE rol = 'user'";
         $stmt = $this -> connection ->prepare($sql);
         $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute();

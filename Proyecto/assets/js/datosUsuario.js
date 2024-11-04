@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Hacemos la solicitud al servidor para obtener los datos del usuario
-    fetch('index.php?controller=usuario&action=DatosUsuario', {
+    fetch('index.php?controller=usuario&action=datosUsuario', {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
@@ -26,4 +26,23 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error('Error:', error);
     });
     
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('index.php?controller=usuario&action=gestionUsuario', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(
+        data => {
+        if (data) {
+            document.querySelector('.listaUsers li').textContent = data.username;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
