@@ -12,7 +12,7 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
     <title>AERGIBIDE</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/tema.css">
-    <link rel="stylesheet" href="assets/css/pregunta.css">
+    <link rel="stylesheet" href="assets/css/preguntaAcciones.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Cargar los estilos de modo oscuro si la cookie está habilitada -->
@@ -81,7 +81,7 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
 
                 <!-- Menú desplegable -->
                 <div id="dropdown" class="dropdown-content">
-                    <a id="person1" href="index.php?controller=usuario&action=mostrardatosusuario">Configuración</a>
+                    <a id="person1" href="index.php?controller=usuario&action=mostrarDatosUsuario">Configuración</a>
                     <a href="index.php?controller=usuario&action=cerrarSesion">Cerrar sesión</a>
                 </div>
 

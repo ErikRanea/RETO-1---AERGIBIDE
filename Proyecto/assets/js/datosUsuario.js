@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Hacemos la solicitud al servidor para obtener los datos del usuario
-    fetch('index.php?controller=usuario&action=DatosUsuario', {
+    fetch('index.php?controller=usuario&action=datosUsuario', {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest'

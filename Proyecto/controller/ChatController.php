@@ -1,29 +1,68 @@
 <?php
-require_once __DIR__ . '/../model/Chat.php';
+require_once 'model/Chat.php';
+require_once 'model/Usuario.php';
+require_once 'model/Db.php';
 
-class ChatController {
-    public $view = "chat/view";
+class ChatController
+{
+    private $usuarioModel;
+    private $chatModel;
+    public $view = "view";
 
-    public function __construct() {
-        // Se puede agregar lógica de inicialización aquí si es necesario
+    public function __construct()
+    {
+        $this->usuarioModel = new Usuario(); // Modelo Usuario
+        $db = new Db(); // Crear instancia de Db
+        $this->chatModel = new Chat($db->connection);
+        // Pasar la conexión al modelo Chat
     }
 
-    public function enviarMensaje() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $chat = new Chat();
-            $emisor = $_SESSION['user_data']['id'];
-            $receptor = $_POST['receptor'];
-            $mensaje = $_POST['mensaje'];
-            $chat->enviarMensaje($emisor, $receptor, $mensaje);
-            echo json_encode(['success' => true]);
+    public function mostrarChat() {
+        if (!isset($_SESSION['user_data']['id'])) {
+            return ['error' => 'Usuario no autenticado'];
         }
+
+        $usuarios = $this->usuarioModel->getUsuariosChat();
+
+        $dataToView = [
+            'usuarios' => $usuarios,
+        ];
+
+        return $dataToView;
     }
 
-    public function obtenerMensajes() {
-        $chat = new Chat();
-        $id_usuario = $_SESSION['user_data']['id'];
-        $receptor = $_GET['receptor']; // Suponiendo que se pasa el ID del receptor
-        $mensajes = $chat->obtenerMensajes($id_usuario, $receptor);
-        echo json_encode($mensajes);
+
+    public function get_messages() {
+        $id_emisor = $_GET['id_emisor'] ?? null;
+        $id_receptor = $_GET['id_receptor'] ?? null;
+
+        if ($id_emisor === null || $id_receptor === null) {
+            echo json_encode(['error' => 'ID de emisor o receptor no proporcionado.']);
+            exit();
+        }
+
+        // Establecer la zona horaria
+        date_default_timezone_set('Europe/Madrid');
+
+        $mensajes = $this->chatModel->obtenerMensajes($id_emisor, $id_receptor);
+
+        // Formatear la fecha y hora de cada mensaje
+        foreach ($mensajes as &$mensaje) {
+            $fecha = new DateTime($mensaje['fecha']);
+            $mensaje['fecha_formateada'] = $fecha->format('Y-m-d H:i:s');
+        }
+
+        // Verificar si hay mensajes
+        if (empty($mensajes)) {
+            echo json_encode(['mensaje' => 'No hay mensajes aún.']);
+        } else {
+            echo json_encode($mensajes);
+        }
+        exit();
     }
+
+
+
+
+
 }

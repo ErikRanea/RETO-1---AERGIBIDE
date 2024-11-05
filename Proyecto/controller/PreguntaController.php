@@ -125,4 +125,179 @@ class PreguntaController{
     }
 
 
+    /* Like a pregunta de manera asincrona */
+    public function like()
+    {
+
+        $idPregunta = $_POST["idPregunta"];
+        $idUsuario = $_POST["idUsuario"];
+        $meGusta = $_POST["meGusta"];
+
+        //Primero, comprobamos si el usuario ya ha votado la pregunta
+        $like = $this->model->getLikePregunta(["idPregunta" => $idPregunta, "idUsuario" => $idUsuario]);
+
+        if($like)
+        {
+            //Si ya ha votado, updateamos el voto
+            
+            $result = $this->model->updateLikePregunta(["idPregunta" => $idPregunta, "idUsuario" => $idUsuario, "meGusta" => $meGusta]);
+
+            if($result)
+            {
+                echo json_encode(["status" => "success","message" => "Votado actualizado correctamente la pregunta  "]);
+                exit;
+            }
+            else
+            {
+                $result = $this->model->deleteLikePregunta(["idPregunta" => $idPregunta, "idUsuario" => $idUsuario]);
+                if($result) 
+                {
+                    echo json_encode(["status" => "success","message" => "Voto eliminado correctamente la pregunta"]);
+                    exit;
+                }
+                else
+                {
+                    echo json_encode(["status" => "error","message" => "Error al borrar el voto de la pregunta"]);
+                    exit;
+                }
+            }
+        }
+        else
+        {
+            //Si no ha votado, insertamos el voto
+            $result = $this->model->insertLikePregunta(["idPregunta" => $idPregunta, "idUsuario" => $idUsuario, "meGusta" => $meGusta]);
+
+            if($result)
+            {
+                echo json_encode(["status" => "success","message" => "Votado correctamente la pregunta"]);
+                exit;
+            }
+            else
+            {
+                echo json_encode(["status" => "error","message" => "Error al votar la pregunta"]);
+                exit;
+            }
+        }
+
+    }   
+
+    public function guardados(){
+        
+        try 
+        {
+            $param = $_POST;
+
+            $idPregunta = $param["idPregunta"];
+
+
+            $estaGuardado = false;
+
+
+
+            $listaGuardados = $this->model->usuario->getPreguntasSave($param["idUsuario"]);
+
+
+            foreach ($listaGuardados as $guardado) {
+                if($guardado["id_pregunta"] == $idPregunta)
+                {
+                
+                    $estaGuardado = true;
+                }            
+            }
+            
+            if($estaGuardado)
+            {
+                
+                $result = $this -> model -> deleteGuardarPregunta($param);
+                if($result)
+                {
+                    echo json_encode(["status" => "success","message" => "delete OK"]);
+                    exit;
+                }
+                else
+                {
+                    //No se le añade mensaje para que muestre el error de la base de datos
+                    throw new Error();
+                }
+
+
+            }
+            else
+            {
+                $result =  $this -> model -> saveGuardarPregunta($param);
+                if($result)
+                {
+                    echo json_encode(["status" => "success","message" => "add OK"]);
+                    exit;
+                }
+                else
+                {
+                    throw new Error();
+                }
+            
+            }
+        }
+        catch (Error $e)
+        {
+           echo json_encode(["status" => "error","message" => "Ha sucedido el siguiente error -> ".$e]);
+           exit();
+            
+        }
+    }
+
+    public function edit()
+    {
+
+        if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id_pregunta"]))
+        {
+
+            $pregunta = $this-> model -> getPreguntaById($_GET["id_pregunta"]);
+
+            if($_SESSION["user_data"]["id"] != $pregunta["id_usuario"])
+            {
+                header("Location: index.php?controller=temas&action=mostrarTemas");
+                exit();
+            }
+            else
+            {
+                $this-> view = "edit";
+                return $pregunta;
+            }
+
+
+
+        }
+
+
+    }
+
+    public function update()
+    {
+
+        try 
+        {
+            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST))
+            {
+                $result = $this->model->updatePregunta($_POST);
+                if($result)
+                {
+                    header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_POST["id_pregunta"]);
+                }
+                else
+                {   
+                    throw new Error("No se ha realizado la update en la base de datos");
+                }
+            }   
+            else
+            {
+                throw new Error();
+            }
+
+        } catch (Error $e) {
+            header("Location: index.php");
+        }
+
+
+    }
+   
 }
