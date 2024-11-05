@@ -103,8 +103,7 @@
            <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
            <label id="editarPregunta" class="botonDeEditar" <?php if($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>>
             <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
-            <label id="eliminarPregunta" class="botonDeEditar" <?php if(($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]) // ){echo "hidden";}?>>
-            <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
+            <label id="eliminarPregunta" class="botonDeEditar" <?php if($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>>            <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
         </div>
     
 

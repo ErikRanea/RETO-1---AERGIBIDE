@@ -56,17 +56,17 @@ class Respuesta
 
         $usuariosRespuestas = array();
 
-        for ($i=0; $i < count($respuestas) ; $i++) { 
+        for ($i=0; $i < count($respuestas) ; $i++) {
 
             $usuarioRespuesta = $this->usuario -> getUsuarioById($respuestas[$i]["id_usuario"]);
             array_push($usuariosRespuestas, $usuarioRespuesta);
         }
-  
+
 
 
         $objetosRespuestas["datosRespuestas"] = $respuestas;
         $objetosRespuestas["usuariosRespuestas"] = $usuariosRespuestas;
-    
+
 
         // Almaceno tanto los datos de la preguntas y de las respuestas en un array de respuesta
         $datosDePreguntaYRespuestas = array();
@@ -157,7 +157,7 @@ class Respuesta
     public function desGuardarRespuesta($param)
     {
         try {
-            
+
             $sql = "DELETE FROM Respuestas_Usu_Fav WHERE id_usuario = ? AND id_respuesta = ?";
             $stmt = $this-> connection->prepare($sql);
             $stmt->execute([$param["id_usuario"]],[$param["id_respuesta"]]);
@@ -204,7 +204,7 @@ class Respuesta
         $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
         return $this->connection->lastInsertId();
     }
-    
+
     public function deleteSaveRespuesta($param){
         $sql = "DELETE FROM Respuestas_Usu_Save WHERE id_respuesta = ? and id_usuario = ?";
         $stmt = $this->connection->prepare($sql);
@@ -219,7 +219,8 @@ class Respuesta
         return true;
     }
 
-    public function deleteGuardarRespuesta($param){
+    public function deleteGuardarRespuesta($param)
+    {
         $sql = "DELETE FROM Respuestas_Usu_Save WHERE id_respuesta = ? and id_usuario = ?";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$param["idRespuesta"], $param["idUsuario"]]);
@@ -231,6 +232,7 @@ class Respuesta
             $stmtPregunta->execute([$param["idRespuesta"]]);
             return $stmtPregunta->fetchColumn();
         }
+    }
 
 
     public function updateRespuesta($param){
@@ -248,7 +250,7 @@ class Respuesta
         }
 
         return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente  
-    }
+
 
         return false;
     }
