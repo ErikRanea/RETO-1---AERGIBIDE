@@ -427,6 +427,8 @@ strong {
     background-color: #1A1A1A;
     width: 100%; height:60%;
     padding: 2em;
+    border: .15em solid #4DBAD9;
+    border-radius: .5em;
 }
 
 .botonSubirArchivo
@@ -451,6 +453,51 @@ strong {
     color: #FFFFFF;
 }
 
+
+.botonGuardarRespuesta
+{
+
+    text-align: center;
+    padding: .75em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+}
+
+.botonGuardarRespuesta:hover
+{
+    cursor: pointer;
+    background-color: #4DBAD9;
+    text-align: center;
+    padding: .75em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    color: #FFFFFF;
+}
+.botonCancelarRespuesta
+{
+    text-align: center;
+    padding: .75em;
+    border: #e51816 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    background-color: #1A1A1A;
+    color: #e51816;
+}
+.botonCancelarRespuesta:hover
+{
+    cursor: pointer;
+    background-color: #e51816;
+    text-align: center;
+    padding: .75em;
+    border: #4DBAD9 solid .1em;
+    border-radius: .5em;
+    width: 50%;
+    color: #FFFFFF;
+}
 /* Chat area */
 .chat-area {
     flex-grow: 1;
@@ -661,4 +708,5 @@ strong {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #5f6368;
+
 }
