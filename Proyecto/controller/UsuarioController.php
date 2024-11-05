@@ -228,4 +228,35 @@ class UsuarioController{
         exit();
     }
 
+
+    public function marcarNotificacionComoLeida()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_notificacion']) && isset($_POST['id_pregunta'])) {
+            $id_notificacion = $_POST['id_notificacion'];
+            $id_pregunta = $_POST['id_pregunta'];
+
+            // Marcar la notificación como leída
+            $this->model->marcarNotificacionComoLeida($id_notificacion);
+
+            // Redirigir a la página de la pregunta
+            header("Location: index.php?controller=respuesta&action=view&id_pregunta=" . $id_pregunta);
+            exit;
+        } else {
+            // Si no se recibieron los datos esperados, redirigir a la página principal
+            header("Location: index.php");
+            exit;
+        }
+    }
+
+    public function marcarTodasNotificacionesComoLeidas() {
+        if (isset($_GET['id_usuario'])) {
+            $id_usuario = $_GET['id_usuario'];
+            $result = $this->model->marcarTodasNotificacionesComoLeidas($id_usuario);
+            echo json_encode(['success' => $result]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID de usuario no proporcionado']);
+        }
+        exit;
+    }
+
 }
