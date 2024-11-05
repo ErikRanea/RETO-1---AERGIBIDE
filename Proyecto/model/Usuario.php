@@ -36,7 +36,7 @@ class Usuario{
         //$stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute([$id_usuario]);
         return $stmt ->fetch(PDO::FETCH_OBJ);
-    }
+    }   
 
     public function getAllUsuarios() {
         $stmt = $this->connection->prepare("SELECT * FROM Usuarios");
@@ -114,10 +114,10 @@ class Usuario{
 
     public function getUsuariosChat()
     {
-        $sql = "SELECT id, username FROM Usuarios";
+        $sql = "SELECT id, username, foto_perfil FROM Usuarios";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Usar fetchAll con PDO::FETCH_ASSOC
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
         public function getUsuarioByEmail($email)
