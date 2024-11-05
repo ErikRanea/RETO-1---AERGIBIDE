@@ -248,4 +248,60 @@ class RespuestaController
         }
     }
 
+    public function edit()
+    {
+        try 
+        {
+
+            if($_SERVER["REQUEST_METHOD"] == "GET")
+            {
+                header("Location: index.php?controller=tema&action=mostrarTemas");
+                exit();
+            }
+            if($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST["idRespuesta"]))
+            {
+                throw new Exception("No se han recibido los datos necesarios para editar la respuesta");
+            }
+
+
+            // Manejar la imagen si se subió una nueva
+            if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                $fileMimeType = mime_content_type($fileTmpPath);
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+
+                if(in_array($fileMimeType, $allowedMimeTypes)) {
+                    $fileName = uniqid() . $_FILES['imagen']['name'];
+                    $uploadFileDir = 'assets/upload/respuestas/';
+                    $destPath = $uploadFileDir . $fileName;
+
+                    if(move_uploaded_file($fileTmpPath, $destPath)) {
+                        $_POST['imagen'] = $destPath;
+                    } else {
+                        throw new Exception("Error al subir la imagen");
+                    }
+                } else {
+                    throw new Exception("Tipo de archivo no permitido");
+                }
+            }
+
+            $result = $this->model->updateRespuesta($_POST);
+            if($result) {
+                header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_POST["id_pregunta"]);
+                exit();
+            } else {
+                throw new Exception("Error al actualizar la respuesta en la base de datos");
+            }
+
+        }
+        catch (Exception $e)
+        {
+            echo json_encode([
+                "status" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+        exit();
+    }
+
 }

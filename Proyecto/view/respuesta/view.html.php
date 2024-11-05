@@ -101,7 +101,10 @@
 
         <div class="preguntaTitulo">
            <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
-           <label id="editarPregunta" class="botonDeEditar" <?php if($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>><i class="bi bi-pencil-square"></i></label>
+           <label id="editarPregunta" class="botonDeEditar" <?php if($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>>
+            <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
+            <label id="eliminarPregunta" class="botonDeEditar" <?php if(($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]) // ){echo "hidden";}?>>
+            <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
         </div>
     
 
@@ -196,12 +199,19 @@
                 </div>
                 <div class="respuesta">
                     <div class="estrella-respuesta">
+                        <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value = "<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar" 
+                        <?php if($datosRespuesta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>>
+                            <i class="bi bi-pencil-square botonEditar"></i>
+                        </label>
                         <i class="bi bi-star"></i>
                     </div>
-                    <?php echo $datosRespuesta["texto"]; ?>
-                    <?php if($datosRespuesta["imagen"] != null){?>
-                        <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
-                    <?php }?>
+                    <div class="contenidoRespuesta">
+                        <?php echo $datosRespuesta["texto"]; ?>
+                        <?php if($datosRespuesta["imagen"] != null){?>
+                            <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
+                        <?php }?>
+                    </div>
+
                 </div>
                 <div class="panelDeBotones">
                 <?php

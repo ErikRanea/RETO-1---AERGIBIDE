@@ -210,4 +210,22 @@ class Respuesta
         return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente 
     }
 
+
+    public function updateRespuesta($param){
+        if(isset($param["imagen"]))
+        {
+            $sql = "UPDATE Respuestas SET texto = ?, imagen = ? WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$param["texto"], $param["imagen"], $param["idRespuesta"]]);
+        }
+        else
+        {
+            $sql = "UPDATE Respuestas SET texto = ? WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$param["texto"], $param["idRespuesta"]]);
+        }
+
+        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente  
+    }
+
 }

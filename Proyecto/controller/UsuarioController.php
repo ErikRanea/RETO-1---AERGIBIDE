@@ -71,11 +71,21 @@ class UsuarioController{
                 exit();
             }
         } 
-            else 
+        elseif(isset($_SESSION["is_logged_in"]) && isset($_SESSION["user_data"]["id"]))
+        {
+            echo json_encode([
+                "status" => "success",
+                "message" => "Usuario con sesión iniaciada",
+                "redirect" => "index.php?controller=tema&action=mostrarTemas"
+            ]);
+            exit();
+        }
+        else 
         {
             echo json_encode([
                 "status" => "error",
-                "message" => "No ha entrado en la condición de la sesión"
+                "message" => "No ha entrado en la condición de la sesión",
+                "datosDeSesion" => $_SESSION["user_data"]["id"]." is loged"
             ]);
             exit();
         }

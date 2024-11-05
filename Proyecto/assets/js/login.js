@@ -44,7 +44,7 @@ async function validarCredenciales(event)
         else if (data.status === "error") 
         {
             console.log(data.message);
-            alert('Login fallido: ' + data.message);
+            alert('Login fallido: ' + data.message +"\n"+data.datosDeSesion);
         }
     } 
     catch (error)
