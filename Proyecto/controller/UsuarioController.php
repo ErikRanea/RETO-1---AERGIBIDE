@@ -101,12 +101,14 @@ class UsuarioController{
     }
 
     public function mostrarGestionUsuario() {
-        // Llamo a la vista html.php
+        $rolUsuario = $_SESSION['user_data']['rol'] ?? 'admin';
         $this -> view = "gestionUsuario";
-        // Recogo los datos en la variable $users
-        $users = $this->model->getUsers();
+        if ($rolUsuario === 'gestor') {
+            $users = $this->model->getUsuarios();
+        } else {
+            $users = $this->model->getUsers();
+        }
         include __DIR__ . '/../view/layout/header.php';
-        // Incluyo la vista para añadir los datos
         include __DIR__ . '/../view/usuario/gestionUsuario.html.php';
     }
 

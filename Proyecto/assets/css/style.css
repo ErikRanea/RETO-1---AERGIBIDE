@@ -320,14 +320,26 @@ input[readonly] {
 .botonesArriba {
     font-weight: bold;
     color: white;
+    padding-bottom: 5em;
     margin: 0 auto;
-    margin-bottom: 3em;
+}
+
+.botonesArriba {
+    font-weight: bold;
+    color: white;
+    margin: 0 auto;
+}
+
+.botonesArriba a {
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 .containerPanel {
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding: 2em;
 }
 
 .containerCreate {
@@ -337,11 +349,21 @@ input[readonly] {
     align-items: center;
 }
 
-.listaUsers {
-    margin: 0 auto;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+.listaUsers li {
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: -0.5em;
+}
+
+.user {
+    background-color: transparent;
+    padding: 15px;
+    font-size: 30px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #4DBAD9;
+    cursor: pointer;
 }
 
 /* Cambiar Contraseña */
