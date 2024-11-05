@@ -161,6 +161,8 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
+            $usuario->foto_perfil = 'assets/img/default_profile_picture.png';
+
     
             // Capturamos el rol
             $usuario->rol = $_POST['rol']; // Asegúrate de tener un campo "rol" en tu formulario

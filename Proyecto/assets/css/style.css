@@ -320,8 +320,8 @@ input[readonly] {
 .botonesArriba {
     font-weight: bold;
     color: white;
-    padding-bottom: 5em;
     margin: 0 auto;
+    padding-bottom: 3em;
 }
 
 .botonesArriba {
