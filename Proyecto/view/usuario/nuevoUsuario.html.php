@@ -1,5 +1,4 @@
 <div class="containerPerfil">
-
     <?php
         require_once "panelLateral.html.php";
     ?>
