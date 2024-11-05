@@ -37,6 +37,35 @@ class Pregunta{
         return $stmt ->fetch();
     }
 
+    public function updatePregunta($param)
+    {
+
+        $sql = "UPDATE ".$this->tabla." SET titulo = ?, texto = ? WHERE id = ?";
+
+
+        if(isset($param["imagen"]) && $param["imagen"] != "")
+        {
+            $sql = "UPDATE ".$this->tabla." SET titulo = ?, texto = ?, imagen = ? WHERE id = ?";  
+            $stmt = $this->connection->prepare($sql);
+            $stmt -> execute([
+                $param["titulo"],
+                $param["texto"],
+                $param["imagen"],
+                $param["id_pregunta"]
+            ]);
+            return true;
+        }
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt -> execute([
+            $param["titulo"],
+            $param["texto"],
+            $param["id_pregunta"]
+        ]);
+
+        return true;
+       
+    }
 
 
     public function getPreguntasPaginated($id_tema, $pagination, $page = 1){

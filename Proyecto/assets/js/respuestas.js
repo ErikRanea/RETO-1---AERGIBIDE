@@ -1,17 +1,20 @@
 /*Detectar si el archivo se ha subido */
-document.getElementById('cargadorDeImagenRespuesta').addEventListener('change', function(e) {
-    const labelConfirmacion = document.getElementById('archivoSubidoRespuesta');
-    
-    if (this.files && this.files[0]) {
-        labelConfirmacion.removeAttribute('hidden');
-    } else {
-        labelConfirmacion.setAttribute('hidden', '');
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.id.startsWith('cargadorDeImagenRespuesta')) {
+        const labelConfirmacion = e.target.nextElementSibling; // Obtiene el label siguiente
+        
+        if (e.target.files && e.target.files[0]) {
+            labelConfirmacion.removeAttribute('hidden');
+        } else {
+            labelConfirmacion.setAttribute('hidden', '');   
+        }
     }
 });
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Dar like o disLike a las preguntas */
+
 document.getElementById('botonPreguntaLike').addEventListener('click', function(event) {
     likePregunta(event, 'botonPreguntaLike');
 });
@@ -89,6 +92,10 @@ async function likePregunta(event, idElemento) {
         location.reload();
     }
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Dar like o disLike a las respuestas 
 
@@ -180,6 +187,7 @@ document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
 });
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*Guardar o desguardar preguntas */
 
@@ -294,3 +302,65 @@ document.querySelectorAll('[id^="botonGuardarRespuesta-"]').forEach(boton => {
 
     })
 })
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/*Editar respuestas*/
+
+//EventListener para poner en modo editar la respuesa
+
+document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
+    boton.addEventListener('click', function() {
+        const idRespuesta = this.getAttribute('value');
+        const idPregunta = this.getAttribute('data-id-pregunta');
+        const contenedorRespuesta = this.closest('.contenedorRespuestaDivididor');
+        const contenidoOriginal = contenedorRespuesta.querySelector('.contenidoRespuesta');
+        const textoOriginal = contenidoOriginal.textContent.trim();
+        const imagenOriginal = contenedorRespuesta.querySelector('.imagenRespuesta');
+        let imagenOriginalUrl = null;
+        if (imagenOriginal) {
+            imagenOriginalUrl = imagenOriginal.src;
+        }
+        
+
+        const formularioEdicion = `
+            <form class="editarRespuestaForm" action="index.php?controller=respuesta&action=edit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="idRespuesta" value="${idRespuesta}">
+                <input type="hidden" name="id_pregunta" value="${idPregunta}">
+                <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
+                <div class="contenedorImagenEdicion">
+                    <img src="${imagenOriginalUrl ? imagenOriginalUrl : ''}" alt="Imagen de respuesta">
+                </div>
+                <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
+                    <label class="botonSubirArchivo">
+                        Cambiar Archivo
+                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="image/*" hidden>
+                        <label id="archivoSubidoRespuesta-${idRespuesta}" hidden>
+                            <i class="bi bi-check-circle-fill"></i>
+                        </label>
+                    </label>
+                    <button class="botonGuardarRespuesta" type="submit" data-id="${idRespuesta}">
+                        <i class="bi bi-check-circle"></i> Guardar
+                    </button>
+                    <button class="botonCancelarRespuesta">
+                        <i class="bi bi-x-circle "></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        `;
+
+        // Reemplazar el contenido original con el formulario
+        contenidoOriginal.innerHTML = formularioEdicion;
+
+        // Manejador para cancelar la edición
+        contenedorRespuesta.querySelector('.botonCancelarRespuesta').addEventListener('click', () => {
+            contenidoOriginal.innerHTML = textoOriginal;
+            if (imagenOriginal) {
+                contenidoOriginal.appendChild(imagenOriginal);
+            }
+        });
+    });
+});

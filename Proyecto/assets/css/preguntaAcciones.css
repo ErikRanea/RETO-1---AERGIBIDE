@@ -73,6 +73,7 @@ strong{
 .btnCrear{
     border: 2px solid #4DBAD9;
     color: #4DBAD9;
+    
 
 }
 
@@ -85,6 +86,9 @@ strong{
 
 .btnImagen{
     cursor: pointer;
+    border: 2px solid #4DBAD9;
+    color: #4DBAD9;
+    width: 100  ;
 }
 
 /* Asegurarse de que el input file esté oculto */

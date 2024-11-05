@@ -240,13 +240,61 @@ class PreguntaController{
            exit();
             
         }
-
-
-        
-
-
-    
     }
 
+    public function edit()
+    {
+
+        if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id_pregunta"]))
+        {
+
+            $pregunta = $this-> model -> getPreguntaById($_GET["id_pregunta"]);
+
+            if($_SESSION["user_data"]["id"] != $pregunta["id_usuario"])
+            {
+                header("Location: index.php?controller=temas&action=mostrarTemas");
+                exit();
+            }
+            else
+            {
+                $this-> view = "edit";
+                return $pregunta;
+            }
+
+
+
+        }
+
+
+    }
+
+    public function update()
+    {
+
+        try 
+        {
+            if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST))
+            {
+                $result = $this->model->updatePregunta($_POST);
+                if($result)
+                {
+                    header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_POST["id_pregunta"]);
+                }
+                else
+                {   
+                    throw new Error("No se ha realizado la update en la base de datos");
+                }
+            }   
+            else
+            {
+                throw new Error();
+            }
+
+        } catch (Error $e) {
+            header("Location: index.php");
+        }
+
+
+    }
    
 }
