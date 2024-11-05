@@ -5,7 +5,7 @@
     ?>
     <div class="perfil">
         <h1><!-- Nombre de usuario se actualizará aquí --></h1>
-        <form action="index.php?controller=usuario&action=updateFoto" method="post" id="datosUsuarioForm" enctype="multipart/form-data" class="divFoto">
+        <form action="index.php?controller=usuario&action=updateFoto" method="post" id="datosFotoForm" enctype="multipart/form-data" class="divFoto">
             <!-- Aqui se mostrara la foto de usuario -->
             <img class="sinFoto" id="fotoPerfil" src="<?php echo isset($usuario->foto_perfil) ? $usuario->foto_perfil : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil default">
             

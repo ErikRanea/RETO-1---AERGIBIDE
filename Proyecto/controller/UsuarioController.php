@@ -111,12 +111,14 @@ class UsuarioController{
     }
 
     public function mostrarGestionUsuario() {
-        // Llamo a la vista html.php
+        $rolUsuario = $_SESSION['user_data']['rol'] ?? 'admin';
         $this -> view = "gestionUsuario";
-        // Recogo los datos en la variable $users
-        $users = $this->model->getUsers();
+        if ($rolUsuario === 'gestor') {
+            $users = $this->model->getUsuarios();
+        } else {
+            $users = $this->model->getUsers();
+        }
         include __DIR__ . '/../view/layout/header.php';
-        // Incluyo la vista para añadir los datos
         include __DIR__ . '/../view/usuario/gestionUsuario.html.php';
     }
 
@@ -138,13 +140,21 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-
-            // Verificar contraseña
-            $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
-            if (password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
-                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
-            } else {
-                echo "La contraseña actual es incorrecta.";
+    
+            // Solo actualizar la contraseña si se ha proporcionado
+            if (!empty($_POST["actualPassword"])) {
+                // Verificar contraseña
+                $usuarioAlmacenado = $this->model->getUsuarioByEmail($usuario->email);
+                if ($usuarioAlmacenado && password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
+                    // Solo actualiza la contraseña si se proporciona una nueva
+                    if (!empty($_POST['nuevaPassword'])) {
+                        $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+                    }
+                } else {
+                    // Si la contraseña actual es incorrecta, mostramos un mensaje de error
+                    echo "La contraseña actual es incorrecta.";
+                    return; // Detenemos la ejecución aquí si la contraseña no es válida
+                }
             }
     
             // Actualizar usuario
@@ -161,6 +171,8 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
+            $usuario->foto_perfil = 'assets/img/default_profile_picture.png';
+
     
             // Capturamos el rol
             $usuario->rol = $_POST['rol']; // Asegúrate de tener un campo "rol" en tu formulario
@@ -181,41 +193,42 @@ class UsuarioController{
     }
 
     public function updateFoto() {
-
         if (isset($_POST)) {
             // Guardamos el id de la sesión
             $usuarioId = $_SESSION['user_data']['id'];
-            // Mediante el id obtenemos el usuario y lo guardamos
+            // Obtenemos el usuario
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
-
+    
             if (isset($_FILES['nuevaFoto']) && $_FILES['nuevaFoto']['error'] === UPLOAD_ERR_OK) {
                 $fileTmpPath = $_FILES['nuevaFoto']['tmp_name'];
                 $fileMimeType = mime_content_type($fileTmpPath);
                 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
-
+    
                 if (in_array($fileMimeType, $allowedMimeTypes)) {
-                    $fileName = uniqid() . '-' . $_FILES['nuevaFoto']['name'];
+                    // Generamos un nombre único para la imagen
+                    $fileName = uniqid() . '-' . basename($_FILES['nuevaFoto']['name']);
                     $uploadFileDir = 'assets/img/';
                     $destPath = $uploadFileDir . $fileName;
-
-                    // Movemos el archivo a la carpeta deseada
+    
+                    // Movemos el archivo a la carpeta de destino
                     if (move_uploaded_file($fileTmpPath, $destPath)) {
-                        $usuario->foto_perfil = $destPath; // Asignamos la nueva ruta a la foto
+                        $usuario->foto_perfil = $destPath; // Asignamos la nueva ruta de la foto al objeto usuario
+                        $this->model->updateUsuario($usuario); // Actualizamos el usuario solo con la foto nueva
+                        header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+                        exit();
                     } else {
-                        echo "No se pudo subir la imagen.";
+                        echo "Error al mover el archivo de imagen.";
                         return;
                     }
                 } else {
-                    echo "Tipo de archivo no permitido.";
+                    echo "Tipo de archivo no permitido. Solo se aceptan JPEG, PNG, GIF y WEBP.";
                     return;
                 }
-
-                $this->model->updateUsuario($usuario);
-                header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
-                exit();
+            } else {
+                echo "No se subió ningún archivo o hubo un error al cargar la imagen.";
             }
         }
-    }
+    }    
 
     public function cerrarSesion() {
         // Aquí destruyes la sesión y rediriges al usuario
