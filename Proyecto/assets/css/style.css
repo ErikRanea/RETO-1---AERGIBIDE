@@ -315,6 +315,35 @@ input[readonly] {
     cursor: pointer;
 }
 
+/* Panel de control */
+
+.botonesArriba {
+    font-weight: bold;
+    color: white;
+    margin: 0 auto;
+    margin-bottom: 3em;
+}
+
+.containerPanel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.containerCreate {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+.listaUsers {
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Cambiar Contraseña */
 
 .paginaPassword {
@@ -631,6 +660,13 @@ body {
     right: 0;
 }
 
+.message em {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    opacity: 0.7;
+}
+
 .user-panel {
     padding: 16px;
     border-top: 1px solid #dadce0;
@@ -866,10 +902,6 @@ body {
     height: 100px;
     border-radius: 50%;
 }
-
-
-
-
 
 .imagenRespuesta {
     max-width: 300px; /* Ancho máximo fijo */
