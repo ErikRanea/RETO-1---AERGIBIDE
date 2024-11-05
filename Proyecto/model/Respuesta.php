@@ -116,23 +116,41 @@ class Respuesta
 
     public function insertRespuesta($param)
     {
-        try{
+        try {
+            $this->connection->beginTransaction();
+
             $texto = $param["texto"];
             $imagen = $param["file_path"];
             $fecha_hora = date("Y-m-d H:i:s");
             $id_pregunta = $param["id_pregunta"];
-            $id_usuario  = $_SESSION["user_data"]["id"];
+            $id_usuario = $_SESSION["user_data"]["id"];
 
-            $sql = "INSERT INTO ".$this->tabla." (texto,imagen,fecha_hora,id_pregunta,id_usuario) VALUES (?,?,?,?,?)";
-            $stmt = $this-> connection-> prepare($sql);
-            $stmt->execute([$texto,$imagen,$fecha_hora,$id_pregunta,$id_usuario]);
+            // Insertar la respuesta
+            $sql = "INSERT INTO ".$this->tabla." (texto, imagen, fecha_hora, id_pregunta, id_usuario) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$texto, $imagen, $fecha_hora, $id_pregunta, $id_usuario]);
+
+            // Obtener el ID de la respuesta recién insertada
+            $id_respuesta = $this->connection->lastInsertId();
+
+            // Obtener el ID del usuario que hizo la pregunta
+            $sqlPregunta = "SELECT id_usuario FROM Preguntas WHERE id = ?";
+            $stmtPregunta = $this->connection->prepare($sqlPregunta);
+            $stmtPregunta->execute([$id_pregunta]);
+            $id_usuario_pregunta = $stmtPregunta->fetchColumn();
+
+            // Insertar la notificación
+            $mensaje = "Tienes una nueva respuesta en tu pregunta.";
+            $sqlNotificacion = "INSERT INTO Notificaciones (id_usuario, id_pregunta, mensaje, leido, fecha) VALUES (?, ?, ?, 0, ?)";
+            $stmtNotificacion = $this->connection->prepare($sqlNotificacion);
+            $stmtNotificacion->execute([$id_usuario_pregunta, $id_pregunta, $mensaje, $fecha_hora]);
+
+            $this->connection->commit();
             return true;
-        }
-        catch(error)
-        {
+        } catch (Exception $e) {
+            $this->connection->rollBack();
             return false;
         }
-
     }
 
     public function guardarRespuesta($param)
