@@ -31,19 +31,6 @@ class UsuarioController{
         $this -> view = "nuevoUsuario";
     }
 
-    public function gestionUsuario() {
-        $users = $this->model->getUsers();
-        header('Content-Type: application/json');
-        if ($users) {
-            echo json_encode($users);
-        } else {
-            echo json_encode(['error' => 'Usuarios no encontrados']);
-        }
-        exit;
-    }
-    
-
-
     /* 
     Metodo -> logear
     From -> Erik
@@ -110,13 +97,17 @@ class UsuarioController{
     }
 
     public function mostrarDatosUsuario() {
-        // Obtenemos el ID del usuario desde la sesión
         $this -> view = "datosUsuario"; 
     }
 
     public function mostrarGestionUsuario() {
-        $data = $this->gestionUsuario();
+        // Llamo a la vista html.php
         $this -> view = "gestionUsuario";
+        // Recogo los datos en la variable $users
+        $users = $this->model->getUsers();
+        include __DIR__ . '/../view/layout/header.php';
+        // Incluyo la vista para añadir los datos
+        include __DIR__ . '/../view/usuario/gestionUsuario.html.php';
     }
 
     public function obtenerTotalUsuarios() {

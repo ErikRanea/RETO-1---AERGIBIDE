@@ -27,22 +27,3 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
 });
-
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('index.php?controller=usuario&action=gestionUsuario', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => response.json())
-    .then(
-        data => {
-        if (data) {
-            document.querySelector('.listaUsers li').textContent = data.username;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});

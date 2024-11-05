@@ -223,7 +223,7 @@ class Usuario{
         $stmt = $this -> connection ->prepare($sql);
         $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute();
-        return $stmt ->fetchAll();
+        return $stmt ->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function getPreguntasSave($idUsuario){
