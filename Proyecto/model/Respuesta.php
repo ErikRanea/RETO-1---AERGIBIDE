@@ -30,6 +30,15 @@ class Respuesta
         return $stmt -> fetchAll();
     }
 
+    public function contarVotos($param)
+    {
+        $sql = "SELECT contarVotos (?,?) AS votos";
+        $stmt = $this -> connection-> prepare($sql);
+       // $stmt -> bindParam("si",$param["tipo"],$param["id"]);
+        $stmt -> execute([$param["tipo"],$param["id"]]);
+        return $stmt -> fetch();
+    }
+
 
 
     public function getRespuestasConUsuariosByIdPregunta($id)
@@ -41,10 +50,12 @@ class Respuesta
         $objetosPregunta = array();
 
         $pregunta = $this-> pregunta -> getPreguntaById($id);
+        $votosPregunta = $this -> contarVotos(["tipo"=>"pregunta","id"=>$id]);
         $usuarioPregunta = $this-> usuario -> getUsuarioById($pregunta["id_usuario"]);
 
 
         $objetosPregunta["datosPregunta"] = $pregunta;
+        $objetosPregunta["datosPregunta"]["votos"] = $votosPregunta;
         $objetosPregunta["usuarioPregunta"] = $usuarioPregunta;
 
 
@@ -58,6 +69,7 @@ class Respuesta
 
         for ($i=0; $i < count($respuestas) ; $i++) { 
 
+            $respuestas[$i]["votos"] = $this -> contarVotos(["tipo"=>"respuesta","id"=>$respuestas[$i]["id"]]);
             $usuarioRespuesta = $this->usuario -> getUsuarioById($respuestas[$i]["id_usuario"]);
             array_push($usuariosRespuestas, $usuarioRespuesta);
         }
@@ -227,5 +239,6 @@ class Respuesta
 
         return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente  
     }
+
 
 }
