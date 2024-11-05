@@ -179,25 +179,46 @@ class Usuario{
     }
 
     public function updateUsuario($objeto) {
-        $sql = "UPDATE " . $this->tabla .
-               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password, foto_perfil = :foto_perfil WHERE id = :id";
+        // Base de la consulta SQL para actualizar el usuario
+        $sql = "UPDATE " . $this->tabla . " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email";
+    
+        // Agregar actualización de contraseña solo si existe una nueva
+        if (!empty($objeto->password)) {
+            $sql .= ", password = :password";
+        }
+    
+        // Agregar actualización de foto de perfil si está configurada
+        if (isset($objeto->foto_perfil)) {
+            $sql .= ", foto_perfil = :foto_perfil";
+        }
+    
+        $sql .= " WHERE id = :id";
+    
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
         $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
-
-        $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
-        $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
-        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
     
+        // Enlazar la contraseña si se va a actualizar
+        if (!empty($objeto->password)) {
+            $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
+        }
+    
+        // Enlazar la foto de perfil si está configurada
+        if (isset($objeto->foto_perfil)) {
+            $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
+        }
+    
+        // Ejecutar la consulta y manejar el resultado
         if ($stmt->execute()) {
-            echo "Foto guardada: " . $objeto->foto_perfil;
+            echo "Datos actualizados correctamente.";
         } else {
-            echo "Error al actualizar la foto";
+            echo "Error al actualizar el usuario.";
         }
     }
+    
 
     public function createUsuario($objeto) {
         $sql = "INSERT INTO " . $this->tabla . " (nombre, apellido, username, email, password, foto_perfil, rol) 
@@ -263,6 +284,36 @@ class Usuario{
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
+    }
+
+    public function getNotificacionesNoLeidas($id_usuario) {
+        try {
+            $sql = "SELECT n.*, p.titulo AS titulo_pregunta 
+                FROM Notificaciones n 
+                LEFT JOIN Preguntas p ON n.id_pregunta = p.id 
+                WHERE n.id_usuario = :id_usuario AND n.leido = 0";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([':id_usuario' => $id_usuario]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Log the error
+            error_log("Error en getNotificacionesNoLeidas: " . $e->getMessage());
+
+            // Re-lanzar la excepción para que pueda ser manejada en un nivel superior si es necesario
+            throw $e;
+        }
+    }
+
+    public function marcarNotificacionComoLeida($id_notificacion) {
+        $sql = "UPDATE Notificaciones SET leido = 1 WHERE id = :id_notificacion";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([':id_notificacion' => $id_notificacion]);
+    }
+
+    public function marcarTodasNotificacionesComoLeidas($id_usuario) {
+        $sql = "UPDATE Notificaciones SET leido = 1 WHERE id_usuario = :id_usuario AND leido = 0";
+        $stmt = $this->connection->prepare($sql);
+        return $stmt->execute([':id_usuario' => $id_usuario]);
     }
 
 }

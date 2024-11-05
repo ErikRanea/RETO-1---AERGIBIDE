@@ -106,6 +106,8 @@ footer span {
     color: black;
 }
 
+/* Cambiar contraseña */
+
 /* Panel Lateral */
 .panelLateral {
     background-color: #162F3B; /* Mantén el color de la barra lateral o ajusta si lo deseas */
@@ -708,5 +710,56 @@ strong {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #5f6368;
+}
 
+
+#notificationsDropdown {
+    background-color: #1A1A1A;
+    color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+#notificationsDropdown .notificacion-form {
+    border-bottom: 1px solid #ddd;
+}
+
+
+#notificationsDropdown .notificacion-item:hover {
+    background-color: #4DBAD9;
+    color: white; /* Cambia el color del texto al hacer hover */
+}
+
+#notificationsDropdown a {
+    color: white;
+
+}
+
+#notificationsDropdown .notificacion-item {
+    color: white;
+}
+
+
+/* Estilo para el botón "Marcar todas como leídas" */
+#marcarTodasLeidasBtn {
+
+    background-color: #1A1A1A;
+    color: white;
+
+}
+
+#marcarTodasLeidasBtn:hover {
+    background-color: #4DBAD9;
+}
+
+#marcarTodasLeidasBtn:active {
+    background-color: #4DBAD9;
+}
+.temas-titulo {
+
+    color: white;
+}
+
+.tituloPregunta{
+    color: white;
 }

@@ -1,4 +1,5 @@
 <main class="main-content">
+    <h1 class="temas-titulo">TEMAS</h1>
     <div class="containerTema">
         <div class="temas">
             <?php
