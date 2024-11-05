@@ -20,11 +20,11 @@
                 if (!empty($publicaciones)): ?>
                     <?php foreach ($publicaciones as $publicacion): ?>
                         <div class="publicacion">
-                            <div class="icono">
+                            <div class="user-avatar">
                                 <?php if (!empty($publicacion['foto_perfil'])): ?>
-                                    <img src="<?= htmlspecialchars($publicacion['foto_perfil']) ?>" alt="Foto de perfil" width="40" height="40" style="border-radius: 50%;">
+                                    <img src="<?= htmlspecialchars($publicacion['foto_perfil']) ?>" alt="Foto de perfil">
                                 <?php else: ?>
-                                    <img src="assets/img/fotoPorDefecto.png" alt="Icono predeterminado" width="40" height="40" style="border-radius: 50%;">
+                                    <img src="assets/img/fotoPorDefecto.png" alt="Icono predeterminado">
                                 <?php endif; ?>
                             </div>
                             <div class="texto">

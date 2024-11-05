@@ -27,6 +27,9 @@ class UsuarioController{
         exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
     }
 
+    public function nuevoUsuario() {
+        $this -> view = "nuevoUsuario";
+    }
 
     /* 
     Metodo -> logear
@@ -51,7 +54,8 @@ class UsuarioController{
                     "nombre" => $row->nombre,
                     "email" => $row->email,
                     "username" => $row->username,
-                    "foto_perfil" => $row->foto_perfil
+                    "foto_perfil" => $row->foto_perfil,
+                    "rol" => $row->rol
                 );
                 //Si todo va bien y entra
                 echo json_encode([
@@ -103,9 +107,17 @@ class UsuarioController{
     }
 
     public function mostrarDatosUsuario() {
-        // Obtenemos el ID del usuario desde la sesión
-        $this -> view = "datosUsuario";
-        
+        $this -> view = "datosUsuario"; 
+    }
+
+    public function mostrarGestionUsuario() {
+        // Llamo a la vista html.php
+        $this -> view = "gestionUsuario";
+        // Recogo los datos en la variable $users
+        $users = $this->model->getUsers();
+        include __DIR__ . '/../view/layout/header.php';
+        // Incluyo la vista para añadir los datos
+        include __DIR__ . '/../view/usuario/gestionUsuario.html.php';
     }
 
     public function obtenerTotalUsuarios() {
@@ -167,8 +179,6 @@ class UsuarioController{
             exit();
         }
     }
-    
-    
 
     public function updateFoto() {
 

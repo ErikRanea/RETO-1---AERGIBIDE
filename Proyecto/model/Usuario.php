@@ -114,10 +114,10 @@ class Usuario{
 
     public function getUsuariosChat()
     {
-        $sql = "SELECT id, username FROM Usuarios";
+        $sql = "SELECT id, username, foto_perfil FROM Usuarios";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Usar fetchAll con PDO::FETCH_ASSOC
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
         public function getUsuarioByEmail($email)
@@ -218,7 +218,13 @@ class Usuario{
         }
     }
     
-    
+    public function getUsers() {
+        $sql = "SELECT username FROM " . $this->tabla . " WHERE rol = 'user'";
+        $stmt = $this -> connection ->prepare($sql);
+        $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+        $stmt->execute();
+        return $stmt ->fetchAll(PDO::FETCH_OBJ);
+    }
 
     public function getPreguntasSave($idUsuario){
         $sql = "SELECT * FROM Preguntas_Usu_Save WHERE id_usuario=?";
