@@ -61,14 +61,32 @@ body {
     right: 10px;
 }
 
-#btnLupa {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+#filtroMenu {
+    position: absolute;
+    top: 40px; /* Ajusta según la posición deseada */
+    right: 0;
+    background-color: white; /* Fondo negro */
+    border: none; /* Borde gris oscuro */
+    border-radius: 10px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+    padding: 10px;
+    z-index: 1000;
 }
 
-#btnLupa:hover {
-    background-color: #EAFBFF;
+#filtroMenu label {
+    display: block; /* Cada opción en una línea separada */
+    margin: 5px 0; /* Espaciado entre opciones */
+    color: #1A1A1A; /* Color de texto blanco */
+}
+
+#filtroMenu input {
+    margin-right: 5px; /* Espacio entre el checkbox y el texto */
+    accent-color: #4DBAD9;
+}
+
+/* Opcional: Cambiar el color del texto al pasar el mouse */
+#filtroMenu label:hover {
+    color: #4DBAD9; /* Cambiar a un color azul al pasar el mouse */
 }
 
 #btnFiltro {
@@ -80,6 +98,19 @@ body {
 #btnFiltro:hover {
     background-color: #EAFBFF;
 }
+
+
+
+#btnLupa {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#btnLupa:hover {
+    background-color: #EAFBFF;
+}
+
 
 .panel-botones {
     display: flex;
@@ -540,6 +571,8 @@ body {
 .users-list {
     overflow-y: auto;
     flex-grow: 1;
+    height: calc(100% - 53px);
+    max-height: calc(100vh - 153px);
 }
 
 .user-item {
@@ -565,22 +598,41 @@ body {
 .user-avatar {
     width: 40px;
     height: 40px;
+    overflow: hidden;
     border-radius: 50%;
     margin-right: 12px;
-    overflow: hidden;
+    flex-shrink: 0; /* Evita que el avatar se encoja */
 }
 
 .user-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
+}
+
+.publicacion {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.publicacion .texto {
+    margin-left: 10px;
+}
+
+.publicacion .texto p {
+    margin: 0;
 }
 
 /* Chat area */
 .chat-area {
-    flex-grow: 1;
+    flex: 0 0 87%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+    max-width: 87%;
 }
 
 .chat-header {
@@ -605,6 +657,10 @@ body {
     padding: 16px;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 100%; /* Ensure it doesn't exceed the width of its parent */
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .message {
@@ -614,6 +670,7 @@ body {
     border-radius: 18px;
     font-size: 14px;
     line-height: 1.4;
+    overflow-wrap: break-word;
 }
 
 .message.received {
