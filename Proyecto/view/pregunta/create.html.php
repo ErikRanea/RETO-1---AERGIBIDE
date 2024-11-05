@@ -56,7 +56,6 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
                 <br>
                 <label class="btn btnCrear">
                     Seleccionar Archivo
-                    <br>
                     <input type="file" name="imagen" hidden="hidden">
                 </label>
             </div>
