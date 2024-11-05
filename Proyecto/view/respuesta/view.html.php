@@ -7,6 +7,7 @@
 
 
 
+
     $respuestasGuardadas = $dataToView["guardados"]["respuestasGuardadas"];
     $preguntasGuardadas = $dataToView["guardados"]["preguntasGuardadas"];
 
@@ -93,7 +94,7 @@
         {
              return $puedeEditar = true;
         }
-        elseif ($rol == ("admin" || "gestor")) {
+        elseif (($rol == "admin") || ($rol == "gestor")) {
             return $puedeEditar = true;
         }
 
@@ -117,7 +118,7 @@
 
         <div class="preguntaTitulo">
            <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
-           <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+           <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta["id"])){echo "hidden";}?>>
             <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
 
             <label id="eliminarPregunta" class="botonDeEditar" <?php if(($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]) || ($_SESSION["user_data"]["rol"] != "admin" || "gestor")){echo "hidden";}?>>
@@ -217,7 +218,7 @@
                 <div class="respuesta">
                     <div class="estrella-respuesta">
                         <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value = "<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar" 
-                        <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+                        <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>
                             <i class="bi bi-pencil-square botonEditar"></i>
                         </label>
                         <i class="bi bi-star"></i>
