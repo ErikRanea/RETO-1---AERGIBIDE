@@ -107,6 +107,15 @@ document.querySelectorAll('[id^="botonRespuestaLike-"]').forEach(boton => {
     boton.addEventListener('click', function() {
         const idRespuesta = this.value;
         const userId = document.getElementById('userId').value;
+        const dislikeBtn = document.getElementById(`botonRespuestaDisLike-${idRespuesta}`);
+        console.log("dislikeBtn: " + dislikeBtn);
+
+        const votosElemento = document.getElementById(`votosRespuesta-${idRespuesta}`);
+        let votosActuales = 0;
+        if (votosElemento) {
+            votosActuales = parseInt(votosElemento.textContent.trim()) || 0;
+        }
+
         
         const params = new URLSearchParams();
         params.append("idRespuesta", idRespuesta);
@@ -125,10 +134,14 @@ document.querySelectorAll('[id^="botonRespuestaLike-"]').forEach(boton => {
         .then(response => response.json())
         .then(data => {
             if(data.message == "Voto eliminado correctamente la respuesta") {
+                votosActuales--;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane-fill');
                 this.querySelector('i').classList.add('bi-airplane');
             } else if(data.status == "success") {
                 // Activar el like
+                votosActuales++;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane');
                 this.querySelector('i').classList.add('bi-airplane-fill');
                 
@@ -149,6 +162,17 @@ document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
     boton.addEventListener('click', function() {
         const idRespuesta = this.value;
         const userId = document.getElementById('userId').value;
+        const strIdRespuesta = `botonRespuestaLike-${idRespuesta}`;
+        console.log("strIdRespuesta: " + strIdRespuesta);
+        const likeBtn = document.getElementById(strIdRespuesta);
+        console.log("primer boton like" + likeBtn );
+        
+        // Añadimos verificación para el elemento de votos
+        const votosElemento = document.getElementById(`votosRespuesta-${idRespuesta}`);
+        let votosActuales = 0;
+        if (votosElemento) {
+            votosActuales = parseInt(votosElemento.textContent.trim()) || 0;
+        }
         
         const params = new URLSearchParams();
         params.append("idRespuesta", idRespuesta);
@@ -166,18 +190,25 @@ document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
         .then(response => response.json())
         .then(data => {
             if(data.message == "Voto eliminado correctamente la respuesta") {
+                votosActuales++;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane-fill');
                 this.querySelector('i').classList.add('bi-airplane');
                 this.querySelector('i').classList.add('airplane-down');
             } else if(data.status == "success") {
                 // Activar el dislike
+                votosActuales--;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane');
                 this.querySelector('i').classList.add('bi-airplane-fill');
                 this.querySelector('i').classList.add('airplane-down');
                 
                 // Asegurarnos de que el like esté limpio
-                const likeBtn = document.getElementById(`botonRespuestaLike-${idRespuesta}`);
+                
+                
+                console.log(likeBtn);
                 if(likeBtn) {
+                    console.log("Votos actuales eliminando like en fill");
                     likeBtn.querySelector('i').classList.remove('bi-airplane-fill');
                     likeBtn.querySelector('i').classList.add('bi-airplane');
                 }
