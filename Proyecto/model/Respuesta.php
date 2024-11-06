@@ -40,6 +40,28 @@ class Respuesta
     }
 
 
+    public function getRespuestaById($id)
+    {
+
+        $sql = "SELECT * FROM ".$this->tabla." WHERE id = ?";
+        $stmt = $this-> connection -> prepare($sql);
+        $stmt -> execute([$id]);
+        return $stmt -> fetch(); 
+    }
+
+    public function getRespuestaYUsuario($param)
+    {
+        $respuesta = $this->getRespuestaById($param["id_respuesta"]);
+
+        $usuario = $this->usuario->getUsuarioById($respuesta["id_usuario"]);
+
+        $datos = array();
+        $datos["respuesta"] = $respuesta;
+        $datos["usuario"] = $usuario;
+
+        return $datos;
+    }
+
 
     public function getRespuestasConUsuariosByIdPregunta($id)
     {
@@ -152,6 +174,22 @@ class Respuesta
             return false;
         }
     }
+
+
+    public function deleteRespuestaById($id)
+    {
+        try {
+            $sql = "DELETE FROM ".$this->tabla." WHERE id = ? ";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        } catch (Error $e) {
+            echo $e;
+            return false;
+        }
+    }
+
+
 
     public function guardarRespuesta($param)
     {

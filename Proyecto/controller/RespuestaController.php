@@ -82,12 +82,68 @@ class RespuestaController
             print_r($respuesta);
             die();
         }
+    }
 
+
+    public function remove()
+    {
+
+        try 
+        {
+        
+            $datos = $this->model->getRespuestaYUsuario($_GET);
+
+
+
+            if(!$this->puedeEditar($datos["respuesta"]["id"]))
+            {
+                header("Location: index.php?controller=tema&action=mostrarTemas");
+                exit();
+            }
+            $this -> view = "remove";
+
+            /*Esta variable de sesión será utilizada para que sin un previo acceso a está ventana, no te permita realizar un borrado */
+            $_SESSION['user_data']['autorizado'] = true;
+
+            return $datos;    
+        } 
+        catch (Error $e)
+        {
+            echo "Ha sucedido el siguiente error: ".$e;
+            exit();
+        }
 
 
 
     }
 
+    public function delete()
+    {
+        try {
+            
+            if(!$this->puedeEditar($_GET["id_respuesta"]) || !isset($_GET["id_respuesta"]) || !isset($_GET["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
+            {
+                header("Location: index.php?controller=tema&action=mostrarTemas");
+                exit();
+            }
+            elseif($_SESSION['user_data']['autorizado'])
+            {
+                $result = $this-> model -> deleteRespuestaById($_GET["id_respuesta"]);
+                if($result)
+                {
+                    unset($_SESSION['user_data']['autorizado']);
+                    header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_GET["id_pregunta"]);
+                }
+            }
+
+
+
+
+        } catch (Error $e) {
+            echo "Ha sucedido el siguiente error: ".$e;
+            exit();
+        }
+    }
 
 
     public function guardarRespuesta()
@@ -304,36 +360,8 @@ class RespuestaController
         exit();
     }
 
-    public function responder($id_pregunta, $texto, $id_usuario_respuesta) {
-        // Código para insertar la respuesta en la base de datos
-        // ...
-
-        // Obtener el id del usuario que hizo la pregunta
-        $pregunta = $this->getPreguntaById($id_pregunta);
-        $id_usuario_pregunta = $pregunta['id_usuario'];
-
-        // Crear notificación
-        $mensaje = "Tu pregunta ha sido respondida.";
-        $this->crearNotificacion($id_usuario_pregunta, $mensaje);
-    }
 
 
-
-    private function crearNotificacion($id_usuario, $mensaje) {
-        $sql = "INSERT INTO Notificaciones (id_usuario, mensaje, leido) VALUES (:id_usuario, :mensaje, 0)";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute([
-            ':id_usuario' => $id_usuario,
-            ':mensaje' => $mensaje
-        ]);
-    }
-
-    private function getUsuarioByPreguntaId($id_pregunta) {
-        $sql = "SELECT id_usuario FROM Preguntas WHERE id = :id_pregunta";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute([':id_pregunta' => $id_pregunta]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 
     public function verRespuesta()
     {
@@ -395,5 +423,42 @@ class RespuestaController
         }
         exit;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Funciones para uso exclusivo del controlador */
+
+private function puedeEditar($id)
+{
+    $puedeEditar = false;
+    $idUsuario = $_SESSION["user_data"]["id"];
+    $rol = $_SESSION["user_data"]["rol"];
+
+    if($idUsuario == $id)
+    {
+         return $puedeEditar = true;
+    }
+    elseif (($rol == "admin") || ($rol == "gestor")) {
+        return $puedeEditar = true;
+    }
+
+    return $puedeEditar;
+}
+
 
 }

@@ -118,11 +118,13 @@
 
         <div class="preguntaTitulo">
            <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
-           <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta["id"])){echo "hidden";}?>>
-            <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
+           <div>
+            <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta["id"])){echo "hidden";}?>>
+                <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
 
-            <label id="eliminarPregunta" class="botonDeEditar" <?php if(($usuarioPregunta["id"] != $_SESSION["user_data"]["id"]) || ($_SESSION["user_data"]["rol"] != "admin" || "gestor")){echo "hidden";}?>>
-            <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
+                <label id="eliminarPregunta" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+                <a href="index.php?controller=pregunta&action=remove&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-trash"></i></a></label> 
+           </div>
         </div>
     
 
@@ -221,6 +223,8 @@
                         <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>
                             <i class="bi bi-pencil-square botonEditar"></i>
                         </label>
+                        <label id="eliminarPregunta" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+                            <a href="index.php?controller=respuesta&action=remove&id_respuesta=<?php echo $datosRespuesta["id"];?>"><i class="bi bi-trash"></i></a></label> 
                         <i class="bi bi-star"></i>
                     </div>
                     <div class="contenidoRespuesta">
