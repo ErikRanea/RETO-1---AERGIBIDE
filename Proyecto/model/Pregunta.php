@@ -18,6 +18,16 @@ class Pregunta{
         $this -> connection = $dbObj ->connection;
     }
 
+    public function contarVotos($param)
+    {
+        $sql = "SELECT contarVotos (?,?) AS votos";
+        $stmt = $this -> connection-> prepare($sql);
+       // $stmt -> bindParam("si",$param["tipo"],$param["id"]);
+        $stmt -> execute([$param["tipo"],$param["id"]]);
+        return $stmt -> fetch();
+    }
+    
+    
     public function getPreguntasPorTema($id_tema){
         //$this->tabla = "Preguntas";
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id_tema = ?";
@@ -105,7 +115,8 @@ class Pregunta{
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindParam(':id_tema', $id_tema, PDO::PARAM_INT);
         $stmt->execute();
-        $totalPages = $this->getNumberPages($id_tema, $pagination); //ceil($this->getNumperPages()/$limit);
+        $totalPages = $this->getNumberPages($id_tema, $pagination); 
+        //ceil($this->getNumperPages()/$limit);
         return [$stmt->fetchAll(), $page, $totalPages];
     }
 
