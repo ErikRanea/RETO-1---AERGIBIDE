@@ -5,7 +5,8 @@
     $usuarioPregunta = $dataToView["pregunta"]["usuarioPregunta"];
     $respuestas = $dataToView["respuestas"];
 
-
+   
+    
 
 
     $respuestasGuardadas = $dataToView["guardados"]["respuestasGuardadas"];
@@ -140,7 +141,7 @@
                       <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
                             <i class="bi bi-airplane"></i>
                         </button>
-                        <p>
+                        <p id="preguntaVoto" value="<?php echo $pregunta["votos"]["votos"];?>">
                             <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
                             echo $pregunta["votos"]["votos"];?>
                         </p>
@@ -155,10 +156,10 @@
                     <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane-fill"></i>
                       </button>
-                      <p>
-                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
-                          echo $pregunta["votos"]["votos"];?>
-                      </p>
+                      <p id="preguntaVoto" value="<?php echo $pregunta["votos"]["votos"];?>">
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo $pregunta["votos"]["votos"];?>
+                        </p>
                       <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane airplane-down"></i>
                       </button>
@@ -170,10 +171,10 @@
                     <button class="botonPanel" id="botonPreguntaLike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane"></i>
                       </button>
-                      <p>
-                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
-                          echo $pregunta["votos"]["votos"];?>
-                      </p>
+                      <p id="preguntaVoto" value="<?php echo $pregunta["votos"]["votos"];?>">
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo $pregunta["votos"]["votos"];?>
+                        </p>
                       <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
                           <i class="bi bi-airplane-fill airplane-down"></i>
                       </button>
@@ -254,7 +255,7 @@
                     <button class="botonPanel" id="botonRespuestaLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
                             <i class="bi bi-airplane"></i>
                         </button>
-                        <p>
+                        <p id="votosRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["votos"]["votos"];?>">
                             <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
                             echo $datosRespuesta["votos"]["votos"];?>
                         </p>
@@ -266,13 +267,13 @@
                 elseif($like == "esLike")
                 {
                     ?>
-                    <button class="botonPanel" id="botonRespuestaLike-<?php echo $datosRespuesta["id"];?>   " value="<?php echo $datosRespuesta["id"];?>">
+                    <button class="botonPanel" id="botonRespuestaLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
                           <i class="bi bi-airplane-fill"></i>
                       </button>
-                      <p>
-                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
-                          echo $datosRespuesta["votos"]["votos"];?>
-                      </p>
+                      <p id="votosRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["votos"]["votos"];?>">
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo $datosRespuesta["votos"]["votos"];?>
+                        </p>
                       <button class="botonPanel" id="botonRespuestaDisLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
                           <i class="bi bi-airplane airplane-down"></i>
                       </button>
@@ -284,10 +285,10 @@
                     <button class="botonPanel" id="botonRespuestaLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
                           <i class="bi bi-airplane"></i>
                       </button>
-                      <p>
-                          <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
-                          echo $datosRespuesta["votos"]["votos"];?>
-                      </p>
+                      <p id="votosRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["votos"]["votos"];?>">
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            echo $datosRespuesta["votos"]["votos"];?>
+                        </p>
                       <button class="botonPanel" id="botonRespuestaDisLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
                           <i class="bi bi-airplane-fill airplane-down"></i>
                       </button>

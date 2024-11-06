@@ -97,6 +97,7 @@ class Respuesta
 
         $pregunta = $this-> pregunta -> getPreguntaById($id);
         $votosPregunta = $this -> contarVotos(["tipo"=>"pregunta","id"=>$id]);
+        
         $usuarioPregunta = $this-> usuario -> getUsuarioById($pregunta["id_usuario"]);
 
 
