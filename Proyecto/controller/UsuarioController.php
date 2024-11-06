@@ -131,12 +131,24 @@ class UsuarioController{
 
     public function update() {
         if (isset($_POST)) {
-            // Guardamos el id de la sesión
-            $usuarioId = $_SESSION['user_data']['id'];
-            // Mediante el id obtenemos el usuario y lo guardamos
+            // Verifica si se pasa el 'id' en la URL
+            if (isset($_POST['id'])) {
+                $usuarioId = $_POST['id'];
+            } else {
+                // Si no, usa el ID del usuario logeado
+                $usuarioId = $_SESSION['user_data']['id'];
+            }
+    
+            // Verificar si el usuario tiene permisos para editar otro usuario (si es admin)
+            if ($_SESSION['user_data']['id'] != $usuarioId && $_SESSION['user_data']['rol'] != 'admin') {
+                echo "No tienes permisos para editar este usuario.";
+                return; // Detenemos la ejecución si no tienes permisos
+            }
+    
+            // Obtener el usuario por ID
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
-            
-            // Guardamos los campos editados
+    
+            // Actualizar los campos
             $usuario->nombre = $_POST['nombre'];
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
@@ -158,12 +170,16 @@ class UsuarioController{
                 }
             }
     
-            // Actualizar usuario
+            // Actualizar usuario en la base de datos
             $this->model->updateUsuario($usuario);
-            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+    
+            // Redirigir a la página de los datos del usuario actualizado
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario&id=" . $usuarioId);
             exit();
         }
-    }
+    }    
+    
+    
 
     public function create() {
         if (isset($_POST)) {
@@ -195,7 +211,7 @@ class UsuarioController{
     public function updateFoto() {
         if (isset($_POST)) {
             // Guardamos el id de la sesión
-            $usuarioId = $_SESSION['user_data']['id'];
+            $usuarioId = isset($_GET['id']) ? $_GET['id'] : $_SESSION['user_data']['id'];
             // Obtenemos el usuario
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
     
