@@ -293,8 +293,110 @@ class PreguntaController{
         } catch (Error $e) {
             header("Location: index.php");
         }
+    }
+
+    public function remove()
+    {
+        try 
+        {
+        
+            $datos = $this->model->getPreguntaYUsuario($_GET);
+
+            if(!$this->puedeEditar($datos["pregunta"]["id"]))
+            {
+                header("Location: index.php?controller=tema&action=mostrarTemas");
+                exit();
+            }
+            $this -> view = "remove";
+
+            /*Esta variable de sesión será utilizada para que sin un previo acceso a está ventana, no te permita realizar un borrado */
+            $_SESSION['user_data']['autorizado'] = true;
+
+            return $datos;    
+        } 
+        catch (Error $e)
+        {
+            echo "Ha sucedido el siguiente error: ".$e;
+            exit();
+        }
+    }
+
+    public function delete()
+    {
+        try {
+            
+            if(!$this->puedeEditar($_GET["id_pregunta"]) || !isset($_GET["id_tema"]) || !isset($_GET["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
+            {
+                header("Location: index.php?controller=tema&action=mostrarTemas");
+                exit();
+            }
+            elseif($_SESSION['user_data']['autorizado'])
+            {
+                $result = $this-> model -> deletePreguntaById($_GET["id_pregunta"]);
+                if($result)
+                {
+                    unset($_SESSION['user_data']['autorizado']);
+                    header("Location: index.php?controller=pregunta&action=list&id_tema=".$_GET["id_tema"]);
+                }
+            }
 
 
+
+
+        } catch (Error $e) {
+            echo "Ha sucedido el siguiente error: ".$e;
+            exit();
+        }
     }
    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*Metodos exclusivos para el uso interno del controlador */
+
+
+    private function puedeEditar($id)
+    {
+        $puedeEditar = false;
+        $idUsuario = $_SESSION["user_data"]["id"];
+        $rol = $_SESSION["user_data"]["rol"];
+
+        if($idUsuario == $id)
+        {
+            return $puedeEditar = true;
+        }
+        elseif (($rol == "admin") || ($rol == "gestor")) {
+            return $puedeEditar = true;
+        }
+
+        return $puedeEditar;
+    }
 }

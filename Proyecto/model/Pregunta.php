@@ -37,6 +37,34 @@ class Pregunta{
         return $stmt ->fetch();
     }
 
+    public function getPreguntaYUsuario($param)
+    {
+
+        $pregunta = $this->getPreguntaById($param["id_pregunta"]);
+        $usuario = $this->usuario->getUsuarioById($pregunta["id_usuario"]);
+
+        $datos = array();
+        $datos["pregunta"] = $pregunta;
+        $datos["usuario"] = $usuario;
+        return $datos;
+        
+
+    }
+    
+    public function deletePreguntaById($id)
+    {
+        try {
+            $sql = "DELETE FROM ".$this->tabla." WHERE id = ? ";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        } catch (Error $e) {
+            echo $e;
+            return false;
+        }
+
+    }
+
     public function updatePregunta($param)
     {
 
