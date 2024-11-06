@@ -225,7 +225,17 @@
                         </label>
                         <label id="eliminarPregunta" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
                             <a href="index.php?controller=respuesta&action=remove&id_respuesta=<?php echo $datosRespuesta["id"];?>"><i class="bi bi-trash"></i></a></label> 
-                        <i class="bi bi-star"></i>
+                        
+                        <label>
+                            <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
+                            href="index.php?controller=respuesta&action=esUtil&idRespuesta=<?php echo $datosRespuesta["id"];?>&idPregunta=<?php echo $pregunta["id"];?>">
+                                <?php if($datosRespuesta["util"] == 1){?>
+                                    <i class="bi bi-star-fill"></i>
+                                <?php }else{?>
+                                    <i class="bi bi-star"></i>
+                                <?php }?>
+                            </a>
+                        </label>
                     </div>
                     <div class="contenidoRespuesta">
                         <?php echo $datosRespuesta["texto"]; ?>

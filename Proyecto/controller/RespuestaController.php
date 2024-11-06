@@ -424,6 +424,31 @@ class RespuestaController
         exit;
     }
 
+    public function esUtil()
+    {
+        try
+        {
+            $idRespuesta = $_GET["idRespuesta"];
+            $idPregunta = $_GET["idPregunta"];
+            $result = $this->model->esUtil($idRespuesta);    
+
+            if($result)
+            {
+                header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$idPregunta);
+            }
+            else
+            {
+                throw new Error("Error al marcar la respuesta como util");
+            }
+
+        }
+        catch (Error $e)
+        {
+            echo "Ha sucedido el siguiente error -> ".$e;
+            exit();
+        }
+    }
+
 
 
 

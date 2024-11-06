@@ -24,10 +24,34 @@ class Respuesta
 
     public function getRespuestasByIdPregunta($id)
     {
-        $sql = "SELECT * FROM ".$this->tabla." WHERE id_pregunta = ?";
+        $sql = "SELECT * FROM ".$this->tabla." WHERE id_pregunta = ? ORDER BY util DESC";
         $stmt = $this->connection->prepare($sql);
         $stmt -> execute([$id]);
         return $stmt -> fetchAll();
+    }
+
+    public function esUtil($id)
+    {
+
+        $sql = "SELECT util FROM Respuestas WHERE id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt -> execute([$id]);
+        $util = $stmt -> fetchColumn();
+
+        if($util == null || $util == 0)
+        {
+            $sql = "UPDATE Respuestas SET util =1 WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt -> execute([$id]);
+            return $stmt -> rowCount() > 0;
+        }
+        else
+        {
+            $sql = "UPDATE Respuestas SET util = 0 WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt -> execute([$id]);
+            return $stmt -> rowCount() > 0;
+        }
     }
 
     public function contarVotos($param)
