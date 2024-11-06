@@ -106,6 +106,17 @@
 
 <input type="text" id="userId" value="<?php echo $_SESSION["user_data"]['id']; ?>" hidden >
 <div class="contenedorPreguntasYRespuestas">
+    <i>
+        <a href="index.php?controller=tema&action=mostrarTemas">
+            Temas
+        </a>
+        ->
+        <a href="index.php?controller=pregunta&action=list&id_tema=<?php echo $pregunta["id_tema"];?>">
+            <?php echo $pregunta["tema"]["nombre"];?>
+        </a>
+        ->
+        <?php echo $pregunta["titulo"];?>
+    </i>
     <div class="contenedorPregunta">
         <div class="fotoUsuarioPregunta">
             <?php

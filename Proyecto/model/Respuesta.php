@@ -97,12 +97,13 @@ class Respuesta
 
         $pregunta = $this-> pregunta -> getPreguntaById($id);
         $votosPregunta = $this -> contarVotos(["tipo"=>"pregunta","id"=>$id]);
-        
+        $temaPregunta = $this->pregunta->getTemaFromPregunta($pregunta);
         $usuarioPregunta = $this-> usuario -> getUsuarioById($pregunta["id_usuario"]);
 
 
         $objetosPregunta["datosPregunta"] = $pregunta;
         $objetosPregunta["datosPregunta"]["votos"] = $votosPregunta;
+        $objetosPregunta["datosPregunta"]["tema"] = $temaPregunta;
         $objetosPregunta["usuarioPregunta"] = $usuarioPregunta;
 
 
