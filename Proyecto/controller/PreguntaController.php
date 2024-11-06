@@ -250,7 +250,7 @@ class PreguntaController{
 
             $pregunta = $this-> model -> getPreguntaById($_GET["id_pregunta"]);
 
-            if($_SESSION["user_data"]["id"] != $pregunta["id_usuario"])
+            if(!$this->puedeEditar($_GET["id_pregunta"]))
             {
                 header("Location: index.php?controller=temas&action=mostrarTemas");
                 exit();
