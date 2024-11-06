@@ -14,18 +14,19 @@ class UsuarioController{
         $this -> view = "login";
     }
 
-    public function datosUsuario(){
-        $usuarioId = $_SESSION['user_data']['id'];
-        // Obtenemos los datos del usuario desde el modelo
+    public function datosUsuario() {
+        // Si no se pasa un ID de usuario, usamos el ID del usuario logueado
+        $usuarioId = isset($_GET['id']) ? $_GET['id'] : $_SESSION['user_data']['id'];
         $usuario = $this->model->getUsuarioById($usuarioId);
-        // Verificamos si el usuario está correctamente cargado
+    
         if ($usuario) {
-            echo json_encode($usuario); // Enviamos la respuesta JSON
+            echo json_encode($usuario);
         } else {
             echo json_encode(['error' => 'Usuario no encontrado']);
         }
-        exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
+        exit;
     }
+    
 
     public function nuevoUsuario() {
         $this -> view = "nuevoUsuario";
@@ -206,7 +207,7 @@ class UsuarioController{
                 if (in_array($fileMimeType, $allowedMimeTypes)) {
                     // Generamos un nombre único para la imagen
                     $fileName = uniqid() . '-' . basename($_FILES['nuevaFoto']['name']);
-                    $uploadFileDir = 'assets/img/';
+                    $uploadFileDir = 'assets/upload/fotoPerfil/';
                     $destPath = $uploadFileDir . $fileName;
     
                     // Movemos el archivo a la carpeta de destino
