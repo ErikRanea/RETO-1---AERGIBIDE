@@ -341,11 +341,21 @@ document.querySelectorAll('[id^="botonGuardarRespuesta-"]').forEach(boton => {
 
 /*Editar respuestas*/
 
-//EventListener para poner en modo editar la respuesa
+//EventListener para poner en modo editar la respuesta
 
 document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
     boton.addEventListener('click', function() {
+
+        if (this.hasAttribute('data-active')) {
+            return; 
+        }
+        
         const idRespuesta = this.getAttribute('value');
+        const botonEditar = document.getElementById(`editarRespuesta-${idRespuesta}`);
+        
+        // Marcar el botón como activo
+        botonEditar.setAttribute('data-active', 'true');
+        
         const idPregunta = this.getAttribute('data-id-pregunta');
         const contenedorRespuesta = this.closest('.contenedorRespuestaDivididor');
         const contenidoOriginal = contenedorRespuesta.querySelector('.contenidoRespuesta');
@@ -386,12 +396,15 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
         // Reemplazar el contenido original con el formulario
         contenidoOriginal.innerHTML = formularioEdicion;
 
-        // Manejador para cancelar la edición
-        contenedorRespuesta.querySelector('.botonCancelarRespuesta').addEventListener('click', () => {
+        // Añadir manejador para restaurar el botón cuando se cancela
+        contenedorRespuesta.querySelector('.botonCancelarRespuesta').addEventListener('click', (e) => {
+            e.preventDefault();
             contenidoOriginal.innerHTML = textoOriginal;
             if (imagenOriginal) {
                 contenidoOriginal.appendChild(imagenOriginal);
             }
+            // Remover el atributo active al cancelar
+            botonEditar.removeAttribute('data-active');
         });
     });
 });

@@ -220,6 +220,7 @@
                 </div>
                 <div class="respuesta">
                     <div class="estrella-respuesta">
+                        
                         <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value = "<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar" 
                         <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>
                             <i class="bi bi-pencil-square botonEditar"></i>
