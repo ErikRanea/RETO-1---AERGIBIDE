@@ -280,4 +280,76 @@ class UsuarioController{
         exit;
     }
 
+
+    public function vistaActividad(){
+        $this->view = "actividad";
+
+    }
+
+    public function mostrarActividad(){
+
+        if (!isset($_POST["username"])){
+            echo json_encode([
+                "status" => "error",
+                "messaje" => "Usuario no especificada"
+            ]);
+        } else {
+            $usuario = $_POST["username"];
+        }
+
+        if (!isset($_POST["vista"])){
+            echo json_encode([
+                "status" => "error",
+                "messaje" => "Vista no especificada"
+            ]);
+            exit();
+        } else {
+            $vista = $_POST["vista"];
+        }
+
+        $page = $_POST["page"] ?? 1;
+
+        $pagination = 2;
+
+        $actividad_pag = $this->model->getActividadPaginated($usuario, $pagination, $vista, $page);
+        $actividad = $actividad_pag[0];
+        $paginas = [$actividad_pag[1], $actividad_pag[2]];
+
+        //$respuestas_pag = $this->model->getActividadPaginated($usuario["username"], $pagination, "Respuestas_Usuario");
+        //$guardados_pag = $this->model->getActividadPaginated($usuario["username"], $pagination, "Guardados");
+
+        // Carga el archivo HTML adecuado y pasa los datos
+        ob_start(); // Inicia un buffer de salida, NECESARIO para cargar archivos HTML externos
+        switch ($vista){
+            case "Preguntas_Usuario":
+                include "view/usuario/actividad/preguntas.html.php";
+                break;
+            case "Respuestas_Usuario":
+                include "view/usuario/actividad/respuestas.html.php";
+                break;
+            case "Guardados":
+                include "view/usuario/actividad/guardados.html.php";
+                break;
+            default:
+                echo json_encode([
+                    "status" => "error",
+                    "messaje" => "ERROR Vista switch"
+                ]);
+                exit();
+        }
+
+        $contenidoHtml = ob_get_clean(); // Obtiene el contenido del buffer y lo guarda en $contenidoHtml
+
+        echo json_encode([
+            "status" => "success",
+            "data" => [
+                "actividad" => $actividad,
+                "paginas" => $paginas,
+                "html" => $contenidoHtml
+            ]
+        ]);
+        exit();
+
+    }
+
 }
