@@ -14,18 +14,19 @@ class UsuarioController{
         $this -> view = "login";
     }
 
-    public function datosUsuario(){
-        $usuarioId = $_SESSION['user_data']['id'];
-        // Obtenemos los datos del usuario desde el modelo
+    public function datosUsuario() {
+        // Si no se pasa un ID de usuario, usamos el ID del usuario logueado
+        $usuarioId = isset($_GET['id']) ? $_GET['id'] : $_SESSION['user_data']['id'];
         $usuario = $this->model->getUsuarioById($usuarioId);
-        // Verificamos si el usuario está correctamente cargado
+
         if ($usuario) {
-            echo json_encode($usuario); // Enviamos la respuesta JSON
+            echo json_encode($usuario);
         } else {
             echo json_encode(['error' => 'Usuario no encontrado']);
         }
-        exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
+        exit;
     }
+
 
     public function nuevoUsuario() {
         $this -> view = "nuevoUsuario";
@@ -130,17 +131,22 @@ class UsuarioController{
 
     public function update() {
         if (isset($_POST)) {
-            // Guardamos el id de la sesión
-            $usuarioId = $_SESSION['user_data']['id'];
-            // Mediante el id obtenemos el usuario y lo guardamos
+            if (isset($_POST['idUsuario'])) {
+                $usuarioId = $_POST['idUsuario'];
+            } /* else {
+                // Si no, usa el ID del usuario logeado
+                $usuarioId = $_SESSION['user_data']['id'];
+            } */
+
+            // Obtener el usuario por ID
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
-            
-            // Guardamos los campos editados
+
+            // Actualizar los campos
             $usuario->nombre = $_POST['nombre'];
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-    
+
             // Solo actualizar la contraseña si se ha proporcionado
             if (!empty($_POST["actualPassword"])) {
                 // Verificar contraseña
@@ -156,13 +162,17 @@ class UsuarioController{
                     return; // Detenemos la ejecución aquí si la contraseña no es válida
                 }
             }
-    
-            // Actualizar usuario
+
+            // Actualizar usuario en la base de datos
             $this->model->updateUsuario($usuario);
-            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+
+            // Redirigir a la página de los datos del usuario actualizado
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario&id=" . $usuarioId);
             exit();
         }
     }
+
+
 
     public function create() {
         if (isset($_POST)) {
@@ -171,12 +181,11 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-            $usuario->foto_perfil = 'assets/img/default_profile_picture.png';
+            $usuario->foto_perfil = 'assets/img/fotoPorDefecto.png';
 
-    
             // Capturamos el rol
             $usuario->rol = $_POST['rol']; // Asegúrate de tener un campo "rol" en tu formulario
-    
+
             // Confirmar contraseña
             if ($_POST["nuevaPassword"] === $_POST["repetirPassword"]) {
                 $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
@@ -184,7 +193,7 @@ class UsuarioController{
                 echo "Las contraseñas no coinciden.";
                 return;
             }
-    
+
             // Crear usuario
             $this->model->createUsuario($usuario);
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
@@ -194,26 +203,25 @@ class UsuarioController{
 
     public function updateFoto() {
         if (isset($_POST)) {
-            // Guardamos el id de la sesión
-            $usuarioId = $_SESSION['user_data']['id'];
-            // Obtenemos el usuario
+            if (isset($_POST['idUsuario'])) {
+                $usuarioId = $_POST['idUsuario'];
+            }
+
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
-    
+
             if (isset($_FILES['nuevaFoto']) && $_FILES['nuevaFoto']['error'] === UPLOAD_ERR_OK) {
                 $fileTmpPath = $_FILES['nuevaFoto']['tmp_name'];
                 $fileMimeType = mime_content_type($fileTmpPath);
                 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
-    
+
                 if (in_array($fileMimeType, $allowedMimeTypes)) {
-                    // Generamos un nombre único para la imagen
                     $fileName = uniqid() . '-' . basename($_FILES['nuevaFoto']['name']);
-                    $uploadFileDir = 'assets/img/';
+                    $uploadFileDir = 'assets/upload/fotoPerfil/';
                     $destPath = $uploadFileDir . $fileName;
-    
-                    // Movemos el archivo a la carpeta de destino
+
                     if (move_uploaded_file($fileTmpPath, $destPath)) {
-                        $usuario->foto_perfil = $destPath; // Asignamos la nueva ruta de la foto al objeto usuario
-                        $this->model->updateUsuario($usuario); // Actualizamos el usuario solo con la foto nueva
+                        $usuario->foto_perfil = $destPath;
+                        $this->model->updateUsuario($usuario);
                         header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
                         exit();
                     } else {
@@ -228,7 +236,7 @@ class UsuarioController{
                 echo "No se subió ningún archivo o hubo un error al cargar la imagen.";
             }
         }
-    }    
+    }
 
     public function cerrarSesion() {
         // Aquí destruyes la sesión y rediriges al usuario

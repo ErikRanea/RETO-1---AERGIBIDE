@@ -1,5 +1,4 @@
 <div class="containerPerfil">
-
     <?php
         require_once "panelLateral.html.php";
     ?>
@@ -69,7 +68,7 @@
                         <tr>
                             <td>
                             <select name="rol">
-                                <option value="usuario">Usuario</option>
+                                <option value="user">Usuario</option>
                                 <option value="admin">Administrador</option>
                             </select>
                             </td>
