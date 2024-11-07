@@ -201,7 +201,7 @@ document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
                 votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane');
                 this.querySelector('i').classList.add('bi-airplane-fill');
-                this.querySelector('i').classList.add('airplane-down');
+
                 
                 // Asegurarnos de que el like esté limpio
                 
@@ -373,7 +373,7 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
                 <input type="hidden" name="id_pregunta" value="${idPregunta}">
                 <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
                 <div class="contenedorImagenEdicion">
-                    <img src="${imagenOriginalUrl ? imagenOriginalUrl : ''}" alt="Imagen de respuesta">
+                    <img class="ImagenEditar" src="${imagenOriginalUrl ? imagenOriginalUrl : ''}" alt="Imagen de respuesta">
                 </div>
                 <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
                     <label class="botonSubirArchivo">
