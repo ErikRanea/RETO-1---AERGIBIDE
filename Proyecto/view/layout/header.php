@@ -100,7 +100,7 @@ $notificaciones = $id_usuario ? $usuarioModel->getNotificacionesNoLeidas($id_usu
                 <i id="person" class="bi bi-person-fill"></i>
                 <!-- Menú desplegable -->
                 <div id="dropdown" class="dropdown-content">
-                    <a id="person1" href="index.php?controller=usuario&action=mostrarDatosUsuario">Configuración</a>
+                    <a id="person1" href="index.php?controller=usuario&action=mostrarDatosUsuario&id=<?php echo $_SESSION["user_data"]["id"] ?>">Configuración</a>
                     <a href="index.php?controller=usuario&action=cerrarSesion">Cerrar sesión</a>
                 </div>
                 <!-- Formulario para cambiar entre modo oscuro y claro -->

@@ -394,9 +394,15 @@ input[readonly] {
     font-weight: bold;
     color: var(--color-principal);
     margin: 0 auto;
-    padding-bottom: 3em;
 }
 
+
+.botonesArriba {
+    font-weight: bold;
+    color: white;
+    margin: 0 auto;
+    padding-bottom: 2em;
+}
 .botonesArriba a {
     margin-left: 2em;
     margin-right: 2em;
@@ -406,6 +412,7 @@ input[readonly] {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100vh;
     padding: 2em;
 }
 
@@ -414,6 +421,10 @@ input[readonly] {
     flex-direction: row;
     width: 100%;
     align-items: center;
+}
+
+.listaUsers {
+    overflow-y: scroll;
 }
 
 .listaUsers li {
