@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("username").value = data.username || '';
             document.getElementById("email").value = data.email || '';
             document.getElementById("password").value = data.password || '';
+            document.getElementById("idUsuario").value = data.id || '';
         }
     })
     .catch(error => {

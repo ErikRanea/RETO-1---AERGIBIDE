@@ -5,7 +5,7 @@
 ?>
 
 <div class="panelLateral">
-    <p><a href="index.php?controller=usuario&action=mostrarDatosUsuario"
+    <p><a href="index.php?controller=usuario&action=mostrarDatosUsuario&id=<?php echo $_SESSION["user_data"]["id"] ?>"
             class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'mostrarDatosUsuario') ? 'active' : ''; ?>">
             Datos de usuario
         </a>
