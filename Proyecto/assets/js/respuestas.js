@@ -104,49 +104,40 @@ async function likePregunta(event, idElemento) {
 
 /*El querySelectorAll es para seleccionar todos los elementos que coincidan con el selector*/
 document.querySelectorAll('[id^="botonRespuestaLike-"]').forEach(boton => {
-    boton.addEventListener('click', function() {
+    boton.addEventListener('click', async function() {
         const idRespuesta = this.value;
         const userId = document.getElementById('userId').value;
         const dislikeBtn = document.getElementById(`botonRespuestaDisLike-${idRespuesta}`);
-        console.log("dislikeBtn: " + dislikeBtn);
-
         const votosElemento = document.getElementById(`votosRespuesta-${idRespuesta}`);
-        let votosActuales = 0;
-        if (votosElemento) {
-            votosActuales = parseInt(votosElemento.textContent.trim()) || 0;
-        }
-
         
         const params = new URLSearchParams();
         params.append("idRespuesta", idRespuesta);
         params.append("idUsuario", userId);
         params.append("meGusta", 1);
 
+        try {
+            const response = await fetch(`index.php?controller=respuesta&action=like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: params.toString()
+            });
 
-        fetch(`index.php?controller=respuesta&action=like`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: params.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
+            const data = await response.json();
+            
             if(data.message == "Voto eliminado correctamente la respuesta") {
-                votosActuales--;
-                votosElemento.textContent = votosActuales;
+                const votosNuevos = await conseguirVotos("respuesta", idRespuesta);
+                votosElemento.textContent = votosNuevos["votos"];
                 this.querySelector('i').classList.remove('bi-airplane-fill');
                 this.querySelector('i').classList.add('bi-airplane');
             } else if(data.status == "success") {
-                // Activar el like
-                votosActuales++;
-                votosElemento.textContent = votosActuales;
+                const votosNuevos = await conseguirVotos("respuesta", idRespuesta);
+                votosElemento.textContent = votosNuevos["votos"];
                 this.querySelector('i').classList.remove('bi-airplane');
                 this.querySelector('i').classList.add('bi-airplane-fill');
                 
-                // Asegurarnos de que el dislike esté limpio
-                const dislikeBtn = document.getElementById(`botonRespuestaDisLike-${idRespuesta}`);
                 if(dislikeBtn) {
                     const dislikeIcon = dislikeBtn.querySelector('i');
                     dislikeIcon.classList.remove('bi-airplane-fill');
@@ -154,68 +145,118 @@ document.querySelectorAll('[id^="botonRespuestaLike-"]').forEach(boton => {
                     dislikeIcon.classList.add('airplane-down');
                 }
             }
-        });
+        } catch (error) {
+            console.error('Error:', error);
+        }
     });
 });
 
 document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
-    boton.addEventListener('click', function() {
+    boton.addEventListener('click', async function() {
         const idRespuesta = this.value;
         const userId = document.getElementById('userId').value;
         const strIdRespuesta = `botonRespuestaLike-${idRespuesta}`;
-        console.log("strIdRespuesta: " + strIdRespuesta);
         const likeBtn = document.getElementById(strIdRespuesta);
-        console.log("primer boton like" + likeBtn );
-        
-        // Añadimos verificación para el elemento de votos
         const votosElemento = document.getElementById(`votosRespuesta-${idRespuesta}`);
-        let votosActuales = 0;
-        if (votosElemento) {
-            votosActuales = parseInt(votosElemento.textContent.trim()) || 0;
-        }
         
-        const params = new URLSearchParams();
-        params.append("idRespuesta", idRespuesta);
-        params.append("idUsuario", userId);
-        params.append("meGusta", 0);
+        try {
 
-        fetch(`index.php?controller=respuesta&action=like`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: params.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.message == "Voto eliminado correctamente la respuesta") {
-                votosActuales++;
-                votosElemento.textContent = votosActuales;
-                this.querySelector('i').classList.remove('bi-airplane-fill');
-                this.querySelector('i').classList.add('bi-airplane');
-                this.querySelector('i').classList.add('airplane-down');
-            } else if(data.status == "success") {
-                // Activar el dislike
-                votosActuales--;
-                votosElemento.textContent = votosActuales;
-                this.querySelector('i').classList.remove('bi-airplane');
-                this.querySelector('i').classList.add('bi-airplane-fill');
+            
+                // Continuamos con el resto del código usando votosActuales
+                const params = new URLSearchParams();
+                params.append("idRespuesta", idRespuesta);
+                params.append("idUsuario", userId);
+                params.append("meGusta", 0);
 
+                const response = await fetch(`index.php?controller=respuesta&action=like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: params.toString()
+                });
+
+                const data = await response.json();
+                if(data.message == "Voto eliminado correctamente la respuesta") {
+                    let votosNuevos = await conseguirVotos("respuesta", idRespuesta);
+                        votosElemento.textContent = votosNuevos["votos"];
+                        this.querySelector('i').classList.remove('bi-airplane-fill');
+                        this.querySelector('i').classList.add('bi-airplane');
+                        this.querySelector('i').classList.add('airplane-down');
+                    
+                } else if(data.status == "success") {
+                    // Activar el dislike
+                    let votosNuevos = await conseguirVotos("respuesta", idRespuesta);
+                        votosElemento.textContent = votosNuevos["votos"];
+                        this.querySelector('i').classList.remove('bi-airplane');
+                        this.querySelector('i').classList.add('bi-airplane-fill');
+
+                    
+                    // Asegurarnos de que el like esté limpio
+                    
+                    
+                    console.log(likeBtn);
+                    if(likeBtn) {
+                        console.log("Votos actuales eliminando like en fill");
+                        likeBtn.querySelector('i').classList.remove('bi-airplane-fill');
+                        likeBtn.querySelector('i').classList.add('bi-airplane');
+                    }
                 
-                // Asegurarnos de que el like esté limpio
-                
-                
-                console.log(likeBtn);
-                if(likeBtn) {
-                    console.log("Votos actuales eliminando like en fill");
-                    likeBtn.querySelector('i').classList.remove('bi-airplane-fill');
-                    likeBtn.querySelector('i').classList.add('bi-airplane');
-                }
             }
-        });
+        } catch (error) {
+            console.error('Error en el proceso:', error);
+        }
     });
 });
+
+
+async function conseguirVotos(tipo,id)
+{
+
+    let voto = 0;
+    const params = new URLSearchParams();
+    params.append("id" , id);
+    params.append("tipo", tipo);
+
+    try 
+    {
+     
+      const response = await fetch('index.php?controller=respuesta&action=cuentaDeVotos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: params.toString()
+        }); 
+
+        const data = await response.json();
+        
+
+        if(data.status == "success")
+        {
+            console.log('Respuesta del CONSEGUITvOTOS:', data.votos);
+            return data.votos;
+        }
+        else
+        {
+            throw new Error(data.message);
+        }
+
+    } 
+    catch (error) {
+
+        return error
+        
+    }
+
+
+
+}
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
