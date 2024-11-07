@@ -47,6 +47,12 @@ class Pregunta{
         return $stmt ->fetch();
     }
 
+    public function getTemaFromPregunta($pregunta){
+        $tema = $this->tema->getTemaById($pregunta["id_tema"]);
+        return $tema;
+    }
+
+    /*Esta función me devuelve la pregunta y el usuario que la ha realizado*/
     public function getPreguntaYUsuario($param)
     {
 
