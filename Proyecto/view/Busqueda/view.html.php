@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content-busqueda">
     <?php
 
     $termino = $dataToView['termino'] ?? ''; // Si no está definido, usa un string vacío
@@ -33,27 +33,29 @@
     }
     ?>
 
-    <h2>Resultados de búsqueda para: <?= htmlspecialchars($termino) ?></h2>
-
+    <h2 class="search-title">Resultados de búsqueda</h2>
     <?php if (!empty($resultados)): ?>
-        <ul>
+        <ul class="results-list">
             <?php foreach ($resultados as $resultado): ?>
-                <li>
-                    <strong><?= htmlspecialchars($resultado['pregunta_titulo'] ?? 'Sin título') ?></strong>
+                <li class="result-item">
+                    <a href="index.php?controller=respuesta&action=view&id_pregunta=<?php echo htmlspecialchars($resultado['pregunta_id'] ?? ''); ?>" class="result-link">
+                        <strong class="result-title"><?= htmlspecialchars($resultado['pregunta_titulo'] ?? 'Sin título') ?></strong>
+
                     <div class="resultado-detalles">
-                        <div class="izquierda">
-                            <small>
-                                Empezado por: <?= htmlspecialchars($resultado['autor_pregunta'] ?? 'Desconocido') ?><br>
-                                Fecha de primera publicación: <?= htmlspecialchars(isset($resultado['fecha_primera_publicacion']) ? formatearFecha($resultado['fecha_primera_publicacion']) : 'No disponible') ?>
+                        <div class="izquierda details-left">
+                            <small class="details-text">
+                                <span class="details-label">Empezado por:</span> <span class="details-value"><?= htmlspecialchars($resultado['autor_pregunta'] ?? 'Desconocido') ?></span><br>
+                                <span class="details-label">Fecha de primera publicación:</span> <span class="details-value"><?= htmlspecialchars(isset($resultado['fecha_primera_publicacion']) ? formatearFecha($resultado['fecha_primera_publicacion']) : 'No disponible') ?></span>
                             </small>
                         </div>
-                        <div class="derecha">
-                            <small>
-                                Última actualización por: <?= htmlspecialchars($resultado['autor_ultima_respuesta'] ?? $resultado['autor_pregunta']) ?><br>
-                                Fecha de última publicación: <?= htmlspecialchars(isset($resultado['fecha_ultima_publicacion']) ? formatearFecha($resultado['fecha_ultima_publicacion']) : 'No disponible') ?>
+                        <div class="derecha details-right">
+                            <small class="details-text">
+                                <span class="details-label">Última actualización por:</span> <span class="details-value"><?= htmlspecialchars($resultado['autor_ultima_respuesta'] ?? $resultado['autor_pregunta']) ?></span><br>
+                                <span class="details-label">Fecha de última publicación:</span> <span class="details-value"><?= htmlspecialchars(isset($resultado['fecha_ultima_publicacion']) ? formatearFecha($resultado['fecha_ultima_publicacion']) : 'No disponible') ?></span>
                             </small>
                         </div>
                     </div>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
