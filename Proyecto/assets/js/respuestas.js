@@ -107,6 +107,15 @@ document.querySelectorAll('[id^="botonRespuestaLike-"]').forEach(boton => {
     boton.addEventListener('click', function() {
         const idRespuesta = this.value;
         const userId = document.getElementById('userId').value;
+        const dislikeBtn = document.getElementById(`botonRespuestaDisLike-${idRespuesta}`);
+        console.log("dislikeBtn: " + dislikeBtn);
+
+        const votosElemento = document.getElementById(`votosRespuesta-${idRespuesta}`);
+        let votosActuales = 0;
+        if (votosElemento) {
+            votosActuales = parseInt(votosElemento.textContent.trim()) || 0;
+        }
+
         
         const params = new URLSearchParams();
         params.append("idRespuesta", idRespuesta);
@@ -125,10 +134,14 @@ document.querySelectorAll('[id^="botonRespuestaLike-"]').forEach(boton => {
         .then(response => response.json())
         .then(data => {
             if(data.message == "Voto eliminado correctamente la respuesta") {
+                votosActuales--;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane-fill');
                 this.querySelector('i').classList.add('bi-airplane');
             } else if(data.status == "success") {
                 // Activar el like
+                votosActuales++;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane');
                 this.querySelector('i').classList.add('bi-airplane-fill');
                 
@@ -149,6 +162,17 @@ document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
     boton.addEventListener('click', function() {
         const idRespuesta = this.value;
         const userId = document.getElementById('userId').value;
+        const strIdRespuesta = `botonRespuestaLike-${idRespuesta}`;
+        console.log("strIdRespuesta: " + strIdRespuesta);
+        const likeBtn = document.getElementById(strIdRespuesta);
+        console.log("primer boton like" + likeBtn );
+        
+        // Añadimos verificación para el elemento de votos
+        const votosElemento = document.getElementById(`votosRespuesta-${idRespuesta}`);
+        let votosActuales = 0;
+        if (votosElemento) {
+            votosActuales = parseInt(votosElemento.textContent.trim()) || 0;
+        }
         
         const params = new URLSearchParams();
         params.append("idRespuesta", idRespuesta);
@@ -166,18 +190,25 @@ document.querySelectorAll('[id^="botonRespuestaDisLike-"]').forEach(boton => {
         .then(response => response.json())
         .then(data => {
             if(data.message == "Voto eliminado correctamente la respuesta") {
+                votosActuales++;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane-fill');
                 this.querySelector('i').classList.add('bi-airplane');
                 this.querySelector('i').classList.add('airplane-down');
             } else if(data.status == "success") {
                 // Activar el dislike
+                votosActuales--;
+                votosElemento.textContent = votosActuales;
                 this.querySelector('i').classList.remove('bi-airplane');
                 this.querySelector('i').classList.add('bi-airplane-fill');
-                this.querySelector('i').classList.add('airplane-down');
+
                 
                 // Asegurarnos de que el like esté limpio
-                const likeBtn = document.getElementById(`botonRespuestaLike-${idRespuesta}`);
+                
+                
+                console.log(likeBtn);
                 if(likeBtn) {
+                    console.log("Votos actuales eliminando like en fill");
                     likeBtn.querySelector('i').classList.remove('bi-airplane-fill');
                     likeBtn.querySelector('i').classList.add('bi-airplane');
                 }
@@ -310,11 +341,21 @@ document.querySelectorAll('[id^="botonGuardarRespuesta-"]').forEach(boton => {
 
 /*Editar respuestas*/
 
-//EventListener para poner en modo editar la respuesa
+//EventListener para poner en modo editar la respuesta
 
 document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
     boton.addEventListener('click', function() {
+
+        if (this.hasAttribute('data-active')) {
+            return; 
+        }
+        
         const idRespuesta = this.getAttribute('value');
+        const botonEditar = document.getElementById(`editarRespuesta-${idRespuesta}`);
+        
+        // Marcar el botón como activo
+        botonEditar.setAttribute('data-active', 'true');
+        
         const idPregunta = this.getAttribute('data-id-pregunta');
         const contenedorRespuesta = this.closest('.contenedorRespuestaDivididor');
         const contenidoOriginal = contenedorRespuesta.querySelector('.contenidoRespuesta');
@@ -332,7 +373,7 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
                 <input type="hidden" name="id_pregunta" value="${idPregunta}">
                 <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
                 <div class="contenedorImagenEdicion">
-                    <img src="${imagenOriginalUrl ? imagenOriginalUrl : ''}" alt="Imagen de respuesta">
+                    <img class="ImagenEditar" src="${imagenOriginalUrl ? imagenOriginalUrl : ''}" alt="Imagen de respuesta">
                 </div>
                 <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
                     <label class="botonSubirArchivo">
@@ -355,12 +396,15 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
         // Reemplazar el contenido original con el formulario
         contenidoOriginal.innerHTML = formularioEdicion;
 
-        // Manejador para cancelar la edición
-        contenedorRespuesta.querySelector('.botonCancelarRespuesta').addEventListener('click', () => {
+        // Añadir manejador para restaurar el botón cuando se cancela
+        contenedorRespuesta.querySelector('.botonCancelarRespuesta').addEventListener('click', (e) => {
+            e.preventDefault();
             contenidoOriginal.innerHTML = textoOriginal;
             if (imagenOriginal) {
                 contenidoOriginal.appendChild(imagenOriginal);
             }
+            // Remover el atributo active al cancelar
+            botonEditar.removeAttribute('data-active');
         });
     });
 });

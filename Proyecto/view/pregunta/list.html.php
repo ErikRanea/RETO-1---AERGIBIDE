@@ -23,7 +23,7 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
                         <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= $pregunta["id"] ?>" class="tituloPregunta"><?= $pregunta["titulo"] ?></a>
                     </p>
                     <div class="datos-pregunta">
-                        <span><?= $pregunta["votos"] ?> Votos</span>
+                        <span><?=$pregunta["cuentaVotos"]["votos"]?> Votos</span>
 
                         <div>
                             <?= $usuario["username"] ?>

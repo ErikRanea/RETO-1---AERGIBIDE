@@ -24,12 +24,67 @@ class Respuesta
 
     public function getRespuestasByIdPregunta($id)
     {
-        $sql = "SELECT * FROM ".$this->tabla." WHERE id_pregunta = ?";
+        $sql = "SELECT * FROM ".$this->tabla." WHERE id_pregunta = ? ORDER BY util DESC";
         $stmt = $this->connection->prepare($sql);
         $stmt -> execute([$id]);
         return $stmt -> fetchAll();
     }
 
+    public function esUtil($id)
+    {
+
+        $sql = "SELECT util FROM Respuestas WHERE id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt -> execute([$id]);
+        $util = $stmt -> fetchColumn();
+
+        if($util == null || $util == 0)
+        {
+            $sql = "UPDATE Respuestas SET util =1 WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt -> execute([$id]);
+            return $stmt -> rowCount() > 0;
+        }
+        else
+        {
+            $sql = "UPDATE Respuestas SET util = 0 WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt -> execute([$id]);
+            return $stmt -> rowCount() > 0;
+        }
+    }
+
+    public function contarVotos($param)
+    {
+        $sql = "SELECT contarVotos (?,?) AS votos";
+        $stmt = $this -> connection-> prepare($sql);
+       // $stmt -> bindParam("si",$param["tipo"],$param["id"]);
+        $stmt -> execute([$param["tipo"],$param["id"]]);
+        return $stmt -> fetch();
+    }
+
+
+    public function getRespuestaById($id)
+    {
+
+        $sql = "SELECT * FROM ".$this->tabla." WHERE id = ?";
+        $stmt = $this-> connection -> prepare($sql);
+        $stmt -> execute([$id]);
+        return $stmt -> fetch(); 
+    }
+
+    public function getRespuestaYUsuario($param)
+    {
+        $respuesta = $this->getRespuestaById($param["id_respuesta"]);
+
+        $usuario = $this->usuario->getUsuarioById($respuesta["id_usuario"]);
+
+        $datos = array();
+        $datos["respuesta"] = $respuesta;
+        $datos["usuario"] = $usuario;
+
+        return $datos;
+    }
 
 
     public function getRespuestasConUsuariosByIdPregunta($id)
@@ -41,10 +96,14 @@ class Respuesta
         $objetosPregunta = array();
 
         $pregunta = $this-> pregunta -> getPreguntaById($id);
+        $votosPregunta = $this -> contarVotos(["tipo"=>"pregunta","id"=>$id]);
+        $temaPregunta = $this->pregunta->getTemaFromPregunta($pregunta);
         $usuarioPregunta = $this-> usuario -> getUsuarioById($pregunta["id_usuario"]);
 
 
         $objetosPregunta["datosPregunta"] = $pregunta;
+        $objetosPregunta["datosPregunta"]["votos"] = $votosPregunta;
+        $objetosPregunta["datosPregunta"]["tema"] = $temaPregunta;
         $objetosPregunta["usuarioPregunta"] = $usuarioPregunta;
 
 
@@ -58,6 +117,7 @@ class Respuesta
 
         for ($i=0; $i < count($respuestas) ; $i++) { 
 
+            $respuestas[$i]["votos"] = $this -> contarVotos(["tipo"=>"respuesta","id"=>$respuestas[$i]["id"]]);
             $usuarioRespuesta = $this->usuario -> getUsuarioById($respuestas[$i]["id_usuario"]);
             array_push($usuariosRespuestas, $usuarioRespuesta);
         }
@@ -104,24 +164,58 @@ class Respuesta
 
     public function insertRespuesta($param)
     {
-        try{
+        try {
+            $this->connection->beginTransaction();
+
             $texto = $param["texto"];
             $imagen = $param["file_path"];
             $fecha_hora = date("Y-m-d H:i:s");
             $id_pregunta = $param["id_pregunta"];
-            $id_usuario  = $_SESSION["user_data"]["id"];
+            $id_usuario = $_SESSION["user_data"]["id"];
 
-            $sql = "INSERT INTO ".$this->tabla." (texto,imagen,fecha_hora,id_pregunta,id_usuario) VALUES (?,?,?,?,?)";
-            $stmt = $this-> connection-> prepare($sql);
-            $stmt->execute([$texto,$imagen,$fecha_hora,$id_pregunta,$id_usuario]);
+            // Insertar la respuesta
+            $sql = "INSERT INTO ".$this->tabla." (texto, imagen, fecha_hora, id_pregunta, id_usuario) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$texto, $imagen, $fecha_hora, $id_pregunta, $id_usuario]);
+
+            // Obtener el ID de la respuesta recién insertada
+            $id_respuesta = $this->connection->lastInsertId();
+
+            // Obtener el ID del usuario que hizo la pregunta
+            $sqlPregunta = "SELECT id_usuario FROM Preguntas WHERE id = ?";
+            $stmtPregunta = $this->connection->prepare($sqlPregunta);
+            $stmtPregunta->execute([$id_pregunta]);
+            $id_usuario_pregunta = $stmtPregunta->fetchColumn();
+
+            // Insertar la notificación
+            $mensaje = "Tienes una nueva respuesta en tu pregunta.";
+            $sqlNotificacion = "INSERT INTO Notificaciones (id_usuario, id_pregunta, mensaje, leido, fecha) VALUES (?, ?, ?, 0, ?)";
+            $stmtNotificacion = $this->connection->prepare($sqlNotificacion);
+            $stmtNotificacion->execute([$id_usuario_pregunta, $id_pregunta, $mensaje, $fecha_hora]);
+
+            $this->connection->commit();
             return true;
-        }
-        catch(error)
-        {
+        } catch (Exception $e) {
+            $this->connection->rollBack();
             return false;
         }
-
     }
+
+
+    public function deleteRespuestaById($id)
+    {
+        try {
+            $sql = "DELETE FROM ".$this->tabla." WHERE id = ? ";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        } catch (Error $e) {
+            echo $e;
+            return false;
+        }
+    }
+
+
 
     public function guardarRespuesta($param)
     {
@@ -227,5 +321,6 @@ class Respuesta
 
         return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente  
     }
+
 
 }

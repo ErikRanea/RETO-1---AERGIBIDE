@@ -14,18 +14,19 @@ class UsuarioController{
         $this -> view = "login";
     }
 
-    public function datosUsuario(){
-        $usuarioId = $_SESSION['user_data']['id'];
-        // Obtenemos los datos del usuario desde el modelo
+    public function datosUsuario() {
+        // Si no se pasa un ID de usuario, usamos el ID del usuario logueado
+        $usuarioId = isset($_GET['id']) ? $_GET['id'] : $_SESSION['user_data']['id'];
         $usuario = $this->model->getUsuarioById($usuarioId);
-        // Verificamos si el usuario está correctamente cargado
+
         if ($usuario) {
-            echo json_encode($usuario); // Enviamos la respuesta JSON
+            echo json_encode($usuario);
         } else {
             echo json_encode(['error' => 'Usuario no encontrado']);
         }
-        exit; // Nos aseguramos de que PHP no siga procesando después de enviar la respuesta
+        exit;
     }
+
 
     public function nuevoUsuario() {
         $this -> view = "nuevoUsuario";
@@ -111,12 +112,14 @@ class UsuarioController{
     }
 
     public function mostrarGestionUsuario() {
-        // Llamo a la vista html.php
+        $rolUsuario = $_SESSION['user_data']['rol'] ?? 'admin';
         $this -> view = "gestionUsuario";
-        // Recogo los datos en la variable $users
-        $users = $this->model->getUsers();
+        if ($rolUsuario === 'gestor') {
+            $users = $this->model->getUsuarios();
+        } else {
+            $users = $this->model->getUsers();
+        }
         include __DIR__ . '/../view/layout/header.php';
-        // Incluyo la vista para añadir los datos
         include __DIR__ . '/../view/usuario/gestionUsuario.html.php';
     }
 
@@ -128,31 +131,48 @@ class UsuarioController{
 
     public function update() {
         if (isset($_POST)) {
-            // Guardamos el id de la sesión
-            $usuarioId = $_SESSION['user_data']['id'];
-            // Mediante el id obtenemos el usuario y lo guardamos
+            if (isset($_POST['idUsuario'])) {
+                $usuarioId = $_POST['idUsuario'];
+            } /* else {
+                // Si no, usa el ID del usuario logeado
+                $usuarioId = $_SESSION['user_data']['id'];
+            } */
+
+            // Obtener el usuario por ID
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
-            
-            // Guardamos los campos editados
+
+            // Actualizar los campos
             $usuario->nombre = $_POST['nombre'];
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
 
-            // Verificar contraseña
-            $usuarioAlmacenado = $this->model->getUsuarioByEmail($_POST['email']);
-            if (password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
-                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
-            } else {
-                echo "La contraseña actual es incorrecta.";
+            // Solo actualizar la contraseña si se ha proporcionado
+            if (!empty($_POST["actualPassword"])) {
+                // Verificar contraseña
+                $usuarioAlmacenado = $this->model->getUsuarioByEmail($usuario->email);
+                if ($usuarioAlmacenado && password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
+                    // Solo actualiza la contraseña si se proporciona una nueva
+                    if (!empty($_POST['nuevaPassword'])) {
+                        $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+                    }
+                } else {
+                    // Si la contraseña actual es incorrecta, mostramos un mensaje de error
+                    echo "La contraseña actual es incorrecta.";
+                    return; // Detenemos la ejecución aquí si la contraseña no es válida
+                }
             }
-    
-            // Actualizar usuario
+
+            // Actualizar usuario en la base de datos
             $this->model->updateUsuario($usuario);
-            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+
+            // Redirigir a la página de los datos del usuario actualizado
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario&id=" . $usuarioId);
             exit();
         }
     }
+
+
 
     public function create() {
         if (isset($_POST)) {
@@ -161,10 +181,11 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-    
+            $usuario->foto_perfil = 'assets/img/fotoPorDefecto.png';
+
             // Capturamos el rol
             $usuario->rol = $_POST['rol']; // Asegúrate de tener un campo "rol" en tu formulario
-    
+
             // Confirmar contraseña
             if ($_POST["nuevaPassword"] === $_POST["repetirPassword"]) {
                 $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
@@ -172,7 +193,7 @@ class UsuarioController{
                 echo "Las contraseñas no coinciden.";
                 return;
             }
-    
+
             // Crear usuario
             $this->model->createUsuario($usuario);
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
@@ -181,11 +202,11 @@ class UsuarioController{
     }
 
     public function updateFoto() {
-
         if (isset($_POST)) {
-            // Guardamos el id de la sesión
-            $usuarioId = $_SESSION['user_data']['id'];
-            // Mediante el id obtenemos el usuario y lo guardamos
+            if (isset($_POST['idUsuario'])) {
+                $usuarioId = $_POST['idUsuario'];
+            }
+
             $usuario = $this->model->getUsuarioByIdObj($usuarioId);
 
             if (isset($_FILES['nuevaFoto']) && $_FILES['nuevaFoto']['error'] === UPLOAD_ERR_OK) {
@@ -194,25 +215,25 @@ class UsuarioController{
                 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
 
                 if (in_array($fileMimeType, $allowedMimeTypes)) {
-                    $fileName = uniqid() . '-' . $_FILES['nuevaFoto']['name'];
-                    $uploadFileDir = 'assets/img/';
+                    $fileName = uniqid() . '-' . basename($_FILES['nuevaFoto']['name']);
+                    $uploadFileDir = 'assets/upload/fotoPerfil/';
                     $destPath = $uploadFileDir . $fileName;
 
-                    // Movemos el archivo a la carpeta deseada
                     if (move_uploaded_file($fileTmpPath, $destPath)) {
-                        $usuario->foto_perfil = $destPath; // Asignamos la nueva ruta a la foto
+                        $usuario->foto_perfil = $destPath;
+                        $this->model->updateUsuario($usuario);
+                        header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+                        exit();
                     } else {
-                        echo "No se pudo subir la imagen.";
+                        echo "Error al mover el archivo de imagen.";
                         return;
                     }
                 } else {
-                    echo "Tipo de archivo no permitido.";
+                    echo "Tipo de archivo no permitido. Solo se aceptan JPEG, PNG, GIF y WEBP.";
                     return;
                 }
-
-                $this->model->updateUsuario($usuario);
-                header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
-                exit();
+            } else {
+                echo "No se subió ningún archivo o hubo un error al cargar la imagen.";
             }
         }
     }
@@ -226,6 +247,37 @@ class UsuarioController{
         // Redirige al usuario a la página de inicio de sesión
         header("Location: index.php?controller=usuario&action=login");
         exit();
+    }
+
+
+    public function marcarNotificacionComoLeida()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_notificacion']) && isset($_POST['id_pregunta'])) {
+            $id_notificacion = $_POST['id_notificacion'];
+            $id_pregunta = $_POST['id_pregunta'];
+
+            // Marcar la notificación como leída
+            $this->model->marcarNotificacionComoLeida($id_notificacion);
+
+            // Redirigir a la página de la pregunta
+            header("Location: index.php?controller=respuesta&action=view&id_pregunta=" . $id_pregunta);
+            exit;
+        } else {
+            // Si no se recibieron los datos esperados, redirigir a la página principal
+            header("Location: index.php");
+            exit;
+        }
+    }
+
+    public function marcarTodasNotificacionesComoLeidas() {
+        if (isset($_GET['id_usuario'])) {
+            $id_usuario = $_GET['id_usuario'];
+            $result = $this->model->marcarTodasNotificacionesComoLeidas($id_usuario);
+            echo json_encode(['success' => $result]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID de usuario no proporcionado']);
+        }
+        exit;
     }
 
 }

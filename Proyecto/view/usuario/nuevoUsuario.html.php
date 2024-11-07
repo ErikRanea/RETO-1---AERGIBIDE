@@ -1,12 +1,11 @@
 <div class="containerPerfil">
-
     <?php
         require_once "panelLateral.html.php";
     ?>
 
     <div class="containerPanel">
         <div class="botonesArriba">
-            <a href="index.php?controller=usuario&action=mostrarGestionUsuario" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'gestionUsuario') ? 'active' : ''; ?>">
+            <a href="index.php?controller=usuario&action=mostrarGestionUsuario" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'mostrarGestionUsuario') ? 'active' : ''; ?>">
                 Gestión Usuarios
             </a>
             <a href="index.php?controller=usuario&action=nuevoUsuario" class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'nuevoUsuario') ? 'active' : ''; ?>">
@@ -69,7 +68,7 @@
                         <tr>
                             <td>
                             <select name="rol">
-                                <option value="usuario">Usuario</option>
+                                <option value="user">Usuario</option>
                                 <option value="admin">Administrador</option>
                             </select>
                             </td>

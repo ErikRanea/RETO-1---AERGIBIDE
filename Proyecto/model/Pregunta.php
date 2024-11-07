@@ -18,6 +18,16 @@ class Pregunta{
         $this -> connection = $dbObj ->connection;
     }
 
+    public function contarVotos($param)
+    {
+        $sql = "SELECT contarVotos (?,?) AS votos";
+        $stmt = $this -> connection-> prepare($sql);
+       // $stmt -> bindParam("si",$param["tipo"],$param["id"]);
+        $stmt -> execute([$param["tipo"],$param["id"]]);
+        return $stmt -> fetch();
+    }
+    
+    
     public function getPreguntasPorTema($id_tema){
         //$this->tabla = "Preguntas";
         $sql = "SELECT * FROM ".$this->tabla. " WHERE id_tema = ?";
@@ -35,6 +45,40 @@ class Pregunta{
 
         $stmt->execute([$id]);
         return $stmt ->fetch();
+    }
+
+    public function getTemaFromPregunta($pregunta){
+        $tema = $this->tema->getTemaById($pregunta["id_tema"]);
+        return $tema;
+    }
+
+    /*Esta función me devuelve la pregunta y el usuario que la ha realizado*/
+    public function getPreguntaYUsuario($param)
+    {
+
+        $pregunta = $this->getPreguntaById($param["id_pregunta"]);
+        $usuario = $this->usuario->getUsuarioById($pregunta["id_usuario"]);
+
+        $datos = array();
+        $datos["pregunta"] = $pregunta;
+        $datos["usuario"] = $usuario;
+        return $datos;
+        
+
+    }
+    
+    public function deletePreguntaById($id)
+    {
+        try {
+            $sql = "DELETE FROM ".$this->tabla." WHERE id = ? ";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        } catch (Error $e) {
+            echo $e;
+            return false;
+        }
+
     }
 
     public function updatePregunta($param)
@@ -77,7 +121,8 @@ class Pregunta{
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindParam(':id_tema', $id_tema, PDO::PARAM_INT);
         $stmt->execute();
-        $totalPages = $this->getNumberPages($id_tema, $pagination); //ceil($this->getNumperPages()/$limit);
+        $totalPages = $this->getNumberPages($id_tema, $pagination); 
+        //ceil($this->getNumperPages()/$limit);
         return [$stmt->fetchAll(), $page, $totalPages];
     }
 
