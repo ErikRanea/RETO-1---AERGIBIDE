@@ -1,29 +1,78 @@
-/* General */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Asegura que paddings y márgenes no afecten el ancho total */
+    box-sizing: border-box;
+}
+:root {
+    --color-principal: #f4f4f9;
+    --color-secundario: #4DBAD9;
+    --color-secundario-activo: #379BB3;
+    --color-fondo: #ffffff;
+    --negro1:#1A1A1A;
+    --fondo-header-footer: #EAFBFF;
+    --color-letra:#333;
+    --color-dia-chat:#5f6368;
+    --color-rojo-aergibide:#e51816;
 }
 
 body {
-    font-family: Mulish-Regular, Arial, sans-serif; /* Combina ambas fuentes */
-    background-color: #f4f4f9; /* Color de fondo unificado */
-    min-height: 100vh; /* Asegura que el body cubra toda la altura de la ventana */
+    font-family: Mulish-Regular, Arial, sans-serif;
+    background-color: var(--color-fondo);
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* Organiza el contenido en columnas */
+    flex-direction: column;
 }
 
+main {
+    display: flex;
+    padding: 20px;
+    flex-grow: 1;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-principal);
+    text-decoration: none;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-secundario);
+    padding: 15px;
+    border-radius: 5px;
+    background-color: var(--color-principal);
+}
+
+strong {
+    font-size: 1.2em;
+    display: block;
+}
 /* Header */
 .header {
-    background-color: #EAFBFF;
+    background-color: var(--fondo-header-footer);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%; /* Asegura que el header ocupe todo el ancho */
+    width: 100%;
     padding: 1em;
-    position: sticky; /* Hace que el header sea fijo al desplazarse */
-    top: 0; /* Asegura que el header esté siempre en la parte superior */
-    z-index: 1000; /* Mantiene el header por encima de otros elementos */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .logo {
@@ -47,15 +96,11 @@ body {
     padding: 0.5em 2em;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: var(--color-principal);
+    color: var(--color-letra);
 }
 
-.lupa {
-    position: absolute;
-    left: 10px;
-    pointer-events: none;
-    cursor: pointer;
-}
-
+/*filtro*/
 .filtro {
     position: absolute;
     right: 10px;
@@ -63,30 +108,30 @@ body {
 
 #filtroMenu {
     position: absolute;
-    top: 40px; /* Ajusta según la posición deseada */
+    top: 40px;
     right: 0;
-    background-color: white; /* Fondo negro */
-    border: none; /* Borde gris oscuro */
-    border-radius: 10px; /* Esquinas redondeadas */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+    background-color: var(--color-principal); /
+border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
     z-index: 1000;
 }
 
 #filtroMenu label {
-    display: block; /* Cada opción en una línea separada */
-    margin: 5px 0; /* Espaciado entre opciones */
-    color: #1A1A1A; /* Color de texto blanco */
+    display: block;
+    margin: 5px 0;
+    color: var(--color-letra);
 }
 
 #filtroMenu input {
-    margin-right: 5px; /* Espacio entre el checkbox y el texto */
-    accent-color: #4DBAD9;
+    margin-right: 5px;
+    accent-color: var(--color-secundario);
 }
 
-/* Opcional: Cambiar el color del texto al pasar el mouse */
+
 #filtroMenu label:hover {
-    color: #4DBAD9; /* Cambiar a un color azul al pasar el mouse */
+    color: var(--color-secundario); /* Cambiar el color al pasar el raton */
 }
 
 #btnFiltro {
@@ -95,11 +140,14 @@ body {
     cursor: pointer;
 }
 
-#btnFiltro:hover {
-    background-color: #EAFBFF;
+/*lupa*/
+
+.lupa {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+    cursor: pointer;
 }
-
-
 
 #btnLupa {
     background-color: transparent;
@@ -107,11 +155,7 @@ body {
     cursor: pointer;
 }
 
-#btnLupa:hover {
-    background-color: #EAFBFF;
-}
-
-
+/*Iconos header*/
 .panel-botones {
     display: flex;
     gap: 0.5em;
@@ -119,28 +163,40 @@ body {
 }
 
 .iconos {
-    color: #4DBAD9;
+    color: var(--color-secundario);
 }
 
 .iconos > i {
     font-size: 1.5em;
 }
-
-/* Main */
-main {
+/* Footer */
+footer {
+    background-color: var(--fondo-header-footer);
     display: flex;
-    padding: 20px;
-    flex-grow: 1; /* Permite que main ocupe el espacio restante */
-    flex-direction: column; /* Asegura que los hijos de main se apilen verticalmente */
-    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+    justify-content: space-between;
+    padding: 4em 2em;
+    width: 100%;
+    margin-top: auto;
 }
+
+footer span {
+    color: var(--color-secundario);
+    font-size: 2em;
+}
+
+.redes, .panel-botones {
+    display: flex;
+    gap: 0.5em;
+    cursor: pointer;
+}
+/*Tema*/
 
 .containerTema {
     display: flex;
-    width: 100%; /* Asegura que el contenedor no exceda el ancho */
-    margin-left: 0; /* Ajusta el margen izquierdo para evitar desbordamiento */
+    width: 100%;
+    margin-left: 0;
     gap: 10px;
-    flex-grow: 1; /* Permitir que el contenedor crezca */
+    flex-grow: 1;
 }
 
 .temas {
@@ -153,53 +209,28 @@ main {
     padding: 15px;
     font-size: 30px;
     margin-bottom: 30px;
-    border-bottom: 2px solid #4DBAD9;
+    border-bottom: 2px solid var(--color-secundario);
     cursor: pointer;
+    color: var(--color-letra);
+}
+
+.tema a:hover {
+    color: var(--color-secundario);
 }
 
 .sidebar {
-    width: 300px; /* Mantiene un ancho fijo para la sidebar */
+    width: 300px;
     padding: 20px;
-    background-color: #f4f4f9;
+    background-color: var(--color-principal);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Paginación */
-.paginacion {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0; /* Espaciado alrededor de la paginación */
-    margin: 20px 0; /* Margen para separar de otros elementos */
-    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
-}
-
-/* Footer */
-footer {
-    background-color: #EAFBFF;
-    display: flex;
-    justify-content: space-between;
-    padding: 4em 2em;
-    width: 100%; /* Asegura que el footer ocupe todo el ancho */
-    margin-top: auto; /* Empuja el footer al final */
-}
-
-footer span {
-    color: #4DBAD9;
-    font-size: 2em;
-}
-
-.redes, .panel-botones {
-    display: flex;
-    gap: 0.5em;
-    cursor: pointer;
 }
 
 /* Últimas Publicaciones */
 .ultimas-publicaciones h3 {
     font-size: 18px;
     margin-bottom: 10px;
-    color: #333;
+    color: var(--color-letra);
 }
 
 .publicacion {
@@ -213,12 +244,21 @@ footer span {
 
 .texto p {
     margin: 0;
-    color: #333;
+    color: var(--color-letra);
 }
 
 .estadisticas {
     margin-top: 20px;
-    color: #333;
+    color: var(--color-letra);
+}
+
+/* Paginación */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    margin: 20px 0;
+    width: 100%;
 }
 
 /* Tabla de Datos */
@@ -226,13 +266,13 @@ footer span {
 .estiloTabla {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
+    background-color: var(--color-principal);
     border-radius: 0.625em;
     overflow: hidden;
 }
 
 .estiloTabla tr {
-    border-bottom: 0.09375em solid #4DBAD9;
+    border-bottom: 0.09375em solid var(--color-secundario);
 }
 
 .estiloTabla tr:first-child th {
@@ -278,9 +318,9 @@ footer span {
 }
 
 .diseñoBoton {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
     border: none;
-    color: white;
+    color: var(--color-principal);
     font-weight: bold;
     border-radius: 0.5em;
     width: 8.125em;
@@ -291,7 +331,7 @@ footer span {
 .sinFoto {
     width: 10em;
     border-radius: 3.13em;
-    border: 2px solid #4DBAD9;
+    border: 2px solid var(--color-secundario);
 }
 
 .divFoto {
@@ -309,28 +349,30 @@ footer span {
     padding-top: 1em;
 }
 
+/*Modificar colores*/
 input[readonly] {
     background-color: #f0f8ff;
     color: #555;
     border: 1px solid #ccc;
 }
+/*Modificar colores*/
 
 .botonPassword {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
     border: none;
     margin: 0 5px;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    color: white;
+    color: var(--color-principal);
     font-weight: bold;
     text-decoration: none;
 }
 
 .botonPassword:hover {
-    background-color: #4DBAD9;
-    color: black;
+    background-color: var(--color-secundario);
+    color: var(--color-letra);
     text-decoration: none;
     cursor: pointer;
 }
@@ -350,9 +392,10 @@ input[readonly] {
 
 .botonesArriba {
     font-weight: bold;
-    color: white;
+    color: var(--color-principal);
     margin: 0 auto;
 }
+
 
 .botonesArriba {
     font-weight: bold;
@@ -360,7 +403,6 @@ input[readonly] {
     margin: 0 auto;
     padding-bottom: 2em;
 }
-
 .botonesArriba a {
     margin-left: 2em;
     margin-right: 2em;
@@ -398,7 +440,7 @@ input[readonly] {
     padding: 15px;
     font-size: 30px;
     margin-bottom: 30px;
-    border-bottom: 2px solid #4DBAD9;
+    border-bottom: 2px solid var(--color-secundario);
     cursor: pointer;
 }
 
@@ -415,10 +457,8 @@ input[readonly] {
     padding: 2em;
 }
 
-/* Panel Lateral */
-
 .panelLateral {
-    background-color: #EAFBFF;
+    background-color: var(--fondo-header-footer);
     height: 100%;
     width: 17em;
     align-content: center;
@@ -432,140 +472,86 @@ input[readonly] {
 }
 
 .panelLateral a {
-    color: black;
+    color: var(--color-letra);
     text-decoration: none;
     font-weight: bold;
 }
 
 .lateralBoton.active {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
     border: none;
     margin: 0 5px;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    color: white;
+    color: var(--color-principal);
     text-decoration: none;
 }
 
 /* Botones de Paginación */
 .page-btn {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
     border: none;
     margin: 0 5px;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    color: white;
+    color: var(--color-principal);
     text-decoration: none;
 }
 
 .page-btn.active {
-    background-color: #379BB3;
+    background-color: var(--color-secundario-activo);
 }
 
 .page-btn:hover {
-    background-color: #379BB3;
+    background-color: var(--color-secundario-activo);
 }
 
 .iconosDark {
     background: transparent;
     border: none;
-    color: #4DBAD9;
+    color: var(--color-secundario);
     cursor: pointer;
     font-size: 1.5em;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #4DBAD9;
-    text-decoration: none;
-}
-
 /* Estilos para el menú desplegable */
 .dropdown-content {
-    display: none; /* Ocultar por defecto */
+    display: none;
     position: absolute;
-    background-color: white; /* Cambia esto si usas modo oscuro */
+    background-color: var(--color-principal);
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Asegúrate de que esté encima del contenido */
-    right: 10px; /* Alineación a la derecha */
-    top: 80px; /* Mueve el menú 50px hacia abajo desde el icono */
-    width: 200px; /* Cambia el ancho del menú a 200px */
-    border-radius: 10px; /* Bordes redondeados */
+    z-index: 1000;
+    right: 10px;
+    top: 80px;
+    width: 200px;
+    border-radius: 10px;
 }
 
 .dropdown-content a {
-    color: black; /* Cambia el color si usas modo oscuro */
-    padding: 12px 16px; /* Aumenta el padding para hacer el menú más grande */
+    color: var(--color-letra);
+    padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 .dropdown-content a:hover {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
     border-radius: 10px;
 }
 
 .content {
-    padding: 0 5%; /* Padding horizontal del 5% */
-}
-
-h2 {
-    margin-bottom: 10px; /* Espacio debajo del título */
-}
-
-ul {
-    list-style-type: none; /* Elimina los puntos de la lista */
-    padding: 0; /* Elimina el padding por defecto */
-}
-
-li {
-    margin-bottom: 20px; /* Espacio entre cada elemento de la lista */
-    border-bottom: 1px solid #4DBAD9;
-    padding: 15px; /* Padding interno del elemento */
-    border-radius: 5px; /* Bordes redondeados */
-    background-color: #ffffff; /* Fondo claro */
-}
-
-strong {
-    font-size: 1.2em; /* Tamaño de fuente del título */
-    display: block; /* Hace que el título ocupe toda la línea */
+    padding: 0 5%;
 }
 
 .resultado-detalles {
-    display: flex; /* Usamos flexbox para alinear los elementos */
-    justify-content: space-between; /* Distribuye el espacio entre los elementos */
-    align-items: flex-start; /* Alinea los elementos al inicio */
-    margin-top: 10px; /* Espacio arriba del bloque de detalles */
-}
-
-.izquierda {
-    text-align: left; /* Alinea el texto a la izquierda */
-}
-
-.derecha {
-    text-align: right; /* Alinea el texto a la derecha */
-}
-
-/* Reset and base styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Roboto', Arial, sans-serif;
-    line-height: 1.6;
-    color: #202124;
-    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 10px;
 }
 
 /* Chat container */
@@ -576,23 +562,22 @@ body {
     overflow: hidden;
 }
 
-/* Users sidebar */
 .users-sidebar {
     width: 280px;
-    border-right: 1px solid #dadce0;
+    border-right: 1px solid var(--color-fondo);
     display: flex;
     flex-direction: column;
 }
 
 .sidebar-header {
     padding: 16px;
-    border-bottom: 1px solid #dadce0;
+    border-bottom: 1px solid var(--color-fondo);
 }
 
 .sidebar-header h2 {
     font-size: 16px;
     font-weight: 500;
-    color: #202124;
+    color: var(--color-letra);
 }
 
 .users-list {
@@ -612,14 +597,15 @@ body {
     background: none;
     width: 100%;
     text-align: left;
+    color: var(--color-letra);
 }
 
 .user-item:hover {
-    background-color: #f1f3f4;
+    background-color: var(--color-principal);
 }
 
 .user-item.active {
-    background-color: #e8f0fe;
+    background-color: var(--color-secundario);
 }
 
 .user-avatar {
@@ -628,7 +614,7 @@ body {
     overflow: hidden;
     border-radius: 50%;
     margin-right: 12px;
-    flex-shrink: 0; /* Evita que el avatar se encoja */
+    flex-shrink: 0; /* Evita la imagen se encoja */
 }
 
 .user-avatar img {
@@ -664,9 +650,10 @@ body {
 
 .chat-header {
     padding: 16px;
-    border-bottom: 1px solid #dadce0;
+    border-bottom: 1px solid var(--color-fondo);
     display: flex;
     align-items: center;
+    color: var(--color-letra);
 }
 
 .chat-header .user-avatar {
@@ -685,7 +672,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 100%; /* Ensure it doesn't exceed the width of its parent */
+    max-width: 100%;
     box-sizing: border-box;
     min-width: 0;
 }
@@ -698,18 +685,19 @@ body {
     font-size: 14px;
     line-height: 1.4;
     overflow-wrap: break-word;
+
 }
 
 .message.received {
     align-self: flex-start;
-    background-color: #f1f3f4;
-    color: #202124;
+    background-color: var(--color-principal);
+    color: var(--color-letra);
 }
 
 .message.sent {
     align-self: flex-end;
-    background-color: #4DBAD9;
-    color: white;
+    background-color: var(--color-secundario);
+    color: var(--color-principal);
 }
 
 .message-time {
@@ -721,7 +709,7 @@ body {
 .message-day {
     text-align: center;
     font-size: 12px;
-    color: #5f6368;
+    color: var(--color-dia-chat);
     margin: 16px 0;
     position: relative;
 }
@@ -733,7 +721,7 @@ body {
     top: 50%;
     width: 42%;
     height: 1px;
-    background-color: #dadce0;
+    background-color: var(--color-fondo);
 }
 
 .message-day::before {
@@ -753,7 +741,7 @@ body {
 
 .user-panel {
     padding: 16px;
-    border-top: 1px solid #dadce0;
+    border-top: 1px solid var(--color-fondo);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -762,7 +750,7 @@ body {
 #message {
     flex-grow: 1;
     padding: 12px;
-    border: 1px solid #dadce0;
+    border: 1px solid var(--color-fondo);
     border-radius: 24px;
     font-size: 14px;
     outline: none;
@@ -770,13 +758,13 @@ body {
 }
 
 #message:focus {
-    border-color: #4DBAD9;
+    border-color: var(--color-secundario);
     box-shadow: 0 0 0 2px rgba(77, 186, 217, 0.2);
 }
 
 #send-message {
-    background-color: #4DBAD9;
-    color: white;
+    background-color: var(--color-secundario);
+    color: var(--color-principal);
     border: none;
     border-radius: 24px;
     padding: 12px 24px;
@@ -787,10 +775,9 @@ body {
 }
 
 #send-message:hover {
-    background-color: #3da8c7;
+    background-color: var(--color-secundario-activo);
 }
 
-/* Utility classes */
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -803,7 +790,7 @@ body {
     border: 0;
 }
 
-/* Scrollbar styles */
+/* Estilos de Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -821,242 +808,346 @@ body {
     background: #bdc1c6;
 }
 
-
-
-
-/*PREGUNTA Y RESPUESTA*/
-
-.contenedorPreguntasYRespuestas
-{
-    display: flex;
-    flex-direction: column;
+/*Pregunta y respuesta*/
+.pregunta p a:hover{
+    color: var(--color-secundario);
+    text-decoration: none
 }
-
 .contenedorPregunta {
-
-    width: 100%;
-    display: grid;
-    grid-template-columns: 200px 4fr 4fr 1fr;
-    grid-template-rows: 1fr 3fr 1fr;
-    gap: 10px;
-    padding: 20px;
-    /*box-sizing: border-box;*/
-    grid-template-areas:
-        "fotoUsuarioPregunta preguntaTitulo preguntaTitulo ."
-        ". descripcionPregunta descripcionPregunta ."
-        ". . panelDeBotones .";
+    position: relative;
+    padding-top: 40px; /* Aumentamos el padding superior para dar espacio a los botones */
 }
 
-.fotoUsuarioPregunta {
-    grid-area: fotoUsuarioPregunta;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-}
-
-.fotoUsuarioPregunta img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-.preguntaTitulo {
-    background-color: #f8f9fa;
-    grid-area: preguntaTitulo;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    justify-content: space-between;
-}
-
-.descripcionPregunta {
-    background-color: #f8f9fa;
-    grid-area: descripcionPregunta;
-    padding: 10px;
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-.panelDeBotones {
-    grid-area: panelDeBotones;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 10px;
-}
-
-.panel-botones button{
-    border: 0;
-}
-
-
-.panelDeBotones .bi {
-    font-size: 24px;
-    border: 0;
-}
-
-
-.bi-lg {
-    font-size: 1.5rem;
-}
-
-.bi-xl {
-    font-size: 2rem;
-}
-
-
-.airplane-down {
-    display: inline-block !important;
-    transform: rotate(180deg) !important;
-    transition: transform 0.2s;
-}
-
-
-
-.botonPanel
-{
-    background-color: #f4f4f9;
-    border: 0px;
-    padding: .5em;
-}
-
-.panelDeBotones .bi {
-    color: #4dabf7;
-    transition: color 0.2s ease;
-}
-.panelDeBotones .bi:hover {
-    color: #1a1a1a;
-    cursor: pointer;
-}
-
-
-
-.contenedorRespuestaDivididor {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 100px 4.75fr 1fr; /* Mantenemos las columnas originales */
-    grid-template-rows: auto 1fr auto;
-    gap: 10px;
-    padding: 20px;
-    grid-template-areas:
-        ". fotoUsuarioRespuesta respuesta ."
-        ". . respuesta ."
-        ". . panelDeBotones .";
-    position: relative; /* Añadimos posición relativa para poder posicionar la estrella */
-}
-
-.respuesta {
-    grid-area: respuesta;
-    padding: 10px;
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #f8f9fa;
-    position: relative; /* Para el posicionamiento de la estrella */
-}
-
-.estrella-respuesta {
+.iconos-pregunta {
     position: absolute;
     top: 10px;
     right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     z-index: 1;
 }
 
-.estrella-respuesta .bi-star {
-    color: #4dabf7;
-    font-size: 1.5rem;
+#editarPregunta, #eliminarPregunta {
+    background: none;
+    border: none;
     cursor: pointer;
-}
-
-.estrella-respuesta .bi-star:hover {
-    color: #ffffff;
-}
-
-
-.fotoUsuarioRespuesta
-{
-    grid-area: fotoUsuarioRespuesta;
+    color: var(--color-secundario);
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: center;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 30px;
+    height: 30px;
 }
-.fotoUsuarioRespuesta img {
-    width: 100px;
-    height: 100px;
+
+#editarPregunta:hover, #eliminarPregunta:hover {
+    color: var(--color-secundario-activo);
+}
+
+#editarPregunta i, #eliminarPregunta i {
+    font-size: 18px;
+}
+
+.botonPanel i, .botonDeEditar i {
+    font-size: 18px;
+}
+.contenedorPreguntasYRespuestas {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.barra{
+    color: var(--color-letra);
+}
+
+.barra a:hover{
+    color: var(--color-secundario);
+}
+
+.contenedorPreguntasYRespuestas p{
+    color: var(--color-letra);
+}
+
+.contenedorPregunta, .contenedorRespuestaDivididor, .publicarRespuesta {
+    background-color: var(--color-principal);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.fotoUsuarioPregunta, .fotoUsuarioRespuesta {
+    float: left;
+    margin-right: 15px;
+}
+
+.fotoUsuarioPregunta img, .fotoUsuarioRespuesta img {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    object-fit: cover;
+}
+
+.preguntaTitulo {
+    margin-bottom: 10px;
+}
+
+.preguntaTitulo p {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--negro1);
+    margin: 0;
+}
+
+.descripcionPregunta, .contenidoRespuesta {
+    margin-bottom: 30px;
+    margin-left: 8%;
+    clear: both;
+    color: var(--color-letra);
+}
+.bi-send{
+    font-size: 300%;
+}
+
+.panelDeBotones {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.botonPanel {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-letra);
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.botonesRespuesta {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.botonRedondeado {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none;
+    text-align: center;
+}
+
+.botonSubirArchivo {
+    background-color: var(--color-secundario);
+    color: var(--color-letra);
+}
+
+.botonSubirArchivo:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-letra);
+}
+
+
+.botonComentar {
+    background-color: var(--color-secundario);
+    color: var(--color-letra);
+}
+
+.botonComentar:hover {
+    background-color: var(--color-secundario-activo);
+}
+
+.botonRedondeado:focus {
+    outline: none;
+
+}
+.botonPanel:hover {
+    background-color: transparent;
+}
+
+.botonPanel i {
+    margin-right: 5px;
+
+}
+.botonPanel, .botonDeEditar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-secundario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 30px;
+    height: 30px;
+}
+
+.botonPanel i, .botonDeEditar i {
+    font-size: 18px;
+}
+
+
+.estrella-respuesta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.textAreaRespuesta {
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid var(--color-dia-chat);
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    resize: vertical;
+    color: var(--color-letra);
+    background-color: var(--color-fondo);
+}
+
+
+
+.botonSubirArchivo:hover {
+    background-color: var(--color-secundario-activo);
 }
 
 .imagenRespuesta {
-    max-width: 300px; /* Ancho máximo fijo */
-    height: auto; /* Mantiene la proporción */
-    display: block; /* Permite que otros elementos se alineen */
-    align-items: center;
+    max-width: 50%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+.ImagenEditar{
+    max-width: 50%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 4px;
 }
 
-.publicarRespuestaContenido
-{
-    grid-area: respuesta;
-    padding: 10px;
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #f8f9fa;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .contenedorPreguntasYRespuestas {
+        padding: 10px;
+    }
+
+    .contenedorPregunta, .contenedorRespuestaDivididor, .publicarRespuesta {
+        padding: 15px;
+        padding-bottom: 70px;
+    }
+
+    .fotoUsuarioPregunta, .fotoUsuarioRespuesta {
+        float: none;
+        margin-bottom: 10px;
+    }
+
+    .panelDeBotones {
+        flex-wrap: wrap;
+
+    }
+}
+
+/* Additional styles for better readability and interaction */
+.contenedorRespuesta {
+    margin-left: 20px;
+    border-left: 2px solid var(--color-secundario);
+    padding-left: 20px;
+    margin-bottom: 40px;
+}
+
+.contenedorRespuestaDivididor {
+    position: relative;
+    padding-top: 40px;
+}
+
+.respuesta {
+    background-color: var(--color-principal);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+
+}
+
+.iconos-respuesta {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 1em ;
-}
-.textAreaRespuesta
-{
-    font-family: Mulish-Regular, Arial, sans-serif;
-    border: 0;
-    color: #1A1A1A;
-    background-color: #f8f9fa;
-    width: 100%; height:60%;
-    padding: 2em;
-    border: .15em solid #1a1a1a;
+    gap: 10px;
+    z-index: 1;
+    color: var(--color-secundario);
 }
 
-.botonSubirArchivo
-{
-
-    text-align: center;
-    padding: .5em;
-    border: #4DBAD9 solid .1em;
-    border-radius: .5em;
-    width: 50%;
+.botonPanel p {
+    margin: 0 5px;
 }
 
-.botonSubirArchivo:hover
-{
-    cursor: pointer;
-    background-color: #4DBAD9;
-    text-align: center;
-    padding: .5em;
-    border: #4DBAD9 solid .1em;
-    border-radius: .5em;
-    width: 50%;
-    color: #FFFFFF;
+.bi-airplane.airplane-down {
+    transform: rotate(180deg);
 }
 
+.bi-airplane-fill.airplane-down{
+    transform: rotate(180deg);
+}
+
+
+
+/* Hover effects */
+.botonPanel:hover i,
+.botonDeEditar:hover i {
+    color: var(--color-secundario-activo);
+}
+
+/* Focus styles for accessibility */
+.botonPanel:focus,
+.botonDeEditar:focus,
+.botonSubirArchivo:focus,
+.textAreaRespuesta:focus {
+    outline: 2px solid var(--color-secundario);
+    outline-offset: 2px;
+}
+
+/* Transitions for smooth interactions */
+.botonPanel,
+.botonDeEditar,
+.botonSubirArchivo {
+    transition: all 0.3s ease;
+}
+
+/*Notificaciones*/
 #notificationsDropdown {
     position: absolute;
-    background-color: white;
-    color: black;
-    min-width: 300px; /* Aumentado de 200px a 300px */
-    max-height: 400px; /* Añadido para limitar la altura */
-    overflow-y: auto; /* Permite scroll si hay muchas notificaciones */
+    background-color: var(--color-principal);
+    color: var(--color-letra);
+    min-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    right: 0; /* Alinea el dropdown a la derecha del icono de la campana */
-    top: 100%; /* Lo coloca justo debajo del icono */
-    border-radius: 10px; /* Añadido para redondear los bordes del contenedor principal */
-}
-
-#notificationsDropdown .notificacion-form {
-    padding: 12px 16px;
-    border-bottom: 1px solid #ddd;
+    right: 0;
+    top: 100%;
+    border-radius: 10px;
 }
 
 #notificationsDropdown .notificacion-item {
@@ -1066,19 +1157,20 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 12px 16px; /* Aumentado el padding para dar más espacio */
-    border-radius: 8px; /* Añadido para redondear los bordes de cada item */
-    margin-bottom: 4px; /* Añadido para dar un poco de espacio entre items */
-    transition: background-color 0.3s ease; /* Suaviza la transición del hover */
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: background-color 0.3s ease;
+    color: var(--color-letra);
 }
 
 #notificationsDropdown .notificacion-item:hover {
-    background-color: #4DBAD9;
-    color: white; /* Cambia el color del texto al hacer hover */
+    background-color: var(--color-secundario);
+    color: var(--color-letra);
 }
 
 #notificationsDropdown a {
-    color: #333;
+    color: var(--color-letra);
     text-decoration: none;
 }
 
@@ -1087,14 +1179,13 @@ body {
     border-bottom: none;
 }
 
-
 /* Estilo para el botón "Marcar todas como leídas" */
 #marcarTodasLeidasBtn {
     display: block;
     width: 100%;
     padding: 12px 16px;
-    background-color: #f9f9f9;
-    color: black;
+    background-color: var(--color-fondo);
+    color: var(--color-letra);
     text-align: center;
     font-weight: bold;
     border: none;
@@ -1103,20 +1194,22 @@ body {
 }
 
 #marcarTodasLeidasBtn:hover {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
 }
 
 #marcarTodasLeidasBtn:active {
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
 }
+
 .temas-titulo {
     font-size: 35px;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
     width: 100%;
-    color: black;
+    color: var(--color-letra);
 }
+
 .bell-container {
     position: relative;
     display: inline-block;
@@ -1128,8 +1221,8 @@ body {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: #e51816;
-    color: white;
+    background-color: var(--color-rojo-aergibide);
+    color: var(--color-principal);
     border-radius: 50%;
     padding: 2px 5px;
     font-size: 0.4em;
@@ -1143,48 +1236,49 @@ body {
     gap: 1em;
 }
 
-
 .botonGuardarRespuesta
 {
 
     text-align: center;
     padding: .75em;
-    border: #4DBAD9 solid .1em;
+    border: var(--color-secundario) solid .1em;
     border-radius: .5em;
     width: 50%;
-    background-color: #f8f9fa;
-    color: #1A1A1A;
+    background-color: transparent;
+    color: var(--negro1);
 }
 
 .botonGuardarRespuesta:hover
 {
     cursor: pointer;
-    background-color: #4DBAD9;
+    background-color: var(--color-secundario);
     text-align: center;
     padding: .75em;
-    border: #4DBAD9 solid .1em;
+    border: var(--color-secundario) solid .1em;
     border-radius: .5em;
     width: 50%;
-    color: #FFFFFF;
+    color: var(--color-principal);
 }
+
 .botonCancelarRespuesta
 {
     text-align: center;
     padding: .75em;
-    border: #e51816 solid .1em;
+    border: var(--color-rojo-aergibide) solid .1em;
     border-radius: .5em;
     width: 50%;
-    background-color: #f8f9fa;
-    color: #e51816;
+    background-color: transparent;
+    color: var(--color-rojo-aergibide);
 }
+
 .botonCancelarRespuesta:hover
 {
     cursor: pointer;
-    background-color: #e51816;
+    background-color: var(--color-rojo-aergibide);
     text-align: center;
     padding: .75em;
-    border: #4DBAD9 solid .1em;
+    border: var(--color-secundario) solid .1em;
     border-radius: .5em;
     width: 50%;
-    color: #FFFFFF;
+    color: var(--color-principal);
 }
