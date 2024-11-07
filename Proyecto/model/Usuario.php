@@ -265,6 +265,25 @@ class Usuario{
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
 
+    public function getNotificacionesNoLeidas($id_usuario)
+    {
+        try {
+            $sql = "SELECT n.*, p.titulo AS titulo_pregunta 
+                FROM Notificaciones n 
+                LEFT JOIN Preguntas p ON n.id_pregunta = p.id 
+                WHERE n.id_usuario = :id_usuario AND n.leido = 0";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([':id_usuario' => $id_usuario]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Log the error
+            error_log("Error en getNotificacionesNoLeidas: " . $e->getMessage());
+
+            // Re-lanzar la excepción para que pueda ser manejada en un nivel superior si es necesario
+            throw $e;
+        }
+    }
+
     public function getActividadPaginated($username, $pagination, $vista, $page=1){
         $limit=$pagination;
         $offset = ($page - 1) * $limit; // Calcula el desplazamiento
