@@ -341,7 +341,7 @@
                     <img src="<?php echo file_exists($_SESSION["user_data"]["foto_perfil"]) ? $_SESSION["user_data"]["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
                 <div class="publicarRespuestaContenido">
-                    <textarea class="textAreaRespuesta" name="texto" id=""></textarea>
+                    <textarea class="textAreaRespuesta" name="texto" id="textoRespuestaPublicar"></textarea>
                     <div class="botonesRespuesta">
                         <label class="botonRedondeado botonSubirArchivo">
                             Subir Archivo
@@ -350,7 +350,7 @@
                                 <i class="bi bi-check-circle-fill"></i>
                             </label>
                         </label>
-                        <button class="botonRedondeado botonComentar" type="submit">
+                        <button id="botonPublicarRespuesta" class="botonRedondeado botonComentar" type="submit">
                             Comentar
                         </button>
                     </div>
@@ -359,6 +359,7 @@
         </form>
     </div>
 <script src="assets/js/respuestas.js"></script>
+<script src="assets/js/valicionRespuesta.js"></script>
 
 
 </div>

@@ -36,7 +36,7 @@ class RespuestaController
     public function create()
     {
         $post = $_POST["texto"] != "" && $_GET["id_pregunta"] != "" ? $_POST : false;
-        if(!$post){header("Location: index.php?controler=tema&action=mostrarTemas");exit();}
+        if(!$post){sleep(3);header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_GET["id_pregunta"]);exit();}
         $filePath = null;
 
         if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
