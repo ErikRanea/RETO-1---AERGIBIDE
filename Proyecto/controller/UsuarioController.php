@@ -29,6 +29,19 @@ class UsuarioController{
 
 
     public function nuevoUsuario() {
+
+
+
+
+        if($this->revisarPrivilegios($_SESSION['user_data']['rol']) == false)
+        {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No tiene permisos para acceder a esta página",
+                "redirect" => "index.php?controller=usuario&action=mostrarDatosUsuario&id".$_SESSION['user_data']['id']
+            ]);
+            exit();
+        }
         $this -> view = "nuevoUsuario";
     }
 
@@ -350,6 +363,20 @@ class UsuarioController{
         ]);
         exit();
 
+    }
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private function revisarPrivilegios($rol)
+    {
+        if($rol == "admin" || $rol == "gestor")
+        {
+            return true;
+        }
+        return false;
     }
 
 }
