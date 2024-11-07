@@ -36,7 +36,7 @@ class RespuestaController
     public function create()
     {
         $post = $_POST["texto"] != "" && $_GET["id_pregunta"] != "" ? $_POST : false;
-        if(!$post){header("Location: index.php?controler=tema&action=mostrarTemas");exit();}
+        if(!$post){sleep(3);header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_GET["id_pregunta"]);exit();}
         $filePath = null;
 
         if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
@@ -360,9 +360,6 @@ class RespuestaController
         exit();
     }
 
-
-
-
     public function verRespuesta()
     {
         $id_pregunta = $_GET['id_pregunta'] ?? null;
@@ -449,6 +446,51 @@ class RespuestaController
         }
     }
 
+    public function cuentaDeVotos()
+    {
+
+        try
+        {
+            if(!isset($_POST["id"]) || !isset($_POST["tipo"]))
+            {
+                throw new Error("No permitido");
+            }
+            if($_SERVER["REQUEST_METHOD"] == "GET")
+            {
+                header("Location: index.php");
+            }
+
+            $result = $this->model->contarVotos($_POST,$_POST);
+
+            if($result)
+            {
+                echo json_encode([
+                    "status" => "success",
+                    "votos" => $result
+                ]);
+                exit;
+            }
+            else
+            {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "No se han devuelto los votos"
+                ]);
+            }
+
+
+
+        }
+        catch (Error $e) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Se ha creado el siguiente error: ".$e
+            ]);
+            exit;
+        }
+
+
+    }
 
 
 

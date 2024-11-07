@@ -73,7 +73,7 @@ strong{
 .btnCrear{
     border: 2px solid #4DBAD9;
     color: #4DBAD9;
-    
+
 
 }
 
@@ -170,5 +170,46 @@ input[type="file"] {
 textarea{
     resize: none;
     height: 10em;
+}
+
+.panelActividad{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.panelBotones{
+    margin: 2em;
+    display: flex;
+    gap: 1em;
+}
+
+.btnPanel{
+    width: 9em;
+    border-radius: 50%;
+    text-align: center;
+}
+
+button.active {
+    background-color: #4DBAD9;
+    color: white;
+}
+
+.contenidoActividad, .contenido{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.contenidoActividad{
+    width: 100%;
+}
+
+.contenido{
+    width: 30%;
 }
 

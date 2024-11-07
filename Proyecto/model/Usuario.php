@@ -179,46 +179,25 @@ class Usuario{
     }
 
     public function updateUsuario($objeto) {
-        // Base de la consulta SQL para actualizar el usuario
-        $sql = "UPDATE " . $this->tabla . " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email";
-    
-        // Agregar actualización de contraseña solo si existe una nueva
-        if (!empty($objeto->password)) {
-            $sql .= ", password = :password";
-        }
-    
-        // Agregar actualización de foto de perfil si está configurada
-        if (isset($objeto->foto_perfil)) {
-            $sql .= ", foto_perfil = :foto_perfil";
-        }
-    
-        $sql .= " WHERE id = :id";
-    
+        $sql = "UPDATE " . $this->tabla .
+               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password, foto_perfil = :foto_perfil WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
         $stmt->bindParam(':apellido', $objeto->apellido, PDO::PARAM_STR);
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
+
+        $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
+        $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
+        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
     
-        // Enlazar la contraseña si se va a actualizar
-        if (!empty($objeto->password)) {
-            $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
-        }
-    
-        // Enlazar la foto de perfil si está configurada
-        if (isset($objeto->foto_perfil)) {
-            $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
-        }
-    
-        // Ejecutar la consulta y manejar el resultado
         if ($stmt->execute()) {
-            echo "Datos actualizados correctamente.";
+            echo "Foto guardada: " . $objeto->foto_perfil;
         } else {
-            echo "Error al actualizar el usuario.";
+            echo "Error al actualizar la foto";
         }
     }
-    
 
     public function createUsuario($objeto) {
         $sql = "INSERT INTO " . $this->tabla . " (nombre, apellido, username, email, password, foto_perfil, rol) 
@@ -230,7 +209,7 @@ class Usuario{
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
         $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
-        $stmt->bindParam(':rol', $objeto->rol, PDO::PARAM_STR);
+        $stmt->bindParam(':rol', $objeto->rol, PDO::PARAM_STR); // Agrega esta línea
     
         if ($stmt->execute()) {
             echo "Usuario creado exitosamente.";
@@ -240,7 +219,7 @@ class Usuario{
     }
     
     public function getUsers() {
-        $sql = "SELECT * FROM " . $this->tabla . " WHERE rol = 'user'";
+        $sql = "SELECT username FROM " . $this->tabla . " WHERE rol = 'user'";
         $stmt = $this -> connection ->prepare($sql);
         $stmt ->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
         $stmt->execute();
@@ -286,7 +265,8 @@ class Usuario{
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
 
-    public function getNotificacionesNoLeidas($id_usuario) {
+    public function getNotificacionesNoLeidas($id_usuario)
+    {
         try {
             $sql = "SELECT n.*, p.titulo AS titulo_pregunta 
                 FROM Notificaciones n 
@@ -304,28 +284,42 @@ class Usuario{
         }
     }
 
-    public function marcarNotificacionComoLeida($id_notificacion) {
-        $sql = "UPDATE Notificaciones SET leido = 1 WHERE id = :id_notificacion";
+    public function getActividadPaginated($username, $pagination, $vista, $page=1){
+        $limit=$pagination;
+        $offset = ($page - 1) * $limit; // Calcula el desplazamiento
+        $sql = "SELECT * FROM " . $vista . " WHERE username= :username LIMIT :limit OFFSET :offset";
         $stmt = $this->connection->prepare($sql);
-        $stmt->execute([':id_notificacion' => $id_notificacion]);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $totalPages = $this->getNumberPages($username, $pagination, $vista); //ceil($this->getNumperPages()/$limit);
+        return [$stmt->fetchAll(), $page, $totalPages];
+
     }
 
-    public function marcarTodasNotificacionesComoLeidas($id_usuario) {
-        $sql = "UPDATE Notificaciones SET leido = 1 WHERE id_usuario = :id_usuario AND leido = 0";
+    public function getNumberPages($username, $pagination, $vista){
+        $limit=$pagination;
+        $sql = "SELECT COUNT(*) FROM ". $vista ." WHERE username=?";
         $stmt = $this->connection->prepare($sql);
-        return $stmt->execute([':id_usuario' => $id_usuario]);
-    }
+        $stmt->execute([$username]);
+        $total = $stmt->fetchColumn();
 
+        //$total=$this->connection->query("SELECT COUNT(*) FROM ".$this->tabla. " WHERE id_tema=?")->fetchColumn();
+        return ceil($total/$limit);
+
+    }
     public function delete($userId) {
-        
-            // Preparamos la consulta SQL
             $sql = "DELETE FROM " . $this->tabla . " WHERE id = :id";
             $stmt = $this->connection->prepare($sql);
-
             return $stmt->execute([':id'=> $userId]);
-            
-           
-        
     }
 
+    public function getViewByUsuario($username, $vista){
+        $sql = "SELECT * FROM " . $vista . " WHERE username=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$username]);
+
+        return $stmt->fetchAll();
+    }
 }

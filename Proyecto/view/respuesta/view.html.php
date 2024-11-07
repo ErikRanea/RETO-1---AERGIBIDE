@@ -5,8 +5,8 @@
     $usuarioPregunta = $dataToView["pregunta"]["usuarioPregunta"];
     $respuestas = $dataToView["respuestas"];
 
-   
-    
+
+
 
 
     $respuestasGuardadas = $dataToView["guardados"]["respuestasGuardadas"];
@@ -106,7 +106,7 @@
 
 <input type="text" id="userId" value="<?php echo $_SESSION["user_data"]['id']; ?>" hidden >
 <div class="contenedorPreguntasYRespuestas">
-    <i>
+    <i class="barra">
         <a href="index.php?controller=tema&action=mostrarTemas">
             Temas
         </a>
@@ -118,6 +118,14 @@
         <?php echo $pregunta["titulo"];?>
     </i>
     <div class="contenedorPregunta">
+        <div class="iconos-pregunta">
+            <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta["id"])){echo "hidden";}?>>
+                <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a>
+            </label>
+            <label id="eliminarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+                <a href="index.php?controller=pregunta&action=remove&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-trash"></i></a>
+            </label>
+        </div>
         <div class="fotoUsuarioPregunta">
             <?php
 
@@ -130,13 +138,6 @@
 
         <div class="preguntaTitulo">
            <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
-           <div>
-            <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta["id"])){echo "hidden";}?>>
-                <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a></label>
-
-                <label id="eliminarPregunta" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
-                <a href="index.php?controller=pregunta&action=remove&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-trash"></i></a></label> 
-           </div>
         </div>
     
 
@@ -168,7 +169,7 @@
                           <i class="bi bi-airplane-fill"></i>
                       </button>
                       <p id="preguntaVoto" value="<?php echo $pregunta["votos"]["votos"];?>">
-                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí
                             echo $pregunta["votos"]["votos"];?>
                         </p>
                       <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
@@ -183,7 +184,7 @@
                           <i class="bi bi-airplane"></i>
                       </button>
                       <p id="preguntaVoto" value="<?php echo $pregunta["votos"]["votos"];?>">
-                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí
                             echo $pregunta["votos"]["votos"];?>
                         </p>
                       <button class="botonPanel" id="botonPreguntaDislike" value="<?php echo $pregunta["id"];?>">
@@ -225,37 +226,38 @@
             $usuarioRespuesta = $respuestas["usuariosRespuestas"][$i];
             $datosRespuesta = $respuestas["datosRespuestas"][$i];
     ?>
-            <div class="contenedorRespuestaDivididor">
-                <div class="fotoUsuarioRespuesta">
-                    <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
-                </div>
-                <div class="respuesta">
-                    <div class="estrella-respuesta">
-                        
-                        <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value = "<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar" 
+
+        <div class="contenedorRespuestaDivididor">
+
+            <div class="fotoUsuarioRespuesta">
+                <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
+                <div class="iconos-respuesta">
+                    <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar"
                         <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>
-                            <i class="bi bi-pencil-square botonEditar"></i>
-                        </label>
-                        <label id="eliminarPregunta" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
-                            <a href="index.php?controller=respuesta&action=remove&id_respuesta=<?php echo $datosRespuesta["id"];?>"><i class="bi bi-trash"></i></a></label> 
-                        
-                        <label>
-                            <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
-                            href="index.php?controller=respuesta&action=esUtil&idRespuesta=<?php echo $datosRespuesta["id"];?>&idPregunta=<?php echo $pregunta["id"];?>">
-                                <?php if($datosRespuesta["util"] == 1){?>
-                                    <i class="bi bi-star-fill"></i>
-                                <?php }else{?>
-                                    <i class="bi bi-star"></i>
-                                <?php }?>
-                            </a>
-                        </label>
-                    </div>
+                        <i class="bi bi-pencil-square botonEditar"></i>
+                    </label>
+                    <label id="eliminarPregunta" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+                        <a href="index.php?controller=respuesta&action=remove&id_respuesta=<?php echo $datosRespuesta["id"];?>"><i class="bi bi-trash"></i></a></label>
+
+                    <label>
+                        <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
+                                href="index.php?controller=respuesta&action=esUtil&idRespuesta=<?php echo $datosRespuesta["id"];?>&idPregunta=<?php echo $pregunta["id"];?>">
+                            <?php if($datosRespuesta["util"] == 1){?>
+                                <i class="bi bi-star-fill"></i>
+                            <?php }else{?>
+                                <i class="bi bi-star"></i>
+                            <?php }?>
+                        </a>
+                </div>
+            </div>
+            <div class="respuesta">
                     <div class="contenidoRespuesta">
                         <?php echo $datosRespuesta["texto"]; ?>
-                        <?php if($datosRespuesta["imagen"] != null){?>
-                            <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
-                        <?php }?>
+
                     </div>
+                <?php if($datosRespuesta["imagen"] != null){?>
+                    <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
+                <?php }?>
 
                 </div>
                 <div class="panelDeBotones">
@@ -283,7 +285,7 @@
                           <i class="bi bi-airplane-fill"></i>
                       </button>
                       <p id="votosRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["votos"]["votos"];?>">
-                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí
                             echo $datosRespuesta["votos"]["votos"];?>
                         </p>
                       <button class="botonPanel" id="botonRespuestaDisLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
@@ -298,7 +300,7 @@
                           <i class="bi bi-airplane"></i>
                       </button>
                       <p id="votosRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["votos"]["votos"];?>">
-                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí 
+                            <?php //Cuando este la view de BD que recoja los likes meterlo aquí
                             echo $datosRespuesta["votos"]["votos"];?>
                         </p>
                       <button class="botonPanel" id="botonRespuestaDisLike-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>">
@@ -334,29 +336,30 @@
     </div>
     <div class="publicarRespuesta">
         <form action="index.php?controller=respuesta&action=create&id_pregunta=<?php echo $pregunta["id"];?>" method="post" enctype="multipart/form-data">
-        <div class="contenedorRespuestaDivididor">
+            <div class="contenedorRespuestaDivididor">
                 <div class="fotoUsuarioRespuesta">
                     <img src="<?php echo file_exists($_SESSION["user_data"]["foto_perfil"]) ? $_SESSION["user_data"]["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 </div>
                 <div class="publicarRespuestaContenido">
-                    <textarea class="textAreaRespuesta"name="texto" id=""></textarea>
-                    <label class="botonSubirArchivo">
-                        Subir Archivo
-                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta" accept="image/*" hidden>
-                        <label id="archivoSubidoRespuesta" hidden>
-                            <i class="bi bi-check-circle-fill"></i>
+                    <textarea class="textAreaRespuesta" name="texto" id="textoRespuestaPublicar"></textarea>
+                    <div class="botonesRespuesta">
+                        <label class="botonRedondeado botonSubirArchivo">
+                            Subir Archivo
+                            <input type="file" name="imagen" id="cargadorDeImagenRespuesta" accept="image/*" hidden>
+                            <label id="archivoSubidoRespuesta" hidden>
+                                <i class="bi bi-check-circle-fill"></i>
+                            </label>
                         </label>
-                    </label>
-                    
-                </div>
-                <div class="panelDeBotones">
-                    <button class="botonPanel" type="submit">
-                        <i class="bi bi-send"></i>
-                    </button>
+                        <button id="botonPublicarRespuesta" class="botonRedondeado botonComentar" type="submit">
+                            Comentar
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
 <script src="assets/js/respuestas.js"></script>
+<script src="assets/js/valicionRespuesta.js"></script>
+
 
 </div>
