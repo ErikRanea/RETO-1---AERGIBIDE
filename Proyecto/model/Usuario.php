@@ -265,4 +265,39 @@ class Usuario{
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna el resultado como array asociativo
     }
 
+    public function getActividadPaginated($username, $pagination, $vista, $page=1){
+        $limit=$pagination;
+        $offset = ($page - 1) * $limit; // Calcula el desplazamiento
+        $sql = "SELECT * FROM " . $vista . " WHERE username= :username LIMIT :limit OFFSET :offset";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $totalPages = $this->getNumberPages($username, $pagination, $vista); //ceil($this->getNumperPages()/$limit);
+        return [$stmt->fetchAll(), $page, $totalPages];
+
+    }
+
+    public function getNumberPages($username, $pagination, $vista){
+        $limit=$pagination;
+        $sql = "SELECT COUNT(*) FROM ". $vista ." WHERE username=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$username]);
+        $total = $stmt->fetchColumn();
+
+        //$total=$this->connection->query("SELECT COUNT(*) FROM ".$this->tabla. " WHERE id_tema=?")->fetchColumn();
+        return ceil($total/$limit);
+
+    }
+
+    public function getViewByUsuario($username, $vista){
+        $sql = "SELECT * FROM " . $vista . " WHERE username=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$username]);
+
+        return $stmt->fetchAll();
+    }
+
+
 }
