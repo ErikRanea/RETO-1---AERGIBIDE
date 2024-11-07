@@ -316,4 +316,16 @@ class Usuario{
         return $stmt->execute([':id_usuario' => $id_usuario]);
     }
 
+    public function delete($userId) {
+        
+            // Preparamos la consulta SQL
+            $sql = "DELETE FROM " . $this->tabla . " WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
+
+            return $stmt->execute([':id'=> $userId]);
+            
+           
+        
+    }
+
 }

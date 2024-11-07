@@ -11,7 +11,7 @@
         </a>
     </p>
 
-    <p><a href="index.php?controller=usuario&action=mostrarActividad"
+    <p><a href="index.php?controller=usuario&action=vistaActividad"
     class="lateralBoton <?php echo ($currentController === 'usuario' && $currentAction === 'mostrarActividad') ? 'active' : ''; ?>">
             Actividad
         </a>

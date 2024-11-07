@@ -108,7 +108,7 @@ class UsuarioController{
     }
 
     public function mostrarDatosUsuario() {
-        $this -> view = "datosUsuario"; 
+        $this -> view = "principalUsuario"; 
     }
 
     public function mostrarGestionUsuario() {
@@ -126,6 +126,44 @@ class UsuarioController{
     public function obtenerTotalUsuarios() {
         $totalUsuarios = $this->model->getTotalUsuarios();
         return ["totalUsuarios" => $totalUsuarios];
+    }
+
+    public function confirmDelete() {
+
+        try {
+
+        //code...
+        if (!isset($_POST["idUsuario"])) {
+            echo json_encode([
+                "status" => "error", "message" => "error"
+            ]);
+        } else {
+            $usuarioId = $_POST['idUsuario'];
+        }
+
+        
+ 
+
+        $this->model->delete($usuarioId);
+
+        
+
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "success"
+        ]);
+        exit();
+
+
+        } 
+        catch (Error $e) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "El error es del catch: ".$e
+            ]);
+            exit();
+        }
     }
 
 
