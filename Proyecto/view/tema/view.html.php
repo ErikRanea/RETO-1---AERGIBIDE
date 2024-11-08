@@ -5,11 +5,15 @@
             <?php
             $temas = $dataToView["temas"] ?? [];
             foreach ($temas as $tema): ?>
+                <a href="index.php?controller=pregunta&action=list&id_tema=<?= $tema['id'] ?>">
                 <div class="tema">
-                    <a href="index.php?controller=pregunta&action=list&id_tema=<?= $tema['id'] ?>">
+
+
                         <?php echo htmlspecialchars($tema['nombre'] ?? ''); ?>
-                    </a>
+
+
                 </div>
+                </a>
             <?php endforeach; ?>
         </div>
 

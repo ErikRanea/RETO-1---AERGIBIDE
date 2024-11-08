@@ -5,11 +5,11 @@
 
 ?>
 
-<div class="contenedorForm">
-    <div class="crearPregunta">
+<div class="contenedorFormCrear">
+    <div class="crearPreguntaCrear">
         <h1>Editar Pregunta</h1>
 
-        <form class="formPregunta" action="index.php?controller=pregunta&action=update" method="POST" enctype="multipart/form-data">
+        <form class="formPreguntaCrear" action="index.php?controller=pregunta&action=update" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="id_pregunta" value="<?php echo $pregunta["id"];?>">
             <div>
                 <label>
@@ -35,7 +35,7 @@
                 </label>
                 <br>
                 <br>
-                <label class="btn btnImagen">
+                <label class="btn btnImagenCrear">
                     Seleccionar Archivo
                     <input type="file" name="imagen" hidden="hidden">
                 </label>
@@ -43,9 +43,9 @@
             <br>
             <br>
 
-            <div class="acciones">
-                <input type="submit" value="Guardar" class="btnForm btnCrear"/>
-                <a href="javascript:window.history.back()" class="btn btnCancel">Cancelar</a>
+            <div class="accionesCrear">
+                <input type="submit" value="Guardar" class="btnForm btnCrearCrear"/>
+                <a href="javascript:window.history.back()" class="btn btnCancelCrear">Cancelar</a>
             </div>
 
         </form>
