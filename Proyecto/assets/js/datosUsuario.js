@@ -35,3 +35,50 @@ function editarUsuario(userId) {
     console.log("Redirigiendo a:", url);
     window.location.href = url;
 }
+
+async function eliminarUsuario(userId) {
+    const params = new URLSearchParams();
+
+    params.append("idUsuario", userId);
+
+    console.log(params.toString());
+
+    let confirmado = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+
+    if (confirmado) {
+
+        const response = await fetch('index.php?controller=usuario&action=confirmDelete', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: params.toString()
+        });
+
+        const responsetxt = await response.text();
+        console.log("respuesta del javascript: " + responsetxt);
+        try {
+            const data = JSON.parse(responsetxt);
+
+            console.log("variable data: "+ data);
+
+            if (data.status === "success") {
+                alert("Usuario eliminado exitosamente");
+                // Eliminar el usuario de la interfaz
+                const usuarioElemento = document.getElementById(`contenedorUsuario`+userId);
+                if (usuarioElemento) {
+                    usuarioElemento.remove();
+                }
+            } else {
+                console.error(data.message);
+                alert("Hubo un problema al eliminar el usuario.");
+            }
+        }
+            
+        catch(error) {
+            console.error("Error:", error);
+            alert("Error al intentar eliminar el usuario.");
+        }
+    }
+}

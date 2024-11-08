@@ -5,13 +5,7 @@
         $id = "";
     }
 ?>
-
-
 <div class="containerPerfil">
-    <?php
-    // Para que aparezca el panel lateral
-    require_once "panelLateral.html.php";
-    ?>
     <div class="perfil">
         <h1><!-- Nombre de usuario se actualizará aquí --></h1>
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="datosFotoForm" enctype="multipart/form-data" class="divFoto">
@@ -33,7 +27,7 @@
             </div>
 
         </form>
-    </div>
+</div>
 
     <div class="listaDatos">
         <h2>Datos de usuario</h2>
@@ -89,6 +83,7 @@
         </form>
     </div>
 </div>
+
 
 <script>
     // Script para poder editar los campos

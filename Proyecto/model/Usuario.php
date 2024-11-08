@@ -309,6 +309,11 @@ class Usuario{
         return ceil($total/$limit);
 
     }
+    public function delete($userId) {
+            $sql = "DELETE FROM " . $this->tabla . " WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
+            return $stmt->execute([':id'=> $userId]);
+    }
 
     public function getViewByUsuario($username, $vista){
         $sql = "SELECT * FROM " . $vista . " WHERE username=?";
@@ -317,6 +322,4 @@ class Usuario{
 
         return $stmt->fetchAll();
     }
-
-
 }
