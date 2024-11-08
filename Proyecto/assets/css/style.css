@@ -113,6 +113,7 @@ strong {
     width: 40%;
 }
 
+
 .barra-busq {
     width: 100%;
     padding: 0.5em 2em;
@@ -1665,3 +1666,115 @@ input[type="file"] {
     background-color: var(--color-secundario);
     color: white;
 }
+
+
+.containerPreRemove{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 10px;
+}
+
+.containerPreRemove h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.contenedorPreguntaRemove {
+    background-color: var(--color-principal);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    width: 100%;
+    max-width: 600px;
+}
+
+.fotoUsuarioPreguntaRemove {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.fotoUsuarioPreguntaRemove img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.preguntaTituloRemove {
+    margin-bottom: 10px;
+}
+
+.preguntaTituloRemove p {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--negro1);
+    margin: 0;
+}
+
+.descripcionPreguntaRemove {
+    margin-bottom: 20px;
+    color: var(--color-letra);
+}
+
+.panelDeBotonesRemove {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.botonCancelarRespuestaRemove,
+.botonGuardarRespuestaRemove {
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.botonCancelarRespuestaRemove {
+    background-color: transparent;
+    border: 2px solid var(--color-rojo-aergibide);
+    color: var(--color-rojo-aergibide);
+}
+
+.botonCancelarRespuestaRemove:hover {
+    background-color: var(--color-rojo-aergibide);
+    color: var(--color-fondo);
+}
+
+.botonGuardarRespuestaRemove {
+    background-color: transparent;
+    border: 2px solid var(--color-secundario);
+    color: var(--color-secundario);
+}
+
+.botonGuardarRespuestaRemove:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-fondo);
+}
+
+@media (max-width: 600px) {
+    .contenedorPreguntaRemove {
+        padding: 15px;
+    }
+
+    .panelDeBotonesRemove {
+        flex-direction: column;
+    }
+
+    .botonCancelarRespuestaRemove,
+    .botonGuardarRespuestaRemove {
+        width: 100%;
+    }
+}
+
+
