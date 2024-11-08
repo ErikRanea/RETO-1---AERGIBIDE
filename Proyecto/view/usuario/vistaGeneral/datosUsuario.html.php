@@ -5,8 +5,8 @@
         $id = "";
     }
 ?>
-
-<div class="perfil">
+<div class="containerPerfil">
+    <div class="perfil">
         <h1><!-- Nombre de usuario se actualizará aquí --></h1>
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="datosFotoForm" enctype="multipart/form-data" class="divFoto">
         <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $id ?>">
@@ -82,6 +82,8 @@
             </div>
         </form>
     </div>
+</div>
+
 
 <script>
     // Script para poder editar los campos
