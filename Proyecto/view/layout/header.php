@@ -45,7 +45,7 @@ $notificaciones = $id_usuario ? $usuarioModel->getNotificacionesNoLeidas($id_usu
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                    <input class="barra-busq" type="text" name="termino" placeholder="Busqueda..." value="<?= isset($_GET['termino']) ? htmlspecialchars($_GET['termino']) : '' ?>">
+                    <input class="barra-busq" type="text" name="termino" placeholder="   Busqueda..." value="<?= isset($_GET['termino']) ? htmlspecialchars($_GET['termino']) : '' ?>">
                     <div class="filtro">
                         <button id="btnFiltro" type="button" class="iconos" onclick="toggleFiltro()">
                             <i class="bi bi-funnel-fill"></i>

@@ -110,11 +110,11 @@
         <a href="index.php?controller=tema&action=mostrarTemas">
             Temas
         </a>
-        ->
+
         <a href="index.php?controller=pregunta&action=list&id_tema=<?php echo $pregunta["id_tema"];?>">
             <?php echo $pregunta["tema"]["nombre"];?>
         </a>
-        ->
+
         <?php echo $pregunta["titulo"];?>
     </i>
     <div class="contenedorPregunta">
@@ -130,18 +130,20 @@
             <?php
 
                 $fotoUsuarioPorDefecto = "assets/img/fotoPorDefecto.png";
-               
-                
+
+
             ?>
             <img src="<?php echo file_exists($usuarioPregunta["foto_perfil"]) ? $usuarioPregunta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
+            <span class="NameUserPregunta"><?php echo $usuarioPregunta["username"]; ?></span>
         </div>
 
-        <div class="preguntaTitulo">
-           <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
-        </div>
+
     
 
         <div class="descripcionPregunta">
+            <div class="preguntaTitulo">
+                <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
+            </div>
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
         </div>
         <div class="panelDeBotones">
@@ -231,6 +233,7 @@
 
             <div class="fotoUsuarioRespuesta">
                 <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
+                <span class="NameUserRespuesta"><?php echo $usuarioRespuesta["username"]; ?></span>
                 <div class="iconos-respuesta">
                     <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar"
                         <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>

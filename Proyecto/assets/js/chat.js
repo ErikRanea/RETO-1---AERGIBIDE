@@ -49,6 +49,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     let firstLoad = true; // Variable para rastrear si es la primera carga
+    function escapeHTML(str) {
+        return str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 
     async function loadMessages() {
         const id_receptor = userComboBox.value;
@@ -87,18 +94,29 @@ document.addEventListener("DOMContentLoaded", function() {
                     const mensajeHora = mensajeFechaLocal.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
                     if (mensajeDia !== lastDate) {
-                        msgBox.innerHTML += `<div class="message-day">${mensajeDia}</div>`;
+                        const dayElement = document.createElement("div");
+                        dayElement.classList.add("message-day");
+                        dayElement.textContent = mensajeDia;
+                        msgBox.appendChild(dayElement);
                         lastDate = mensajeDia;
                     }
 
                     const messageClass = (mensaje.emisor === user_emisor) ? 'sent' : 'received';
-                    msgBox.innerHTML += `
-            <div class="message ${messageClass}">
-                ${mensaje.mensaje}
-                <em class="message-time">${mensajeHora}</em>
-            </div>
-            `;
+
+                    const messageElement = document.createElement("div");
+                    messageElement.classList.add("message", messageClass);
+
+                    // Escapamos el contenido del mensaje
+                    messageElement.textContent = escapeHTML(mensaje.mensaje);
+
+                    const timeElement = document.createElement("em");
+                    timeElement.classList.add("message-time");
+                    timeElement.textContent = mensajeHora;
+
+                    messageElement.appendChild(timeElement);
+                    msgBox.appendChild(messageElement);
                 });
+
 
                 // Lógica para el desplazamiento
                 if (firstLoad) {
