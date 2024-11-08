@@ -156,10 +156,10 @@ class Pregunta{
         $fecha_hora = $fecha_hora->format("Y-m-d H:i:s");
 
         /* Database operations */
-        $sql = "INSERT INTO ".$this->tabla. " (id_tema, titulo, texto, votos, imagen, fecha_hora, id_usuario) 
-                VALUES(?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO ".$this->tabla. " (id_tema, titulo, texto, imagen, fecha_hora, id_usuario) 
+                VALUES(?, ?, ?, ?, ?, ?)";
         $stmt = $this->connection->prepare($sql);
-        $stmt->execute([$id_tema, $titulo, $texto, $votos, $filePath, $fecha_hora, $id_usuario]);
+        $stmt->execute([$id_tema, $titulo, $texto, $filePath, $fecha_hora, $id_usuario]);
         $id = $this->connection->lastInsertId();
 
         return $id;

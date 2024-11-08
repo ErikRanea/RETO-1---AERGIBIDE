@@ -11,7 +11,6 @@ $darkModeEnabled = isset($_COOKIE['darkMode']) && $_COOKIE['darkMode'] === 'enab
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/login.css">
-    <link rel="stylesheet" href="assets/css/bodega.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <title>AERGIBIDE - LOGIN</title>
