@@ -7,11 +7,11 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
 
 ?>
 
-<div class="contenedorForm">
-    <div class="crearPregunta">
+<div class="contenedorFormCrear">
+    <div class="crearPreguntaCrear">
         <h1>Crear Pregunta</h1>
 
-        <form class="formPregunta" action="index.php?controller=pregunta&action=save" method="POST" enctype="multipart/form-data">
+        <form class="formPreguntaCrear" action="index.php?controller=pregunta&action=save" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="id_usuario" value="<?= $usuario["id"] ?>">
 
             <?php if (!isset($_GET["id_tema"])): ?>
@@ -54,7 +54,7 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
                 </label>
                 <br>
                 <br>
-                <label class="btn btnCrear">
+                <label class="btn btnImagenCrear">
                     Seleccionar Archivo
                     <input type="file" name="imagen" hidden="hidden">
                 </label>
@@ -62,9 +62,9 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
             <br>
             <br>
 
-            <div class="acciones">
-                <input type="submit" value="Guardar" class="btnForm btnCrear"/>
-                <a href="javascript:window.history.back()" class="btn btnCancel">Cancelar</a>
+            <div class="accionesCrear">
+                <input type="submit" value="Guardar" class="btnForm btnCrearCrear"/>
+                <a href="javascript:window.history.back()" class="btn btnCancelCrear">Cancelar</a>
             </div>
 
         </form>

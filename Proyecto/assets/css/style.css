@@ -26,6 +26,10 @@ strong {
     --color-letra:#333;
     --color-dia-chat:#5f6368;
     --color-rojo-aergibide:#e51816;
+    --color-rojo-aergibide-activo: #ba1513;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-hover: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 body {
@@ -235,23 +239,23 @@ footer span {
     display: flex;
     width: 100%;
     margin-left: 0;
-    gap: 10px;
+    gap: 0.5%;
     flex-grow: 1;
 }
 
 .temas {
     flex-grow: 1;
-    padding: 20px;
-    gap: 500px;
+    padding: 0.5%;
+    gap: 1%;
 }
 
 .tema {
     background-color: var(--color-principal);
-    padding: 15px;
-    font-size: 18px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.8%;
+    font-size: 1em;
+    margin-bottom: 1.5%;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     color: var(--color-letra);
     display: block;
@@ -260,8 +264,8 @@ footer span {
 }
 
 .tema:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.005);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tema a {
@@ -274,47 +278,50 @@ footer span {
 }
 
 .sidebar {
-    width: 300px;
-    padding: 20px;
+    width: 20%;
+    padding: 15px;
     background-color: var(--color-principal);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Últimas Publicaciones */
 .ultimas-publicaciones h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 8px;
     color: var(--color-letra);
 }
 
 .publicacion {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .icono img {
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 .texto p {
     margin: 0;
     color: var(--color-letra);
+    font-size: 0.9em;
 }
 
 .estadisticas {
-    margin-top: 20px;
+    margin-top: 15px;
     color: var(--color-letra);
+    font-size: 0.9em;
 }
 
 /* Paginación */
 .paginacion {
     display: flex;
     justify-content: center;
-    padding: 10px 0;
-    margin: 20px 0;
+    padding: 8px 0;
+    margin: 15px 0;
     width: 100%;
 }
+
 
 /* Tabla de Datos */
 
@@ -403,6 +410,8 @@ footer span {
 .divBotonGuardar {
     padding-top: 1em;
 }
+
+
 
 /*Modificar colores*/
 input[readonly] {
@@ -1032,30 +1041,7 @@ input[readonly] {
     margin-left: 6px;
 }
 
-@media (max-width: 768px) {
-    .barra {
-        font-size: 12px;
-        flex-wrap: wrap;
-    }
 
-    .barra a, .barra span {
-        padding: 6px 8px;
-        margin-bottom: 4px;
-    }
-
-    .barra > a {
-        margin-right: 20px;
-    }
-
-    .barra > a::after {
-        right: -16px;
-        font-size: 16px;
-    }
-
-    .barra > span {
-        margin-left: 4px;
-    }
-}
 
 .contenedorPreguntasYRespuestas p{
     color: var(--color-letra);
@@ -1144,18 +1130,18 @@ input[readonly] {
 
 .botonSubirArchivo {
     background-color: var(--color-secundario);
-    color: var(--color-letra);
+    color: white;
 }
 
 .botonSubirArchivo:hover {
     background-color: var(--color-secundario);
-    color: var(--color-letra);
+    color: white;
 }
 
 
 .botonComentar {
     background-color: var(--color-secundario);
-    color: var(--color-letra);
+    color: white;
 }
 
 .botonComentar:hover {
@@ -1233,27 +1219,6 @@ input[readonly] {
     border-radius: 4px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .contenedorPreguntasYRespuestas {
-        padding: 10px;
-    }
-
-    .contenedorPregunta, .contenedorRespuestaDivididor, .publicarRespuesta {
-        padding: 15px;
-        padding-bottom: 70px;
-    }
-
-    .fotoUsuarioPregunta, .fotoUsuarioRespuesta {
-        float: none;
-        margin-bottom: 10px;
-    }
-
-    .panelDeBotones {
-        flex-wrap: wrap;
-
-    }
-}
 
 /* Additional styles for better readability and interaction */
 .contenedorRespuesta {
@@ -1504,7 +1469,7 @@ input[readonly] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2em;
+    gap: 2px;
     width: 60%;
     margin-top: 3em;
 }
@@ -1548,21 +1513,26 @@ input[readonly] {
 
 .btnCrear {
     border: 2px solid var(--color-secundario);
-    color: var(--color-secundario);
+    color: white;
+    background-color: var(--color-secundario);
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .btnCrear:hover {
-    background-color: var(--color-secundario);
+    background-color: var(--color-secundario-activo);
     color: white;
 }
 
 .btnCancel {
     border: 2px solid var(--color-rojo-aergibide);
-    color: var(--color-rojo-aergibide);
+    color: white;
+    background-color: var(--color-rojo-aergibide);;
+    cursor: pointer;
 }
 
 .btnCancel:hover {
-    background-color: var(--color-rojo-aergibide);
+    background-color: var(--color-rojo-aergibide-activo);
     color: white;
 }
 
@@ -1762,7 +1732,174 @@ input[type="file"] {
     color: var(--color-fondo);
 }
 
-@media (max-width: 600px) {
+
+/*Crear y editar pregunta*/
+.contenedorFormCrear {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 70vh;
+    padding: 2rem;
+}
+
+.crearPreguntaCrear {
+    background-color: var(--color-fondo);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: var(--shadow-md);
+}
+
+.crearPreguntaCrear h1 {
+    font-size: 1.75rem;
+    color: var(--color-letra);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.formPreguntaCrear label {
+    font-size: 0.9rem;
+    color: var(--color-letra);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: 500;
+}
+
+.formPreguntaCrear input[type="text"],
+.formPreguntaCrear textarea,
+.formPreguntaCrear select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: var(--color-fondo);
+    color: var(--color-letra);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.formPreguntaCrear input[type="text"]:focus,
+.formPreguntaCrear textarea:focus,
+.formPreguntaCrear select:focus {
+    outline: none;
+    border-color: var(--color-secundario);
+    box-shadow: 0 0 0 3px rgba(77, 186, 217, 0.2);
+}
+
+.formPreguntaCrear textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.btn, .btnForm {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.btnCrearCrear {
+    background-color: var(--color-secundario);
+    color: white;
+    text-align: center;
+}
+
+.btnCrearCrear:hover {
+    background-color: var(--color-secundario-activo);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+}
+
+.btnCancelCrear {
+    background-color: var(--color-rojo-aergibide);
+    color: white;
+    text-align: center;
+}
+
+.btnCancelCrear:hover {
+    background-color: var(--color-rojo-aergibide-activo);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+}
+
+.btnImagenCrear{
+    text-align: center;
+}
+
+.accionesCrear {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.accionesCrear .btnForm,
+.accionesCrear .btn {
+    flex: 1;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.btn.btnCrearCrear {
+    display: inline-block;
+    background-color: var(--color-secundario);
+    padding: 0.75rem 1.5rem;
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+
+@media (max-width: 991px) {
+    .containerTema {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: none;
+    }
+    .temas-titulo{
+        font-size: 6em;
+    }
+
+    .tema {
+        padding: 9%;
+        font-size: 3em;
+        margin-bottom: 1.5%;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        color: var(--color-letra);
+        display: block;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .paginacion .page-btn {
+        font-size: 5em;  /* Tamaño aún más grande para móviles */
+        padding: 15px 20px;
+    }
+
+    .contenedorFormCrear {
+        padding: 1rem;
+    }
+
+    .crearPreguntaCrear {
+        padding: 1.5rem;
+    }
+
+    .accionesCrear {
+        flex-direction: column;
+    }
+
+
+
     .contenedorPreguntaRemove {
         padding: 15px;
     }
@@ -1775,6 +1912,186 @@ input[type="file"] {
     .botonGuardarRespuestaRemove {
         width: 100%;
     }
+
+    .contenedorPreguntasYRespuestas {
+         padding: 10px;
+     }
+
+    .contenedorPregunta, .contenedorRespuestaDivididor, .publicarRespuesta {
+        padding: 15px;
+        padding-bottom: 70px;
+    }
+
+    .fotoUsuarioPregunta, .fotoUsuarioRespuesta {
+        float: none;
+        margin-bottom: 10px;
+    }
+
+    .panelDeBotones {
+        flex-wrap: wrap;
+
+    }.barra {
+         font-size: 12px;
+         flex-wrap: wrap;
+     }
+
+    .barra a, .barra span {
+        padding: 6px 8px;
+        margin-bottom: 4px;
+    }
+
+    .barra > a {
+        margin-right: 20px;
+    }
+
+    .barra > a::after {
+        right: -16px;
+        font-size: 16px;
+    }
+
+    .barra > span {
+        margin-left: 4px;
+    }
+    .containerTema {
+         flex-direction: column;
+     }
+
+    .sidebar {
+        display: none;
+    }
+
+    .barra-busq {
+        font-size: 34px;
+    }
+
+    .iconos {
+        font-size: 40px;
+    }
+
+    .logo {
+        width: 3%;
+        cursor: pointer;
+    }
+
+    .logo > img {
+        width: 300%;
+    }
+
+    .btnCrear{
+        text-align: center;
+    }
+
+
+    /*list preguntas*/
+    .contenedorListaPreguntas {
+        padding: 10px;
+    }
+
+    .listaPreguntas {
+        padding: 15px;
+    }
+
+    .pregunta {
+        padding: 25px;
+        min-height: 120px;
+        width: 100%;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pregunta p {
+        font-size: 20px;
+        line-height: 1.5;
+    }
+
+    .pregunta:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+
+    .tema-titulo {
+        font-size: 200px;
+    }
+
+    .tituloPregunta {
+        font-size: 30px;
+    }
+    .datos-pregunta{
+        font-size: 30px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .page-btn {
+        margin: 2px;
+    }
+
+    .panelDeBotones{
+        font-size: 50px;
+        gap: 30px;
+    }
+
+    .bi-airplane.airplane-down {
+        transform: rotate(180deg);
+        font-size: 54px;
+    }
+
+    .bi-airplane-fill.airplane-down {
+        transform: rotate(180deg);
+        font-size: 54px;
+    }
+
+    /* Estilo general para todos los íconos de avión */
+    .bi-airplane, .bi-airplane-fill {
+        font-size: 54px;
+    }
+
+
+    .botonPanel .bi-airplane,
+    .botonPanel .bi-airplane-fill,
+    .botonPanel .bi-bookmark,
+    .botonPanel .bi-bookmark-fill{
+        font-size: 50px;
+    }
+
+    .iconos-respuesta .bi-trash,
+    .iconos-respuesta .bi-pencil-square,
+    .iconos-respuesta .bi.bi-trash,
+    .iconos-respuesta i.bi-trash,
+    .iconos-respuesta i.bi-pencil-square,
+    .iconos-respuesta .botonDeEditar i,
+    .iconos-respuesta .botonDeBorrar i {
+        font-size: 50px;
+    }
+
+    .iconos-respuesta .bi-trash,
+    .iconos-respuesta i.bi-trash {
+        font-size: 50px !important;
+    }
+
+    .iconos-respuesta{
+        gap: 20px;
+    }
+
+    .iconos-pregunta .bi-pencil-square,
+    .iconos-pregunta i.bi-pencil-square {
+        font-size: 50px !important;
+    }
+
+
+
+    .iconos-pregunta .bi-trash,
+    .iconos-pregunta i.bi-trash {
+        font-size: 50px !important;
+    }
+
+    .iconos-pregunta{
+        gap: 20px;
+    }
+
+
 }
-
-
