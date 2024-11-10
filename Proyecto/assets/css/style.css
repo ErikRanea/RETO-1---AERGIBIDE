@@ -148,8 +148,8 @@ strong {
     position: absolute;
     top: 40px;
     right: 0;
-    background-color: var(--color-principal); /
-border: none;
+    background-color: var(--color-principal); 
+    border: none;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
@@ -1777,4 +1777,46 @@ input[type="file"] {
     }
 }
 
+
+
+
+
+
+
+/*CSS del panel*/
+/* swal-custom-popup estilos personalizados */
+.swal-custom-popup {
+    max-width: 500px; /* Cambia el tamaño a tu preferencia */
+    width: 80%; /* Esto hace que el ancho sea un porcentaje del contenedor */
+}
+
+
+.swal-custom-popup .containerPreRemove {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    /*padding: 10px;*/
+}
+
+.swal-custom-popup .contenedorPreguntaRemove {
+    background-color: var(--color-principal);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+.swal-custom-popup .fotoUsuarioPreguntaRemove img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+/* Otros estilos según lo necesario */
 

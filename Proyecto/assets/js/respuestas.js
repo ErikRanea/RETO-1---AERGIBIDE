@@ -449,3 +449,131 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
         });
     });
 });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('eliminarPregunta').addEventListener('click', async function() {
+    const idPregunta = document.getElementById("eliminarPregunta").getAttribute('data-value');
+    try
+    {
+        /*Primero recojo el usuario y la pregunta de la base de datos y luego muestro dentro del panel Swal */
+        console.log("Comenzando la eliminiación de la pregunta");
+        console.log("El id de la pregunta es " + idPregunta );
+        const params = new URLSearchParams();
+        params.append("id_pregunta", idPregunta);
+
+        const response = await fetch(`index.php?controller=pregunta&action=remove`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: params.toString()
+        }); 
+        
+        const data = await response.json();
+        console.log('Respuesta del servidor:', data);
+
+        if(data.status == "success")
+        {
+
+            console.log("Los datos son los siguientes: "+data.data["usuario"]["id"]);
+
+            const usuario = data.data["usuario"];
+            const pregunta = data.data["pregunta"];
+
+
+            let html = `    
+            <div class="contenedorPreguntaRemove">
+                <div class="fotoUsuarioPreguntaRemove">
+                    <img src="${usuario["foto_perfil"]}" alt="Foto de usuario">
+                    <span>${usuario["username"]}</span>
+                </div>
+        
+                <div class="preguntaTituloRemove">
+                   <p>${pregunta["titulo"]}</p>
+                </div>
+                <div class="descripcionPreguntaRemove">
+                    <p>${pregunta["descripcion"] ?? ""}</p>
+                </div>
+            </div>`; 
+
+            let respuestaUsuario;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Estas seguro de que quieres eliminar esta pregunta?',
+                html: html,
+                color: 'var(--color-letra)',
+                background: 'var(--color-principal)',
+                showDenyButton: true,
+                confirmButtonText: 'Aceptar',
+                denyButtonText: 'Cancelar'
+
+            }).then((result)  => {
+                if(result.isConfirmed) {
+                    respuestaUsuario = true;
+                    console.log("La respuesta del usuario es la siguiente: "+ respuestaUsuario);
+
+                    const parametros = new URLSearchParams;
+                    parametros.append("id_pregunta", idPregunta);
+                    
+                    // Realizar la segunda llamada fetch correctamente
+                    fetch(`index.php?controller=pregunta&action=delete`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: parametros.toString()
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status === "success") {
+                            // Redirigir al usuario después de eliminar
+                            window.location.href = data.redirect;
+                        } 
+                        else if(data.status === "error"){
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message,
+                                color: 'var(--color-letra)',
+                                background: 'var(--color-principal)'
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'No se pudo eliminar la pregunta',
+                                color: 'var(--color-letra)',
+                                background: 'var(--color-principal)'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al eliminar la pregunta:", error);
+                    });
+                }
+                else if (result.isDenied) 
+                {
+                    respuestaUsuario = false;
+                }
+            });
+        }
+        
+    } 
+    catch (error) {
+        console.log("Ha sucedido el siguiente error que nos ha llevado al catch de js: "+error);
+    }
+ 
+
+
+//Una vez pulse que sí, elimino la pregunta y le redirijo al tema donde a eliminado la pregunta
+
+
+
+});
+
+
+/*      */
