@@ -147,6 +147,11 @@ strong {
 .filtro {
     position: absolute;
     right: 10px;
+
+}
+
+.filtro-titulo{
+    color: var(--color-letra);
 }
 
 #filtroMenu {

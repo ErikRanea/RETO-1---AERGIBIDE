@@ -74,20 +74,20 @@ strong {
     outline: none;
     box-shadow: none;
     border-radius: 35px;
+    transition: all 0.3s ease;
 }
 
 .btnPanelLateral.active {
     background-color: var(--color-secundario);
-    border-radius: 35px;
     color: white;
-
+    font-weight: bold;
 }
 
 .btnPanelLateral:hover {
-    box-shadow: none;
-    border-radius: 35px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: white;
     background-color: var(--color-secundario);
+    transform: translateY(-2px);
 }
 
 
@@ -293,6 +293,56 @@ strong {
 .btnPanelLateral.active {
     background-color: var(--color-secundario);
     color: white;
+}
+
+/*Actividad*/
+
+.btnAc {
+    margin-bottom: 20px; /* Aumentado de 10px a 20px para mayor separación vertical */
+    padding: 12px 20px; /* Añadido padding para hacer los botones más gorditos */
+    text-align: center;
+    background-color: transparent;
+    color: var(--color-letra);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-radius: 35px;
+    font-size: 16px; /* Aumentado el tamaño de la fuente */
+    transition: all 0.3s ease; /* Añadida transición suave para todos los cambios */
+}
+
+.btnAc.active {
+    background-color: var(--color-secundario);
+    color: white;
+    font-weight: bold; /* Añadido para destacar el botón activo */
+}
+
+.btnAc:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añadida sombra sutil al hover */
+    color: white;
+    background-color: var(--color-secundario);
+    transform: translateY(-2px); /* Efecto de elevación sutil */
+}
+
+/* Añadido para mejorar la disposición de los botones */
+.contenedor-botones-actividad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espacio entre botones */
+    justify-content: center; /* Centrar los botones horizontalmente */
+}
+
+.contenido-actividad{
+    color: var(--color-letra);
+}
+
+.contenido-actividad a:hover{
+    color: var(--color-secundario);
+}
+
+.listaUsers{
+    color: var(--color-letra);
 }
 
 /* Responsive design */
