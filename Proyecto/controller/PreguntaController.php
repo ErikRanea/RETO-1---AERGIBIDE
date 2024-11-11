@@ -255,7 +255,7 @@ class PreguntaController{
 
             if(!$this->puedeEditar($_GET["id_pregunta"]))
             {
-                header("Location: index.php?controller=temas&action=mostrarTemas");
+                header("Location: index.php?controller=tema&action=mostrarTemas");
                 exit();
             }
             else
