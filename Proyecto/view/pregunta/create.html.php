@@ -61,10 +61,9 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
             </div>
             <br>
             <br>
-
-            <div class="accionesCrear">
-                <input type="submit" value="Guardar" class="btnForm btnCrearCrear"/>
-                <a href="javascript:window.history.back()" class="btn btnCancelCrear">Cancelar</a>
+            <div class="acciones">
+                <input type="submit" value="Guardar" class="btnForm btnCrear"/>
+                <a href= "<?php echo isset($id_tema) ? "index.php?controller=pregunta&action=list&id_tema=".$id_tema : "index.php"?>" class="btn btnCancel">Cancelar</a>
             </div>
 
         </form>

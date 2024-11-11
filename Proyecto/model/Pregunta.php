@@ -57,8 +57,7 @@ class Pregunta{
     {
 
         $pregunta = $this->getPreguntaById($param["id_pregunta"]);
-        $usuario = $this->usuario->getUsuarioById($pregunta["id_usuario"]);
-
+        $usuario = $this->usuario->getDatosUsuarioById($pregunta["id_usuario"]);
         $datos = array();
         $datos["pregunta"] = $pregunta;
         $datos["usuario"] = $usuario;
@@ -210,6 +209,20 @@ class Pregunta{
     }
 
     
-
+    public function getIdTemaByIdPregunta($id) 
+    {
+        try {
+            $sql = "SELECT id_tema FROM ".$this->tabla." WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$id]);
+            return $stmt->fetch();
+        }
+        catch(Exception $e) {
+            return [
+                "status" => "error",
+                "message" => "Error en el modelo: " . $e->getMessage()
+            ];
+        }
+    }
 
 }

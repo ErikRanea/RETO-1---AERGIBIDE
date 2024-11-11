@@ -77,7 +77,7 @@ class Respuesta
     {
         $respuesta = $this->getRespuestaById($param["id_respuesta"]);
 
-        $usuario = $this->usuario->getUsuarioById($respuesta["id_usuario"]);
+        $usuario = $this->usuario->getDatosUsuarioById($respuesta["id_usuario"]);
 
         $datos = array();
         $datos["respuesta"] = $respuesta;

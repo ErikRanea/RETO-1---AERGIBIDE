@@ -45,6 +45,15 @@ class Usuario{
     }
 
 
+    public function getDatosUsuarioById($id)
+    {
+        $sql = "SELECT id, nombre,email,username,rol,foto_perfil,apellido FROM ". $this->tabla . " WHERE id = ?";
+        $stmt = $this-> connection -> prepare($sql);
+        $stmt -> execute(["$id"]);
+        return $stmt -> fetch();
+    }
+
+
     public function insertUsuario($param)
     {
 
