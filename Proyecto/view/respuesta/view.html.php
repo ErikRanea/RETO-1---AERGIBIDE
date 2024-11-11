@@ -102,6 +102,18 @@
         return $puedeEditar;
     }
 
+    function esDueno($id)
+    {
+        $puedeEditar = false;
+        $idUsuario = $_SESSION["user_data"]["id"];
+        $rol = $_SESSION["user_data"]["rol"];
+
+        if($idUsuario == $id)
+        {
+             return $puedeEditar = true;
+        }
+    }
+
 ?>
 
 <input type="text" id="userId" value="<?php echo $_SESSION["user_data"]['id']; ?>" hidden >
@@ -119,7 +131,7 @@
     </i>
     <div class="contenedorPregunta">
         <div class="iconos-pregunta">
-            <label id="editarPregunta" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta["id"])){echo "hidden";}?>>
+            <label id="editarPregunta" class="botonDeEditar" <?php if(!esDueno($usuarioPregunta["id"])){echo "hidden";}?>>
                 <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a>
             </label>
             <label id="eliminarPregunta" class="botonDeEditar" data-value="<?=$pregunta["id"]?>" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
@@ -236,7 +248,7 @@
                 <span class="NameUserRespuesta"><?php echo $usuarioRespuesta["username"]; ?></span>
                 <div class="iconos-respuesta">
                     <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar"
-                        <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>
+                        <?php if(!esDueno($usuarioRespuesta["id"])){echo "hidden";}?>>
                         <i class="bi bi-pencil-square botonEditar"></i>
                     </label>
                     <label id="eliminarRespuesta-<?php echo $datosRespuesta["id"]?>" value = "<?= $datosRespuesta["id"]?>" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
