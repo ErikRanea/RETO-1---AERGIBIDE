@@ -211,23 +211,18 @@ class Pregunta{
     
     public function getIdTemaByIdPregunta($id) 
     {
-        try
-        {
-
-            $sql = "SELECT id_tema FROM ".$this->tabla." WHERE id = ?";;
+        try {
+            $sql = "SELECT id_tema FROM ".$this->tabla." WHERE id = ?";
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$id]);
             return $stmt->fetch();
         }
-        catch(Error $e)
-        {
-            echo json_encode([
+        catch(Exception $e) {
+            return [
                 "status" => "error",
-                "message" => "Ha dado este error en el modelo "+$e
-            ]);
-            exit();
+                "message" => "Error en el modelo: " . $e->getMessage()
+            ];
         }
-
     }
 
 }

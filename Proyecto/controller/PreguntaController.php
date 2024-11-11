@@ -305,7 +305,6 @@ class PreguntaController{
             try 
             {
 
-
                 
                 $idUsuario = $_SESSION['user_data']['id'];
                 $_POST["id_usuario"] = $idUsuario;
@@ -353,7 +352,6 @@ class PreguntaController{
 
         if($_SERVER["REQUEST_METHOD"] == "POST")
         {
-
             try {
                 
                 if(!$this->puedeEditar($_POST["id_pregunta"]) || !isset($_POST["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
@@ -368,23 +366,19 @@ class PreguntaController{
                 elseif($_SESSION['user_data']['autorizado'])
                 {
 
-
-                    $id_tema = $this -> model -> getIdTemaByIdPregunta($_POST["id_pregunta"]);
-
-                    echo json_encode([
-                        "status" => "error",
-                        "message" => "El id tema es ".$id_tema
-                    ]);
-                    exit();
-
+                    
+    
+                    $idTema = $this -> model -> getIdTemaByIdPregunta($_POST["id_pregunta"]);
                     
                     $result = $this-> model -> deletePreguntaById($_POST["id_pregunta"]);
                     if($result)
                     {
+
+
                         unset($_SESSION['user_data']['autorizado']);
                         echo json_encode([
                             "status" => "success",
-                            "redirect" => "index.php?controller=pregunta&action=list&id_tema".$id_tema
+                            "redirect" => "index.php?controller=pregunta&action=list&id_tema=".$idTema["id_tema"]
                         ]);
                         exit();
                     }

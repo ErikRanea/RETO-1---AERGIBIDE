@@ -414,7 +414,7 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
                 <input type="hidden" name="id_pregunta" value="${idPregunta}">
                 <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
                 <div class="contenedorImagenEdicion">
-                    <img class="ImagenEditar" src="${imagenOriginalUrl ? imagenOriginalUrl : ''}" alt="Imagen de respuesta">
+                    <img class="ImagenEditar" src="${imagenOriginalUrl ? imagenOriginalUrl : ''}">
                 </div>
                 <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
                     <label class="botonSubirArchivo">
@@ -486,7 +486,7 @@ document.getElementById('eliminarPregunta').addEventListener('click', async func
             let html = `    
             <div class="contenedorPreguntaRemove">
                 <div class="fotoUsuarioPreguntaRemove">
-                    <img src="${usuario["foto_perfil"]}" alt="Foto de usuario">
+                    <img src="${usuario["foto_perfil"] ?? "assets/img/fotoPorDefecto.png"}" alt="Foto de usuario">
                     <span>${usuario["username"]}</span>
                 </div>
         
@@ -536,7 +536,7 @@ document.getElementById('eliminarPregunta').addEventListener('click', async func
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
-                                text: data.message,
+                                text: data.message  ,
                                 color: 'var(--color-letra)',
                                 background: 'var(--color-principal)'
                             });
@@ -577,3 +577,130 @@ document.getElementById('eliminarPregunta').addEventListener('click', async func
 
 
 /*      */
+
+
+document.querySelectorAll('[id^="eliminarRespuesta-"]').forEach(boton => {
+    boton.addEventListener('click', async function() {
+
+
+        const idRespuesta = this.getAttribute('value');
+        const botoEliminar = document.getElementById(`eliminarRespuesta-${idRespuesta}`);
+
+        try
+        {
+            /*Primero recojo el usuario y la respuesta de la base de datos y luego muestro dentro del panel Swal */
+            console.log("Comenzando la eliminiación de la respuesta");
+            console.log("El id de la respuesta es " + idRespuesta );
+            const params = new URLSearchParams();
+            params.append("id_respuesta", idRespuesta);
+
+            const response = await fetch(`index.php?controller=respuesta&action=remove`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: params.toString()
+            }); 
+            
+            const data = await response.json();
+            console.log('Respuesta del servidor:', data);
+
+            if(data.status == "success")
+            {
+
+                console.log("Los datos son los siguientes: "+data.data["usuario"]["id"]);
+
+                const usuario = data.data["usuario"];
+                const respuesta = data.data["respuesta"];
+                const idPregunta = respuesta["id_pregunta"];
+                const imagen = respuesta["imagen"];
+
+                let html = `    
+                <div class="contenedorRespuestaDivididorRemove">
+                <div class="fotoUsuarioRespuesta">
+                    <img src="${usuario["foto_perfil"] ?? "assets/img/fotoPorDefecto.png"}" alt="Foto de usuario">
+                    <span>${usuario["username"]}</span>
+                </div>
+                <div class="respuesta">
+                    <div class="estrella-respuesta"></div>
+                    <div class="contenidoRespuesta">
+                        ${respuesta["texto"]}
+
+                        <img class="imagenRespuesta" src="${imagen ?? "" }">
+                    </div>
+                </div>
+                </div>`; 
+
+                let respuestaUsuario;
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Estas seguro de que quieres eliminar esta respuesta?',
+                    html: html,
+                    color: 'var(--color-letra)',
+                    background: 'var(--color-principal)',
+                    showDenyButton: true,
+                    confirmButtonText: 'Aceptar',
+                    denyButtonText: 'Cancelar'
+
+                }).then((result)  => {
+                    if(result.isConfirmed) {
+                        respuestaUsuario = true;
+                        console.log("La respuesta del usuario es la siguiente: "+ respuestaUsuario);
+
+                        const parametros = new URLSearchParams;
+                        parametros.append("id_pregunta", idPregunta);
+                        parametros.append("id_respuesta" , idRespuesta);
+                        
+                        // Realizar la segunda llamada fetch correctamente
+                        fetch(`index.php?controller=respuesta&action=delete`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: parametros.toString()
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.status === "success") {
+                                // Redirigir al usuario después de eliminar
+                                window.location.href = data.redirect;
+                            } 
+                            else if(data.status === "error"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: data.message  ,
+                                    color: 'var(--color-letra)',
+                                    background: 'var(--color-principal)'
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar la pregunta',
+                                    color: 'var(--color-letra)',
+                                    background: 'var(--color-principal)'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error al eliminar la pregunta:", error);
+                        });
+                    }
+                    else if (result.isDenied) 
+                    {
+                        respuestaUsuario = false;
+                    }
+                });
+            }
+            
+        } 
+        catch (error) 
+        {
+            console.log("Ha sucedido el siguiente error en el catch del cliente: "+error);    
+        }
+    });
+});

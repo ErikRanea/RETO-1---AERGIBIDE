@@ -88,28 +88,53 @@ class RespuestaController
     public function remove()
     {
 
-        try 
+        if($_SERVER["REQUEST_METHOD"] == "POST")
         {
-        
-            $datos = $this->model->getRespuestaYUsuario($_GET);
-
-
-
-            if(!$this->puedeEditar($datos["respuesta"]["id"]))
+ 
+            try 
             {
-                header("Location: index.php?controller=tema&action=mostrarTemas");
+
+                
+                $idUsuario = $_SESSION['user_data']['id'];
+                $_POST["id_usuario"] = $idUsuario;
+
+
+                $datos = $this->model->getRespuestaYUsuario($_POST);
+        
+                
+
+                if(!$this->puedeEditar($datos["respuesta"]["id"]))
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "No tiene permiso para eliminar este elemento"
+                    ]);
+                    exit();
+                }
+    
+                /*Esta variable de sesión será utilizada para que sin un previo acceso a está ventana, no te permita realizar un borrado */
+                $_SESSION['user_data']['autorizado'] = true;
+    
+              
+                echo json_encode([
+                    "status" => "success",
+                    "data" => $datos
+                ]);
+                exit();    
+            } 
+            catch (Error $e)
+            {   
+                echo json_encode([
+                "status" => "error",
+                "message" => "Ha sucedido el siguiente error: ".$e
+                ]);
                 exit();
             }
-            $this -> view = "remove";
-
-            /*Esta variable de sesión será utilizada para que sin un previo acceso a está ventana, no te permita realizar un borrado */
-            $_SESSION['user_data']['autorizado'] = true;
-
-            return $datos;    
-        } 
-        catch (Error $e)
+ 
+        }
+        else
         {
-            echo "Ha sucedido el siguiente error: ".$e;
+            header("Location: index.php");
             exit();
         }
 
@@ -119,28 +144,47 @@ class RespuestaController
 
     public function delete()
     {
-        try {
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+        {
+
+
+            try {
             
-            if(!$this->puedeEditar($_GET["id_respuesta"]) || !isset($_GET["id_respuesta"]) || !isset($_GET["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
-            {
-                header("Location: index.php?controller=tema&action=mostrarTemas");
+                if(!$this->puedeEditar($_POST["id_respuesta"]) || !isset($_POST["id_respuesta"]) || !isset($_POST["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "No está autorizado para realizar dicha operación",
+                        "redirect" => "index.php?"
+                    ]);
+                    exit();
+                }
+                elseif($_SESSION['user_data']['autorizado'])
+                {
+                    $result = $this-> model -> deleteRespuestaById($_POST["id_respuesta"]);
+                    if($result)
+                    {
+                        unset($_SESSION['user_data']['autorizado']);
+                        echo json_encode([
+                            "status" => "success",
+                            "redirect" => "index.php?controller=respuesta&action=view&id_pregunta=".$_POST["id_pregunta"]
+                        ]);
+                        exit();
+                    }
+                }
+
+            } catch (Error $e) {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Ha sucedido el siguiente error en el servidor: ".$e
+                ]);
                 exit();
             }
-            elseif($_SESSION['user_data']['autorizado'])
-            {
-                $result = $this-> model -> deleteRespuestaById($_GET["id_respuesta"]);
-                if($result)
-                {
-                    unset($_SESSION['user_data']['autorizado']);
-                    header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_GET["id_pregunta"]);
-                }
-            }
 
-
-
-
-        } catch (Error $e) {
-            echo "Ha sucedido el siguiente error: ".$e;
+        }
+        else
+        {
+            header("Location: index.php");
             exit();
         }
     }

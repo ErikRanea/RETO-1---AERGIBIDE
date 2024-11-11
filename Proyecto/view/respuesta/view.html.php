@@ -215,7 +215,7 @@
     </div>
     
     <!--Aqui comienzan las respuestas-->
-
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
     
@@ -239,8 +239,8 @@
                         <?php if(!puedeEditar($usuarioRespuesta["id"])){echo "hidden";}?>>
                         <i class="bi bi-pencil-square botonEditar"></i>
                     </label>
-                    <label id="eliminarRespuesta-" class="botonDeBorrar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
-                        <a href="index.php?controller=respuesta&action=remove&id_respuesta=<?php echo $datosRespuesta["id"];?>"><i class="bi bi-trash"></i></a></label>
+                    <label id="eliminarRespuesta-<?php echo $datosRespuesta["id"]?>" value = "<?= $datosRespuesta["id"]?>" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
+                        <i class="bi bi-trash"></i></label>
 
                     <label>
                         <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
