@@ -1,0 +1,638 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: Mulish-Regular;
+    src: url("../fonts/Mulish/static/Mulish-Regular.ttf");
+}
+
+@font-face {
+    font-family: Mulish-Bold;
+    src: url("../fonts/Mulish/static/Mulish-Bold.ttf");
+    font-weight: bold;
+}
+strong {
+    font-family: Mulish-Bold;
+}
+:root {
+    --color-principal: #f4f4f9;
+    --color-secundario: #4DBAD9;
+    --color-secundario-activo: #379BB3;
+    --color-fondo: #ffffff;
+    --negro1:#1A1A1A;
+    --fondo-header-footer: #EAFBFF;
+    --color-letra:#333;
+    --color-dia-chat:#5f6368;
+    --color-rojo-aergibide:#e51816;
+    --color-rojo-aergibide-activo: #ba1513;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-hover: 0 6px 12px rgba(0,0,0,0.15);
+}
+/* Tabla de Datos */
+
+.estiloTabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-principal);
+    border-radius: 0.625em;
+    overflow: hidden;
+}
+
+.estiloTabla tr {
+    border-bottom: 0.09375em solid var(--color-secundario);
+}
+
+.estiloTabla tr:first-child th {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:first-child td {
+    padding-top: 2.5em;
+}
+
+.estiloTabla tr:last-child {
+    border-bottom: none;
+}
+
+.estiloTabla th {
+    font-weight: bold;
+    text-align: right;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
+}
+
+.estiloTabla td {
+    font-weight: bold;
+    text-align: left;
+    padding: 1.25em 1.875em;
+    font-size: 1em;
+}
+
+.listaDatos {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.listaDatos h2 {
+    margin-bottom: 1em;
+}
+
+.perfil {
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.diseñoBoton {
+    background-color: var(--color-secundario);
+    border: none;
+    color: var(--color-principal);
+    font-weight: bold;
+    border-radius: 0.5em;
+    width: 8.125em;
+    height: 2.1875em;
+    font-size: 1em;
+}
+
+.sinFoto {
+    width: 10em;
+    border-radius: 3.13em;
+    border: 2px solid var(--color-secundario);
+}
+
+.divFoto {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.containerPerfil {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-principal);
+}
+
+.divBotonGuardar {
+    padding-top: 1em;
+}
+
+botonPassword {
+    background-color: var(--color-secundario);
+    border: none;
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    color: var(--color-principal);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.botonPassword:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-letra);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.botonesPerfil {
+    margin: 1em;
+}
+
+.botonEditar {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Panel de control */
+
+.botonesArriba {
+    font-weight: bold;
+    color: var(--color-principal);
+    margin: 0 auto;
+}
+
+
+.botonesArriba {
+    font-weight: bold;
+    color: white;
+    margin: 0 auto;
+    padding-bottom: 2em;
+}
+.botonesArriba a {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.containerPanel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    padding: 2em;
+}
+
+.containerCreate {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+.listaUsers {
+    overflow-y: scroll;
+}
+
+.listaUsers li {
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: -0.5em;
+}
+
+.user {
+    background-color: transparent;
+    padding: 15px;
+    font-size: 30px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--color-secundario);
+    cursor: pointer;
+}
+
+/* Cambiar Contraseña */
+
+.paginaPassword {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.formPassword {
+    padding: 2em;
+}
+
+
+.panelLateral {
+    width: 250px;
+    background-color: var(--fondo-header-footer);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100vh;
+}
+
+.btnPanelLateral {
+    width: 100%;
+    padding: 12px 20px;
+    text-align: left;
+    border: none;
+    border-radius: 25px;
+    background: transparent;
+    color: var(--color-letra);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+.btnPanelLateral:hover {
+    background-color: var(--color-secundario);
+    color: white;
+}
+
+.btnPanelLateral.active {
+    background-color: var(--color-secundario);
+    color: white;
+}
+
+/* Add container for buttons to control their layout */
+.botonesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Reduced gap between buttons */
+    width: 100%;
+}
+
+/*Datos Usuarios*/
+/* Layout Styles */
+.containerPerfil {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+
+
+
+
+/* Main Content Area */
+#panelPrincipalUsuario {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Profile Section */
+.panelDatos {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* Imagen en columna 1, datos en columna 2 */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.perfil {
+    text-align: center;
+}
+
+.perfil h1 {
+    margin: 20px 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Profile Image */
+.divFoto {
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.divFoto img {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    border: 2px solid #4DBAD9;
+    object-fit: cover;
+}
+
+#labelActualizarFoto {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    cursor: pointer;
+}
+
+.botonEditar {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form Styles */
+.listaDatos {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.listaDatos h2 {
+    width: 100%;
+    max-width: 700px;
+    color: var(--color-letra);
+}
+
+.estiloTabla {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.estiloTabla th {
+    text-align: right;
+    padding-right: 20px;
+    width: 150px;
+    color: #666;
+    font-weight: 500;
+}
+
+.estiloTabla td input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.estiloTabla td input:focus {
+    border-color: #4DBAD9;
+}
+
+.estiloTabla td input[readonly] {
+    background-color: #f8fafc;
+}
+
+/* Buttons */
+.diseñoBoton {
+    background-color: #4DBAD9;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.diseñoBoton:hover {
+    background-color: #3a9bc0;
+}
+
+.divBotonGuardar {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Update Photo Button */
+#guardarFoto {
+    margin-top: 20px;
+}
+
+/* Active State for Sidebar Buttons */
+.btnPanelLateral.active {
+    background-color: #4DBAD9;
+    color: white;
+}
+
+.usuario-panel {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--color-fondo);
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    width: 100%; /* Ocupa el 100% del ancho disponible */
+    max-width: 1200px; /* Establece un ancho máximo para pantallas muy grandes */
+    margin: 0 auto;
+}
+
+.usuario-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.usuario-imagen {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 3px solid var(--color-secundario);
+}
+
+#actualizarFoto {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.btn-editar {
+    background-color: transparent;
+    color: var(--color-secundario);
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.perfil-acciones {
+    margin-top: 1rem;
+}
+
+.btn-guardar {
+    background-color: var(--color-secundario);
+    color: var(--color-fondo);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background 0.3s ease;
+}
+
+.btn-guardar:hover {
+    background-color: var(--color-secundario-activo);
+}
+
+.usuario-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    max-width: 100%;
+}
+
+.campo-usuario {
+    margin-bottom: 15px;
+}
+
+.campo-usuario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.campo-usuario input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--color-secundario);
+}
+
+.input-con-boton {
+    display: flex;
+    align-items: center;
+}
+
+/* Acciones del formulario */
+.datos-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-guardar, .btn-cancelar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-guardar {
+    background-color: var(--color-secundario);
+    color: white;
+}
+
+.btn-cancelar {
+    background-color: var(--color-rojo-aergibide);
+    color: white;
+}
+
+
+/* Estilos para el panel lateral móvil */
+.panelLateralMovil {
+    display: none; /* Oculto por defecto */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.btnPanelLateral {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 15px;
+    background-color: transparent; /* Sin fondo por defecto */
+    border: 2px solid var(--color-secundario); /* Borde del color secundario */
+    border-radius: 20px; /* Botones más redondeados */
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-secundario); /* Color del texto igual al color secundario */
+    transition: all 0.3s ease; /* Transición suave para todos los cambios */
+}
+
+.btnPanelLateral:hover {
+    background-color: rgba(77, 186, 217, 0.1); /* Fondo semitransparente al pasar el mouse */
+}
+
+.btnPanelLateral.active {
+    background-color: var(--color-secundario);
+    color: white;
+}
+
+.containerPerfil{
+    background-color: var(--color-principal);
+}
+
+/*actividad*/
+.panelBotones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.panelActividad {
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.panelBotones {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+}
+
+.btnPanelActividad {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--color-principal);
+    color: var(--color-letra);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btnPanelActividad:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-fondo);
+}
+
+.btnPanelActividad.active {
+    background-color: var(--color-secundario);
+    color: var(--color-fondo);
+    box-shadow: var(--shadow-md);
+}
+
+/* Contenido Actividad styles */
+.contenidoActividad {
+    background-color: var(--color-fondo);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+}

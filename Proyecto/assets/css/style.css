@@ -32,6 +32,7 @@ strong {
     --shadow-hover: 0 6px 12px rgba(0,0,0,0.15);
 }
 
+
 body {
     font-family: Mulish-Regular, Arial, sans-serif;
     background-color: var(--color-fondo);
@@ -320,237 +321,6 @@ footer span {
     padding: 8px 0;
     margin: 15px 0;
     width: 100%;
-}
-
-
-/* Tabla de Datos */
-
-.estiloTabla {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--color-principal);
-    border-radius: 0.625em;
-    overflow: hidden;
-}
-
-.estiloTabla tr {
-    border-bottom: 0.09375em solid var(--color-secundario);
-}
-
-.estiloTabla tr:first-child th {
-    padding-top: 2.5em;
-}
-
-.estiloTabla tr:first-child td {
-    padding-top: 2.5em;
-}
-
-.estiloTabla tr:last-child {
-    border-bottom: none;
-}
-
-.estiloTabla th {
-    font-weight: bold;
-    text-align: right;
-    padding: 1.25em 1.875em;
-    font-size: 1em;
-}
-
-.estiloTabla td {
-    font-weight: bold;
-    text-align: left;
-    padding: 1.25em 1.875em;
-    font-size: 1em;
-}
-
-.listaDatos {
-    margin: 0 auto;
-    width: 50%;
-}
-
-.listaDatos h2 {
-    margin-bottom: 1em;
-}
-
-.perfil {
-    margin: 0 auto;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-}
-
-.diseñoBoton {
-    background-color: var(--color-secundario);
-    border: none;
-    color: var(--color-principal);
-    font-weight: bold;
-    border-radius: 0.5em;
-    width: 8.125em;
-    height: 2.1875em;
-    font-size: 1em;
-}
-
-.sinFoto {
-    width: 10em;
-    border-radius: 3.13em;
-    border: 2px solid var(--color-secundario);
-}
-
-.divFoto {
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-.containerPerfil {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-}
-
-.divBotonGuardar {
-    padding-top: 1em;
-}
-
-
-
-/*Modificar colores*/
-input[readonly] {
-    background-color: #f0f8ff;
-    color: #555;
-    border: 1px solid #ccc;
-}
-/*Modificar colores*/
-
-.botonPassword {
-    background-color: var(--color-secundario);
-    border: none;
-    margin: 0 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    color: var(--color-principal);
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.botonPassword:hover {
-    background-color: var(--color-secundario);
-    color: var(--color-letra);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.botonesPerfil {
-    margin: 1em;
-}
-
-.botonEditar {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-/* Panel de control */
-
-.botonesArriba {
-    font-weight: bold;
-    color: var(--color-principal);
-    margin: 0 auto;
-}
-
-
-.botonesArriba {
-    font-weight: bold;
-    color: white;
-    margin: 0 auto;
-    padding-bottom: 2em;
-}
-.botonesArriba a {
-    margin-left: 2em;
-    margin-right: 2em;
-}
-
-.containerPanel {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    padding: 2em;
-}
-
-.containerCreate {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-}
-
-.listaUsers {
-    overflow-y: scroll;
-}
-
-.listaUsers li {
-    border: none;
-    background: none;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: -0.5em;
-}
-
-.user {
-    background-color: transparent;
-    padding: 15px;
-    font-size: 30px;
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--color-secundario);
-    cursor: pointer;
-}
-
-/* Cambiar Contraseña */
-
-.paginaPassword {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-}
-
-.formPassword {
-    padding: 2em;
-}
-
-.panelLateral {
-    background-color: var(--fondo-header-footer);
-    height: 100%;
-    width: 17em;
-    align-content: center;
-    text-align: center;
-    padding: 2em;
-}
-
-.panelLateral p {
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-.panelLateral a {
-    color: var(--color-letra);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.lateralBoton.active {
-    background-color: var(--color-secundario);
-    border: none;
-    margin: 0 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    color: var(--color-principal);
-    text-decoration: none;
 }
 
 /* Botones de Paginación */
@@ -1246,7 +1016,6 @@ input[readonly] {
     padding: 15px;
     margin-bottom: 15px;
 
-}
 
 .iconos-respuesta {
     position: absolute;
@@ -1861,8 +1630,6 @@ input[type="file"] {
     color: white;
     box-shadow: var(--shadow-sm);
 }
-
-
 @media (max-width: 991px) {
     .containerTema {
         flex-direction: column;
@@ -2089,6 +1856,86 @@ input[type="file"] {
         font-size: 50px !important;
     }
 
+    /*Datos Usuario movil*/
+    .panelLateralMovil {
+        display: flex; /* Oculto por defecto en móviles */
+    }
+    .panelLateral {
+        display: none; /* Oculto por defecto en móviles */
+    }
+
+    .usuario-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .panelDatos {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+        gap: 20px;
+    }
+
+    .usuario-perfil {
+        grid-row: 1; /* Imagen en la primera fila */
+        width: 100%;
+    }
+
+    .usuario-imagen {
+        width: 200px;
+        height: 200px;
+    }
+
+    .panelLateralMovil {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+
+    .usuario-datos {
+        grid-row: 2; /* Datos en la segunda fila */
+        grid-column: 1; /* Ocupando toda la pantalla */
+    }
+
+    .campo-usuario {
+        margin-bottom: 15px;
+    }
+
+    .campo-usuario label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .campo-usuario input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 5px;
+    }
+
+    .input-con-boton {
+        flex-direction: column;
+    }
+
+    .btn-editar {
+        width: 13%;
+        text-align: center;
+    }
+
+    .datos-acciones {
+        flex-direction: column;
+    }
+
+    .btn-guardar, .btn-cancelar {
+        width: 100%;
+    }
+
+
+
+
+
+
+
+}
 
 
     .iconos-pregunta .bi-trash,
