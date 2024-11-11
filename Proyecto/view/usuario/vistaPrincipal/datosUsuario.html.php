@@ -6,20 +6,22 @@
     }
 $usuario = $_SESSION["user_data"];
 ?>
-<div class="usuario-panel">
-    <div class="usuario-perfil">
-        <h1><!-- Nombre de usuario se actualizará aquí --></h1>
-        <form action="index.php?controller=usuario&action=updateFoto" method="post" id="fotoForm" enctype="multipart/form-data" class="perfil-foto">
+<div class="user-dashboard">
+    <div class="user-profile-section">
+        <h1 class="user-name"><!-- Nombre de usuario se actualizará aquí --></h1>
+        <form action="index.php?controller=usuario&action=updateFoto" method="post" id="photoForm" enctype="multipart/form-data" class="profile-photo-form">
             <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $id ?>">
-            <img class="usuario-imagen" id="usuarioImagen" src="<?php echo isset($usuario->foto_perfil) ? $usuario->foto_perfil : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil">
-            <label id="actualizarFoto">
-                <button id="editarImagen" class="btn-editar">
-                    Editar
-                </button>
-                <input type="file" name="nuevaImagen" id="nuevaImagen" accept="image/*" hidden>
-            </label>
-            <div class="perfil-acciones">
-                <button type="submit" id="guardarImagen" class="btn-guardar">Actualizar Foto</button>
+            <div class="profile-photo-container">
+                <img class="profile-photo" id="userImage" src="<?php echo isset($usuario->foto_perfil) ? $usuario->foto_perfil : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil">
+                <label for="newImage" class="photo-update-label">
+                    <button id="editPhoto" class="btn-edit btn-edit-photo">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <input type="file" name="nuevaImagen" id="newImage" accept="image/*" class="hidden-input">
+                </label>
+            </div>
+            <div class="profile-actions">
+                <button type="submit" id="savePhoto" class="btn-save btn-save-photo">Actualizar Foto</button>
             </div>
         </form>
     </div>
@@ -34,42 +36,42 @@ $usuario = $_SESSION["user_data"];
     </div>
 
 
-    <div class="usuario-datos">
-        <h2>Datos de usuario</h2>
-        <form action="index.php?controller=usuario&action=update" method="post" id="datosForm">
-            <div class="campo-usuario">
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" readonly />
+    <div class="user-data-section">
+        <h2 class="section-title">Datos de usuario</h2>
+        <form action="index.php?controller=usuario&action=update" method="post" id="userDataForm" class="user-data-form">
+            <div class="form-field">
+                <label for="nombre" class="field-label">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="field-input" readonly />
             </div>
-            <div class="campo-usuario">
-                <label for="apellido">Apellido:</label>
-                <input type="text" name="apellido" id="apellido" readonly />
+            <div class="form-field">
+                <label for="apellido" class="field-label">Apellido:</label>
+                <input type="text" name="apellido" id="apellido" class="field-input" readonly />
             </div>
-            <div class="campo-usuario">
-                <label for="username">Usuario:</label>
-                <div class="input-con-boton">
-                    <input type="text" name="username" id="username" readonly />
-                    <button id="editarUsuario" class="btn-editar">Editar</button>
+            <div class="form-field">
+                <label for="username" class="field-label">Usuario:</label>
+                <div class="input-with-button">
+                    <input type="text" name="username" id="username" class="field-input" readonly />
+                    <button id="editarUsuario" class="btn-edit">Editar</button>
                 </div>
             </div>
-            <div class="campo-usuario">
-                <label for="email">Email:</label>
-                <input type="text" name="email" id="email" readonly />
+            <div class="form-field">
+                <label for="email" class="field-label">Email:</label>
+                <input type="text" name="email" id="email" class="field-input" readonly />
             </div>
-            <div class="campo-usuario">
-                <label for="actualPassword">Contraseña actual:</label>
-                <div class="input-con-boton">
-                    <input type="password" name="actualPassword" id="actualPassword" readonly />
-                    <button id="editarPassword" class="btn-editar">Editar</button>
+            <div class="form-field">
+                <label for="actualPassword" class="field-label">Contraseña actual:</label>
+                <div class="input-with-button">
+                    <input type="password" name="actualPassword" id="actualPassword" class="field-input" readonly />
+                    <button id="editarPassword" class="btn-edit">Editar</button>
                 </div>
             </div>
-            <div class="campo-usuario">
-                <label for="nuevaPassword">Nueva contraseña:</label>
-                <input type="password" name="nuevaPassword" id="nuevaPassword" readonly />
+            <div class="form-field">
+                <label for="nuevaPassword" class="field-label">Nueva contraseña:</label>
+                <input type="password" name="nuevaPassword" id="nuevaPassword" class="field-input" readonly />
             </div>
-            <div class="datos-acciones">
-                <button type="submit" id="guardarDatos" class="btn-guardar">Guardar</button>
-                <button type="button" class="btn-cancelar" onclick="location.reload();">Cancelar</button>
+            <div class="form-actions">
+                <button type="submit" id="guardarDatos" class="btn-save">Guardar</button>
+                <button type="button" class="btn-cancel" onclick="location.reload();">Cancelar</button>
             </div>
         </form>
     </div>

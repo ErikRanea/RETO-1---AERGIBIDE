@@ -124,7 +124,7 @@ strong {
     padding: 0.5em 2em;
     border: 1px solid var(--color-principal);
     border-radius: 5px;
-    background-color: var(--color-principal);
+    background-color: var(--color-fondo);
     color: var(--color-letra);
 }
 .barra-busq:hover{
@@ -153,7 +153,7 @@ strong {
     position: absolute;
     top: 40px;
     right: 0;
-    background-color: var(--color-principal); 
+    background-color: var(--color-principal);
     border: none;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
