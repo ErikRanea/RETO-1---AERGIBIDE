@@ -14,12 +14,10 @@ class UsuarioController{
         $this -> view = "login";
     }
 
-    public function mostrarDatosUsuario() {
-        $this -> view = "principalUsuario"; 
-    }
+
 
     public function editarPerfil() {
-        $this -> view = "vistaGeneral/datosUsuario"; 
+        $this -> view = "vistaPrincipal/datosUsuario";
     }
 
     public function datosUsuario() {
@@ -34,29 +32,6 @@ class UsuarioController{
         exit;
     }
 
-    public function mostrarGestionUsuario() {
-        $rolUsuario = $_SESSION['user_data']['rol'] ?? 'admin';
-        $this -> view = "listaUsuarios";
-        if ($rolUsuario === 'gestor') {
-            $users = $this->model->getUsuarios();
-        } else {
-            $users = $this->model->getUsers();
-        }
-        include __DIR__ . '/../view/layout/header.php';
-        include __DIR__ . '/../view/usuario/gestion/listaUsuarios.html.php';
-    }
-
-    public function nuevoUsuario() {
-        if($this->revisarPrivilegios($_SESSION['user_data']['rol']) == false) {
-            echo json_encode([
-                "status" => "error",
-                "message" => "No tiene permisos para acceder a esta página",
-                "redirect" => "index.php?controller=usuario&action=mostrarDatosUsuario&id".$_SESSION['user_data']['id']
-            ]);
-            exit();
-        }
-        $this -> view = "nuevoUsuario";
-    }
 
     public function confirmDelete() {
         try {
@@ -308,9 +283,50 @@ class UsuarioController{
         exit;
     }
 
+    public function mostrarDatosUsuario() {
+        $this -> view = "principalUsuario";
+    }
 
-    public function vistaActividad(){
-        $this->view = "actividad";
+    public function mostrarPrincipal(){
+        if (!isset($_POST["vista"])){
+            echo json_encode([
+                "status" => "error",
+                "message" => "Vista no especificada"
+            ]);
+            exit();
+        } else {
+            $vista = $_POST["vista"];
+        }
+
+        ob_start();
+        switch ($vista){
+            case "DatosUsuario":
+                include "view/usuario/vistaPrincipal/datosUsuario.html.php";
+                break;
+            case "Actividad":
+                include "view/usuario/vistaPrincipal/actividad.html.php";
+                break;
+            case "PanelControl":
+                include "view/usuario/vistaPrincipal/gestionUsuario.html.php";
+                break;
+            default:
+                echo json_encode([
+                    "status" => "error",
+                    "messaje" => "ERROR Vista switch"
+                ]);
+                exit();
+        }
+
+        $htmlPrincipal = ob_get_clean();
+
+        echo json_encode([
+            "status" => "success",
+            "data" => [
+                "html" => $htmlPrincipal
+            ]
+        ]);
+        exit();
+
 
     }
 
@@ -321,6 +337,7 @@ class UsuarioController{
                 "status" => "error",
                 "messaje" => "Usuario no especificada"
             ]);
+            exit();
         } else {
             $usuario = $_POST["username"];
         }
@@ -342,9 +359,6 @@ class UsuarioController{
         $actividad_pag = $this->model->getActividadPaginated($usuario, $pagination, $vista, $page);
         $actividad = $actividad_pag[0];
         $paginas = [$actividad_pag[1], $actividad_pag[2]];
-
-        //$respuestas_pag = $this->model->getActividadPaginated($usuario["username"], $pagination, "Respuestas_Usuario");
-        //$guardados_pag = $this->model->getActividadPaginated($usuario["username"], $pagination, "Guardados");
 
         // Carga el archivo HTML adecuado y pasa los datos
         ob_start(); // Inicia un buffer de salida, NECESARIO para cargar archivos HTML externos
@@ -380,7 +394,73 @@ class UsuarioController{
 
     }
 
+    public function mostrarGestion(){
 
+        if (!isset($_POST["vista"]) ){
+            echo json_encode([
+                "status" => "error",
+                "message" => "Vista no especificada"
+            ]);
+            exit();
+        } else {
+            $vista = $_POST["vista"];
+        }
+
+        ob_start();
+        switch ($vista){
+            case "Gestion":
+                include "view/usuario/gestion/listaUsuarios.html.php";
+                break;
+            case "CrearUsuario":
+                include "view/usuario/gestion/nuevoUsuario.html.php";
+                break;
+            default:
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "ERRO vista switch"
+                ]);
+                exit();
+        }
+
+        $contenidoHtml = ob_get_clean();
+
+        echo json_encode([
+            "status" => "success",
+            "data" => [
+                "html" => $contenidoHtml
+            ]
+        ]);
+        exit();
+
+
+
+
+    }
+
+
+    public function mostrarGestionUsuario() {
+        $rolUsuario = $_SESSION['user_data']['rol'] ?? 'admin';
+        $this -> view = "listaUsuarios";
+        if ($rolUsuario === 'gestor') {
+            $users = $this->model->getUsuarios();
+        } else {
+            $users = $this->model->getUsers();
+        }
+        include __DIR__ . '/../view/layout/header.php';
+        include __DIR__ . '/../view/usuario/gestion/listaUsuarios.html.php';
+    }
+
+    public function nuevoUsuario() {
+        if($this->revisarPrivilegios($_SESSION['user_data']['rol']) == false) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No tiene permisos para acceder a esta página",
+                "redirect" => "index.php?controller=usuario&action=mostrarDatosUsuario&id".$_SESSION['user_data']['id']
+            ]);
+            exit();
+        }
+        $this -> view = "nuevoUsuario";
+    }
 
 
 
