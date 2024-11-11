@@ -106,12 +106,12 @@
     {
         $puedeEditar = false;
         $idUsuario = $_SESSION["user_data"]["id"];
-        $rol = $_SESSION["user_data"]["rol"];
 
         if($idUsuario == $id)
         {
              return $puedeEditar = true;
         }
+        return $puedeEditar;
     }
 
 ?>
@@ -131,12 +131,33 @@
     </i>
     <div class="contenedorPregunta">
         <div class="iconos-pregunta">
-            <label id="editarPregunta" class="botonDeEditar" <?php if(!esDueno($usuarioPregunta["id"])){echo "hidden";}?>>
-                <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>"><i class="bi bi-pencil-square"></i></a>
-            </label>
-            <label id="eliminarPregunta" class="botonDeEditar" data-value="<?=$pregunta["id"]?>" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
-                <i class="bi bi-trash"></i>
-            </label>
+
+            <?php
+
+                if(esDueno($usuarioPregunta["id"]))
+                {
+                    ?>
+                    <label id="editarPregunta" class="botonDeEditar">
+                    <a href="index.php?controller=pregunta&action=edit&id_pregunta=<?php echo $pregunta["id"];?>">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    </label>
+                <?php }
+
+                if(puedeEditar($usuarioPregunta))
+                {?>
+
+                    <label id="eliminarPregunta" class="botonDeEditar" data-value="<?=$pregunta["id"]?>">
+                        <i class="bi bi-trash"></i>
+                    </label>
+
+
+                <?php }
+            
+            ?>
+
+            
+
         </div>
         <div class="fotoUsuarioPregunta">
             <?php
@@ -247,13 +268,24 @@
                 <img src="<?php echo file_exists($usuarioRespuesta["foto_perfil"]) ? $usuarioRespuesta["foto_perfil"] : $fotoUsuarioPorDefecto;?>" alt="Foto de usuario">
                 <span class="NameUserRespuesta"><?php echo $usuarioRespuesta["username"]; ?></span>
                 <div class="iconos-respuesta">
-                    <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>" data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar"
-                        <?php if(!esDueno($usuarioRespuesta["id"])){echo "hidden";}?>>
-                        <i class="bi bi-pencil-square botonEditar"></i>
-                    </label>
-                    <label id="eliminarRespuesta-<?php echo $datosRespuesta["id"]?>" value = "<?= $datosRespuesta["id"]?>" class="botonDeEditar" <?php if(!puedeEditar($usuarioPregunta)){echo "hidden";}?>>
-                        <i class="bi bi-trash"></i></label>
 
+                <?php
+                
+                    if(esDueno($usuarioRespuesta["id"]))
+                    {?>
+                        <label id="editarRespuesta-<?php echo $datosRespuesta["id"];?>" value="<?php echo $datosRespuesta["id"];?>" 
+                        data-id-pregunta="<?php echo $pregunta["id"];?>" class="botonDeEditar">
+                        <i class="bi bi-pencil-square botonEditar"></i>
+                        </label>
+                    <?php }
+
+                    if(puedeEditar($usuarioPregunta))
+                    {?>
+                        <label id="eliminarRespuesta-<?php echo $datosRespuesta["id"]?>" value = "<?= $datosRespuesta["id"]?>" class="botonDeEditar">
+                        <i class="bi bi-trash"></i></label>
+                    <?php }
+
+                ?>
                     <label>
                         <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
                                 href="index.php?controller=respuesta&action=esUtil&idRespuesta=<?php echo $datosRespuesta["id"];?>&idPregunta=<?php echo $pregunta["id"];?>">
