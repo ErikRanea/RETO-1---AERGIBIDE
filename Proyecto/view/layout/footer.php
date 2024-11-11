@@ -14,7 +14,8 @@
 <!-- <script src="assets/js/bootstrap.min.js"></script> -->
 <script src="assets/js/menuDesplegable.js"></script>
 <script src="assets/js/redirect.js"></script>
-<script src="assets/js/actividadUsuario.js"></script>
+<script src="assets/js/vistasUsuario/vistaPrincipal.js"></script>
+<!-- <script src="assets/js/vistasUsuario/actividad.js"></script> -->
 <script>
     function toggleFiltro() {
         var filtroMenu = document.getElementById("filtroMenu");

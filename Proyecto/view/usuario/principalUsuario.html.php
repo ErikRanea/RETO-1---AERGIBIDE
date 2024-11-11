@@ -1,18 +1,21 @@
 <?php
-    if (isset($_GET["id"])) {
-        $id = $_GET["id"];
-    } else {
-        $id = "";
-    }
+$usuario = $_SESSION["user_data"];
+//print_r($usuario)
 ?>
 
 
 <div class="containerPerfil">
-    <?php
-    // Para que aparezca el panel lateral
-    require_once "panelLateral.html.php";
-    ?>
-    <div>
-        
+
+    <div class="panelLateral">
+        <button class="btn btnCrear btnPanelLateral" id="btnDatos">Datos de Usuario</button>
+        <button class="btn btnCrear btnPanelLateral" id="btnActividad">Actividad</button>
+        <?php if ( $usuario["rol"] == "admin" || $usuario["rol"] == "gestor" ): ?>
+            <button class="btn btnCrear btnPanelLateral" id="btnPanelControl">Panel de Control</button>
+        <?php endif; ?>
+
+    </div>
+
+    <div id="panelPrincipalUsuario">
+
     </div>
 </div>
