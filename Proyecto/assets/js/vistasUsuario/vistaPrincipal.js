@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cambiarPanelPrincipal({ target: btnDatos });
 });
 
+
+
 // Usamos delegación de eventos para el div contenedor de la actividad
 divPrincipal.addEventListener("click", (event) => {
     if (event.target.classList.contains("btnPanelActividad")) {
@@ -24,6 +26,13 @@ divPrincipal.addEventListener("click", (event) => {
 divPrincipal.addEventListener("click", (event) => {
     if (event.target.classList.contains("btnPanelGestion")) {
         verGestion(event);
+    }
+});
+
+
+divPrincipal.addEventListener("click", (event) => {
+    if (event.target.classList.contains("btnPanelLateral")) {
+        cambiarPanelPrincipal(event);
     }
 });
 

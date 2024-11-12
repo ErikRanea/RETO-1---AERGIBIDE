@@ -86,14 +86,14 @@ class Pregunta{
         $sql = "UPDATE ".$this->tabla." SET titulo = ?, texto = ? WHERE id = ?";
 
 
-        if(isset($param["imagen"]) && $param["imagen"] != "")
+        if(isset($param['file_path'])) 
         {
             $sql = "UPDATE ".$this->tabla." SET titulo = ?, texto = ?, imagen = ? WHERE id = ?";  
             $stmt = $this->connection->prepare($sql);
             $stmt -> execute([
                 $param["titulo"],
                 $param["texto"],
-                $param["imagen"],
+                $param['file_path'],
                 $param["id_pregunta"]
             ]);
             return true;
@@ -150,7 +150,6 @@ class Pregunta{
         if(isset($param["titulo"])) $titulo = $param["titulo"];
         if(isset($param["texto"])) $texto = $param["texto"];
         if(isset($param["id_usuario"])) $id_usuario = $param["id_usuario"];
-        $votos = 0;
         $fecha_hora = new DateTime();
         $fecha_hora = $fecha_hora->format("Y-m-d H:i:s");
 

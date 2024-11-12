@@ -58,25 +58,27 @@ class PreguntaController{
 
         // Primero, verificamos si se ha subido un archivo
         $filePath = null;
-        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-            // Si el archivo es válido, procesarlo
-            $fileTmpPath = $_FILES['file']['tmp_name'];
-            $fileName = $_FILES['file']['name'];
-            $fileName = uniqid()."_".$fileName;
-            $uploadFileDir = './assets/uploads/preguntas/';
-            $destPath = $uploadFileDir . $fileName;
+        if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
 
-            // Verificar que el directorio de subida exista, sino crear uno
-            if (!is_dir($uploadFileDir)) {
-                mkdir($uploadFileDir, 0777, true);
-            }
+            $fileTmpPath = $_FILES['imagen']['tmp_name'];
+            $fileMimeType = mime_content_type($fileTmpPath);
+            $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
 
-            // Mover el archivo desde su ubicación temporal al directorio final
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                // Si el archivo se movió correctamente, guardar la ruta de archivo
-                $filePath = $destPath;
+            if(in_array($fileMimeType, $allowedMimeTypes)) {
+                $fileName = uniqid(). $_FILES['imagen']['name'];
+                $uploadFileDir = 'assets/upload/respuestas/';
+                $destPath = $uploadFileDir.$fileName;
+
+                // Movemos de temporal a /uploads
+                if(move_uploaded_file($fileTmpPath,$destPath)){
+                    $filePath = $destPath;
+                }
+                else {
+                    $_GET["response"] = false;
+                    print_r("No le ha permitido subir la imagen");
+                    return;
+                }
             } else {
-                // Si hubo un error al mover el archivo
                 $_GET["response"] = false;
                 return;
             }
@@ -253,9 +255,9 @@ class PreguntaController{
 
             $pregunta = $this-> model -> getPreguntaById($_GET["id_pregunta"]);
 
-            if(!$this->puedeEditar($_GET["id_pregunta"]))
+            if(!$this->esDueno($pregunta["id_usuario"]))
             {
-                header("Location: index.php?controller=temas&action=mostrarTemas");
+                header("Location: index.php?controller=tema&action=mostrarTemas");
                 exit();
             }
             else
@@ -278,6 +280,38 @@ class PreguntaController{
         {
             if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST))
             {
+
+                   // Primero, verificamos si se ha subido un archivo
+                    $filePath = null;
+                    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
+
+
+                        $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                        $fileMimeType = mime_content_type($fileTmpPath);
+                        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+
+                        if(in_array($fileMimeType, $allowedMimeTypes)) {
+                            $fileName = uniqid(). $_FILES['imagen']['name'];
+                            $uploadFileDir = 'assets/upload/respuestas/';
+                            $destPath = $uploadFileDir.$fileName;
+
+                            // Movemos de temporal a /uploads
+                            if(move_uploaded_file($fileTmpPath,$destPath)){
+                                $filePath = $destPath;
+                            }
+                            else {
+                                $_GET["response"] = false;
+                                print_r("No le ha permitido subir la imagen");
+                                return;
+                            }
+                        } else {
+                            $_GET["response"] = false;
+                            return;
+                        }
+                    }
+
+
+                $_POST["file_path"] = $filePath;
                 $result = $this->model->updatePregunta($_POST);
                 if($result)
                 {
@@ -311,7 +345,9 @@ class PreguntaController{
 
                 $datos = $this->model->getPreguntaYUsuario($_POST);
 
-                if(!$this->puedeEditar($datos["pregunta"]["id"]))
+
+
+                if(!$this->puedeEditar($datos["pregunta"]["id_usuario"]))
                 {
                     echo json_encode([
                         "status" => "error",
@@ -354,7 +390,7 @@ class PreguntaController{
         {
             try {
                 
-                if(!$this->puedeEditar($_POST["id_pregunta"]) || !isset($_POST["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
+                if( !isset($_POST["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
                 {
                     echo json_encode([
                         "status" => "error",
@@ -428,21 +464,31 @@ class PreguntaController{
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*Metodos exclusivos para el uso interno del controlador */
 
-
     private function puedeEditar($id)
     {
         $puedeEditar = false;
         $idUsuario = $_SESSION["user_data"]["id"];
         $rol = $_SESSION["user_data"]["rol"];
-
+    
         if($idUsuario == $id)
         {
-            return $puedeEditar = true;
+             return $puedeEditar = true;
         }
         elseif (($rol == "admin") || ($rol == "gestor")) {
             return $puedeEditar = true;
         }
-
+        return $puedeEditar;
+    }
+    
+    private function esDueno($id)
+    {
+        $puedeEditar = false;
+        $idUsuario = $_SESSION["user_data"]["id"];
+    
+        if($idUsuario == $id)
+        {
+             return $puedeEditar = true;
+        }
         return $puedeEditar;
     }
 }

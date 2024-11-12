@@ -21,13 +21,12 @@ foreach ($actividad as $item) {
             <?php foreach ($preguntas as $pregunta): ?>
                 <div class="pregunta">
                     <p>
-                        <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= $pregunta["id"] ?>" class="tituloPregunta"><?= $pregunta["titulo"] ?></a>
+                        <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= $pregunta["id"] ?>" class="tituloPregunta"><?= htmlspecialchars($pregunta["titulo"]) ?></a>
                     </p>
                     <div class="datos-pregunta">
-                        <span><?= $pregunta["votos"] ?> Votos</span>
-
+                        <span><?= isset($pregunta["votos"]) ? $pregunta["votos"] : 0 ?> Votos</span>
                         <div>
-                            <?= $pregunta["username"] ?>
+                            <?= htmlspecialchars($pregunta["username"]) ?>
                             <?= $pregunta["fecha_hora"] ?>
                         </div>
                     </div>
@@ -35,7 +34,6 @@ foreach ($actividad as $item) {
             <?php endforeach; ?>
         </div>
         <div class="pagination">
-            <!-- Enlaces de número de página -->
             <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
                 <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPaginacion(<?= $i ?>, 'Guardados')">
                     <?= $i; ?>
@@ -46,30 +44,40 @@ foreach ($actividad as $item) {
         <p>No hay preguntas guardadas</p>
     <?php endif; ?>
 </div>
+
 <div>
     <h2>Respuestas</h2>
     <?php if (count($respuestas) > 0):?>
         <div class="contenido">
-            <?php foreach ($respuestas as $respuesta): ?>
-                <div class="pregunta">
-                    <div>
-                        <p><?= $respuesta["titulo"] ?></p>
-                    </div>
-                    <div class="datos-pregunta">
-                        <span><?= $respuesta["votos"] ?> Votos</span>
-
-                        <div>
-                            <?= $respuesta["username"] ?>
-                            <?= $respuesta["fecha_hora"] ?>
-                        </div>
+            <?php foreach ($respuestas as $respuesta):?>
+                <div class="respuesta">
+                    <?php if (isset($respuesta["titulo_pregunta"])): ?>
+                        <h3><?= htmlspecialchars($respuesta["titulo_pregunta"]) ?></h3>
+                    <?php endif; ?>
+                    <p>
+                        <?php
+                        if (isset($respuesta["contenido"])) {
+                            echo htmlspecialchars($respuesta["contenido"]);
+                        } elseif (isset($respuesta["respuesta"])) {
+                            echo htmlspecialchars($respuesta["respuesta"]);
+                        } else {
+                            echo "Contenido no disponible";
+                        }
+                        ?>
+                    </p>
+                    <div class="datos-respuesta">
+                        <span><?= isset($respuesta["votos"]) ? $respuesta["votos"] : 0 ?> votos</span>
+                        <span><?= isset($respuesta["fecha_hora"]) ? $respuesta["fecha_hora"] : "Fecha no disponible" ?></span>
+                        <span>por <?= isset($respuesta["username"]) ? htmlspecialchars($respuesta["username"]) : "Usuario desconocido" ?></span>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
         <div class="pagination">
-            <!-- Enlaces de número de página -->
             <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
-                <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPaginacion(<?= $i ?>, 'Guardados')">
+
+                <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPagina(<?= $i ?>, 'Respuestas_Usuario')">
+
                     <?= $i; ?>
                 </a>
             <?php endfor; ?>
@@ -78,6 +86,3 @@ foreach ($actividad as $item) {
         <p>No hay respuestas guardadas</p>
     <?php endif; ?>
 </div>
-
-
-

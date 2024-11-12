@@ -60,40 +60,81 @@ if (isset($_GET['action']) && $_GET['action'] === 'buscar') {
 $controller_path = "controller/" . $_GET["controller"] . "Controller.php";
 
 
+/* Creamos una gran diferencia entre un controlador que tiene un archivo o no*/
+//Si el archivo no existe actuara el controlador por defecto con su acción por defecto
 if (!file_exists($controller_path)) {
+
     $controller_path = "controller/" . constant("DEFAULT_CONTROLLER") . "Controller.php";
+
+    require_once $controller_path;
+
+    $_GET["controller"] = constant("DEFAULT_CONTROLLER");
+    $_GET["action"] = constant("DEFAULT_ACTION");
+
+    $controllerName = constant("DEFAULT_CONTROLLER") . "Controller";
+    $controller = new $controllerName();
+
+    $dataToView = array();
+
+    if ($isAjaxRequest) {
+        $dataToView = $controller->{$_GET["action"]}();
+        echo json_encode($dataToView);
+        exit; // Importante: salir del script para evitar cargar las vistas
+    }
+
+    // Manejar la acción de cerrar sesión
+    if ($_GET["action"] === "cerrarSesion") {
+        $controller->cerrarSesion(); // Llama al método de cerrar sesión
+    } else if (method_exists($controller, $_GET["action"])) {
+        $dataToView = $controller->{$_GET["action"]}();
+    }
+
+    // Incluir las vistas si no es una solicitud AJAX
+    if($_GET["action"] != "login" && isset($_SESSION['user_data']['id'])){
+        require_once 'view/layout/header.php';
+        require_once 'view/'.$_GET["controller"].'/'.$controller->view.'.html.php';
+        require_once 'view/layout/footer.php';
+    } else {
+        mostrarLogin();
+    }
+
+}
+//Si da el caso de que existe el controlador, actua en función de la acción 
+else
+{
+    require_once $controller_path;
+
+
+    $controllerName = $_GET["controller"] . "Controller";
+    $controller = new $controllerName();
+
+    $dataToView = array();
+
+    if ($isAjaxRequest) {
+        $dataToView = $controller->{$_GET["action"]}();
+        echo json_encode($dataToView);
+        exit; // Importante: salir del script para evitar cargar las vistas
+    }
+
+    // Manejar la acción de cerrar sesión
+    if ($_GET["action"] === "cerrarSesion") {
+        $controller->cerrarSesion(); // Llama al método de cerrar sesión
+    } else if (method_exists($controller, $_GET["action"])) {
+        $dataToView = $controller->{$_GET["action"]}();
+    }
+
+    // Incluir las vistas si no es una solicitud AJAX
+    if($_GET["action"] != "login" && isset($_SESSION['user_data']['id'])){
+        require_once 'view/layout/header.php';
+        require_once 'view/'.$_GET["controller"].'/'.$controller->view.'.html.php';
+        require_once 'view/layout/footer.php';
+    } else {
+        mostrarLogin();
+    }
 }
 
 
-require_once $controller_path;
 
-
-$controllerName = $_GET["controller"] . "Controller";
-$controller = new $controllerName();
-
-$dataToView = array();
-
-if ($isAjaxRequest) {
-    $dataToView = $controller->{$_GET["action"]}();
-    echo json_encode($dataToView);
-    exit; // Importante: salir del script para evitar cargar las vistas
-}
-
-// Manejar la acción de cerrar sesión
-if ($_GET["action"] === "cerrarSesion") {
-    $controller->cerrarSesion(); // Llama al método de cerrar sesión
-} else if (method_exists($controller, $_GET["action"])) {
-    $dataToView = $controller->{$_GET["action"]}();
-}
-
-// Incluir las vistas si no es una solicitud AJAX
-if($_GET["action"] != "login" && isset($_SESSION['user_data']['id'])){
-    require_once 'view/layout/header.php';
-    require_once 'view/'.$_GET["controller"].'/'.$controller->view.'.html.php';
-    require_once 'view/layout/footer.php';
-} else {
-    mostrarLogin();
-}
 
 function mostrarLogin()
 {

@@ -360,7 +360,7 @@ class UsuarioController{
 
         $page = $_POST["page"] ?? 1;
 
-        $pagination = 2;
+        $pagination = 10;
 
         $actividad_pag = $this->model->getActividadPaginated($usuario, $pagination, $vista, $page);
         $actividad = $actividad_pag[0];

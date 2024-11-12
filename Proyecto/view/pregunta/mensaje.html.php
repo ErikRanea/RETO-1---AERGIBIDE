@@ -1,13 +1,13 @@
 
-<div class="row">
+<div class="contenedorMensajeServidor">
     <div class="alert alert-success">
 
         <?php if ($_GET["action"] == "save"):
             if (isset($dataToView["pregunta"])) $pregunta = $dataToView["pregunta"]; ?>
 
-            Pregunta realizada correctamente. <a href="index.php?controller=pregunta&action=create">Hacer otra Pregunta</a>
-            <br>
-            <a href="index.php?controller=pregunta&action=list&id_tema=<?= $pregunta["id_tema"] ?>">Volver al listado</a>
+            <label id="pregunta" data-id-tema = "<?= $pregunta["id_tema"] ?>" value="<?= $pregunta["id"] ?>"></label>
+
+           
         <?php endif; ?>
 
         <?php if ($_GET["action"] == "edit"): ?>
@@ -24,3 +24,4 @@
 
     </div>
 </div>
+<script src="assets/js/preguntas/guardarPregunta.js"></script>
