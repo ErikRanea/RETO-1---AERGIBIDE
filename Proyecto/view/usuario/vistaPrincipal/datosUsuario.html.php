@@ -1,5 +1,5 @@
 <?php
-if ( isset($dataToView["usuario"]) ) $usuario = $dataToView["usuario"];
+
 
 
 if (isset($_GET["id"])) {
@@ -8,6 +8,8 @@ if (isset($_GET["id"])) {
     $id = $_SESSION["user_data"]["id"];
 }
 
+
+
 ?>
 <div class="user-dashboard">
     <div class="user-profile-section">
@@ -15,7 +17,7 @@ if (isset($_GET["id"])) {
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="photoForm" enctype="multipart/form-data" class="profile-photo-form">
             <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo htmlspecialchars($id); ?>">
             <div class="profile-photo-container">
-                <img class="profile-photo" id="userImage" src="<?php echo isset($usuario['foto_perfil']) ? htmlspecialchars($usuario['foto_perfil']) : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil">
+                <img class="profile-photo" id="userImage" src="<?php echo isset($usuario['foto_perfil']) && $usuario['foto_perfil'] != "" ? $usuario['foto_perfil'] : 'assets/img/fotoPorDefecto.png'; ?>" alt="Foto de perfil">
                 <label for="newImage" class="photo-update-label">
                     <button id="editPhoto" class="btn-edit btn-edit-photo">
                         <i class="bi bi-pencil"></i>
