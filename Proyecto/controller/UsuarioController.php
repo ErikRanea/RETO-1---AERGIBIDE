@@ -303,7 +303,7 @@ class UsuarioController{
         switch ($vista){
             case "DatosUsuario":
                 $usuario = $_SESSION["user_data"];
-                $mostrar_usuario = $this->model->getUsuarioById($usuario["id"]);
+                $mostrar_usuario = $this->model->getUsuarioByIdObj($usuario["id"]);
 
 
                 include "view/usuario/vistaPrincipal/datosUsuario.html.php";
@@ -423,6 +423,7 @@ class UsuarioController{
         ob_start();
         switch ($vista){
             case "Gestion":
+                $usuarios = $this->model->getAllUsuarios();
                 include "view/usuario/gestion/listaUsuarios.html.php";
                 break;
             case "CrearUsuario":
@@ -432,7 +433,7 @@ class UsuarioController{
                 echo json_encode([
                     "status" => "error",
                     "message" => "ERRO vista switch"
-                ]);
+                ]); 
                 exit();
         }
 
@@ -441,7 +442,8 @@ class UsuarioController{
         echo json_encode([
             "status" => "success",
             "data" => [
-                "html" => $contenidoHtml
+                "html" => $contenidoHtml,
+                "usuarios" => $usuarios
             ]
         ]);
         exit();

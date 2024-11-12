@@ -182,7 +182,7 @@
             </div>
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
             <?php
-            if(isset($pregunta["imagen"]))
+            if(isset($pregunta["imagen"]) && $pregunta["imagen"] != "")
             {?>
                     <br>
                     <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">

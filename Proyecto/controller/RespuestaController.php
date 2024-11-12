@@ -103,7 +103,7 @@ class RespuestaController
         
                 
 
-                if(!$this->esDueno($datos["respuesta"]["id_usuario"]))
+                if(!$this->puedeEditar($datos["respuesta"]["id_usuario"]))
                 {
                     echo json_encode([
                         "status" => "error",
