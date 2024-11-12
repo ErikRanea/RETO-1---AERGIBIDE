@@ -116,6 +116,9 @@
 
 ?>
 
+  <!--Aqui comienzan la PREGUNTA-->
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
 <input type="text" id="userId" value="<?php echo $_SESSION["user_data"]['id']; ?>" hidden >
 <div class="contenedorPreguntasYRespuestas">
     <i class="barra">
@@ -144,7 +147,7 @@
                     </label>
                 <?php }
 
-                if(puedeEditar($usuarioPregunta))
+                if(puedeEditar($usuarioPregunta) || esDueno($usuarioPregunta["id"]))
                 {?>
 
                     <label id="eliminarPregunta" class="botonDeEditar" data-value="<?=$pregunta["id"]?>">
@@ -178,6 +181,15 @@
                 <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
             </div>
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
+            <?php
+            if(isset($pregunta["imagen"]))
+            {?>
+                    <br>
+                    <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">
+
+
+            <?php }
+            ?>
         </div>
         <div class="panelDeBotones">
             <?php
@@ -279,7 +291,7 @@
                         </label>
                     <?php }
 
-                    if(puedeEditar($usuarioPregunta))
+                    if(puedeEditar($usuarioRespuesta["id"]))
                     {?>
                         <label id="eliminarRespuesta-<?php echo $datosRespuesta["id"]?>" value = "<?= $datosRespuesta["id"]?>" class="botonDeEditar">
                         <i class="bi bi-trash"></i></label>
@@ -302,8 +314,8 @@
                         <?php echo $datosRespuesta["texto"]; ?>
 
                     </div>
-                <?php if($datosRespuesta["imagen"] != null){?>
-                    <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>" alt="Imagen de respuesta">
+                <?php if($datosRespuesta["imagen"] != null && $datosRespuesta["imagen"] != ""){?>
+                    <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>">
                 <?php }?>
 
                 </div>

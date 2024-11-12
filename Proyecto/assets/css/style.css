@@ -513,6 +513,7 @@ footer span {
     border-radius: 50%;
 }
 
+
 .publicacion {
     display: flex;
     align-items: center;
@@ -698,6 +699,7 @@ footer span {
 }
 
 /*Pregunta y respuesta*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .pregunta p a:hover{
     color: var(--color-secundario);
     text-decoration: none
@@ -868,6 +870,17 @@ footer span {
     clear: both;
     color: var(--color-letra);
 }
+
+.imagenDeLaPregunta{
+    max-width: 50%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+
+
+
 .bi-send{
     font-size: 300%;
 }
@@ -1002,7 +1015,7 @@ footer span {
 }
 
 
-/* Additional styles for better readability and interaction */
+/*  Estilos adiccionales para la una correcta readaptabilidad */
 .contenedorRespuesta {
     margin-left: 20px;
     border-left: 2px solid var(--color-secundario);
@@ -1047,12 +1060,14 @@ footer span {
     }
 
 
+
     /* Hover effects */
 
     .botonPanel:hover i,
     .botonDeEditar:hover i {
         color: var(--color-secundario-activo);
     }
+
 
     /* Focus styles for accessibility */
 
@@ -1064,6 +1079,7 @@ footer span {
         outline-offset: 2px;
     }
 
+
     /* Transitions for smooth interactions */
 
     .botonPanel,
@@ -1072,7 +1088,8 @@ footer span {
         transition: all 0.3s ease;
     }
 
-    /*Notificaciones*/
+/*Notificaciones*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     #notificationsDropdown {
         position: absolute;
@@ -1990,5 +2007,42 @@ footer span {
             margin-right: 15px;
         }
     }
+
+
+/*CSS del panel*/
+/* swal-custom-popup estilos personalizados */
+.swal-custom-popup {
+    max-width: 500px; /* Cambia el tamaño a tu preferencia */
+    width: 80%; /* Esto hace que el ancho sea un porcentaje del contenedor */
+}
+
+
+.swal-custom-popup .containerPreRemove {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    /*padding: 10px;*/
+}
+
+.swal-custom-popup .contenedorPreguntaRemove {
+    background-color: var(--color-principal);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+.swal-custom-popup .fotoUsuarioPreguntaRemove img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+}
 
 

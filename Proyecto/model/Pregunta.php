@@ -150,7 +150,6 @@ class Pregunta{
         if(isset($param["titulo"])) $titulo = $param["titulo"];
         if(isset($param["texto"])) $texto = $param["texto"];
         if(isset($param["id_usuario"])) $id_usuario = $param["id_usuario"];
-        $votos = 0;
         $fecha_hora = new DateTime();
         $fecha_hora = $fecha_hora->format("Y-m-d H:i:s");
 

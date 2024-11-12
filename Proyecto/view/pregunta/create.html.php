@@ -18,7 +18,7 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
                 <div>
                     <label>
                         Tema
-                        <select id="" name="id_tema">
+                        <select id="tema" name="id_tema">
                             <?php foreach ($temas as $tema):?>
                                 <option value="<?= $tema["id"] ?>"><?= $tema["nombre"] ?></option>
                             <?php endforeach; ?>
@@ -27,14 +27,14 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
                 </div>
                 <br>
             <?php else: ?>
-                <input type="hidden" name="id_tema" value="<?= $id_tema; ?>" />
+                <input id="id_tema" type="hidden" name="id_tema" value="<?= $id_tema; ?>" />
             <?php endif; ?>
 
             <div>
                 <label>
-                    Titulo
+                    Titulo*
                     <br>
-                    <input type="text" name="titulo" placeholder="Titulo de tu Pregunta">
+                    <input id="titulo" type="text" name="titulo" placeholder="Titulo de tu Pregunta" required>
                 </label>
             </div>
             <br>
@@ -43,20 +43,21 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
                 <label>
                     Describe tu problema
                     <br>
-                    <textarea name="texto" placeholder="Descripción de tu Problema"></textarea>
+                    <textarea id="texto" name="texto" placeholder="Descripción de tu Problema"></textarea>
                 </label>
             </div>
             <br>
 
             <div>
-                <label>
+                <label >
                     Adjuntar Archivo
                 </label>
                 <br>
                 <br>
                 <label class="btn btnImagenCrear">
                     Seleccionar Archivo
-                    <input type="file" name="imagen" hidden="hidden">
+                    <input id="botonAdjuntarImagen" type="file" name="imagen" hidden accept="image/*">
+                        <i class="bi bi-check-circle-fill" hidden></i>
                 </label>
             </div>
             <br>
@@ -70,3 +71,4 @@ if (isset($dataToView["temas"])) $temas = $dataToView["temas"];
     </div>
 
 </div>
+<script src="assets/js/preguntas/validarCrear.js"></script>
