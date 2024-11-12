@@ -477,7 +477,6 @@ class PreguntaController{
         elseif (($rol == "admin") || ($rol == "gestor")) {
             return $puedeEditar = true;
         }
-    
         return $puedeEditar;
     }
     
@@ -492,6 +491,4 @@ class PreguntaController{
         }
         return $puedeEditar;
     }
-    
-
 }
