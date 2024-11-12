@@ -1,10 +1,14 @@
+<?php
+
+
+?>
 <div class="listaUsers">
     <p>
         LISTA USUARIOS
     </p>
-    <?php if (isset($users) && count($users) > 0): ?>
+    <?php if (isset($listaUsuarios) && count($listaUsuarios) > 0): ?>
         <ul>
-            <?php foreach ($users as $user): ?>
+            <?php foreach ($listaUsuarios as $user): ?>
                 <div class="user" id="contenedorUsuario<?php echo $user->id; ?>">
                     <li>
                         <?php echo $user->username; ?>
