@@ -86,14 +86,14 @@ class Pregunta{
         $sql = "UPDATE ".$this->tabla." SET titulo = ?, texto = ? WHERE id = ?";
 
 
-        if(isset($param["imagen"]) && $param["imagen"] != "")
+        if(isset($param['file_path'])) 
         {
             $sql = "UPDATE ".$this->tabla." SET titulo = ?, texto = ?, imagen = ? WHERE id = ?";  
             $stmt = $this->connection->prepare($sql);
             $stmt -> execute([
                 $param["titulo"],
                 $param["texto"],
-                $param["imagen"],
+                $param['file_path'],
                 $param["id_pregunta"]
             ]);
             return true;

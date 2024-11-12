@@ -255,7 +255,7 @@ class PreguntaController{
 
             $pregunta = $this-> model -> getPreguntaById($_GET["id_pregunta"]);
 
-            if(!$this->puedeEditar($_GET["id_pregunta"]))
+            if(!$this->esDueno($pregunta["id_usuario"]))
             {
                 header("Location: index.php?controller=tema&action=mostrarTemas");
                 exit();
@@ -280,6 +280,38 @@ class PreguntaController{
         {
             if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST))
             {
+
+                   // Primero, verificamos si se ha subido un archivo
+                    $filePath = null;
+                    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
+
+
+                        $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                        $fileMimeType = mime_content_type($fileTmpPath);
+                        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+
+                        if(in_array($fileMimeType, $allowedMimeTypes)) {
+                            $fileName = uniqid(). $_FILES['imagen']['name'];
+                            $uploadFileDir = 'assets/upload/respuestas/';
+                            $destPath = $uploadFileDir.$fileName;
+
+                            // Movemos de temporal a /uploads
+                            if(move_uploaded_file($fileTmpPath,$destPath)){
+                                $filePath = $destPath;
+                            }
+                            else {
+                                $_GET["response"] = false;
+                                print_r("No le ha permitido subir la imagen");
+                                return;
+                            }
+                        } else {
+                            $_GET["response"] = false;
+                            return;
+                        }
+                    }
+
+
+                $_POST["file_path"] = $filePath;
                 $result = $this->model->updatePregunta($_POST);
                 if($result)
                 {
@@ -461,11 +493,5 @@ class PreguntaController{
         return $puedeEditar;
     }
     
-    private function puedeEliminar($id)
-    {
-        $puede = false;
 
-
-    }
-    
 }
