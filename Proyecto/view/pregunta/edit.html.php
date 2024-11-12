@@ -29,6 +29,20 @@
             </div>
             <br>
 
+
+            <div>
+                <label>
+                    Imagen subida
+                    <br>
+                    <?php
+                    if(isset($pregunta["imagen"]))
+                    {?>
+                            <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">
+                    <?php }
+                    ?>
+                </label>
+            </div>
+
             <div>
                 <label>
                     Adjuntar Archivo
@@ -37,7 +51,8 @@
                 <br>
                 <label class="btn btnImagenCrear">
                     Seleccionar Archivo
-                    <input type="file" name="imagen" hidden="hidden">
+                    <input id="botonAdjuntarImagen" type="file" name="imagen" hidden accept="image/*">
+                        <i class="bi bi-check-circle-fill" hidden></i>
                 </label>
             </div>
             <br>
@@ -52,3 +67,4 @@
     </div>
 
 </div>
+<script src="assets/js/preguntas/validarCrear.js"></script>

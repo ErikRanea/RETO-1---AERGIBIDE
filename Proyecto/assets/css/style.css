@@ -1067,6 +1067,11 @@ footer span {
     .botonDeEditar:hover i {
         color: var(--color-secundario-activo);
     }
+/* Efectos hover  */
+.botonPanel:hover i,
+.botonDeEditar:hover i {
+    color: var(--color-secundario-activo);
+}
 
 
     /* Focus styles for accessibility */
@@ -1078,6 +1083,14 @@ footer span {
         outline: 2px solid var(--color-secundario);
         outline-offset: 2px;
     }
+/* Estilos focus */
+.botonPanel:focus,
+.botonDeEditar:focus,
+.botonSubirArchivo:focus,
+.textAreaRespuesta:focus {
+    outline: 2px solid var(--color-secundario);
+    outline-offset: 2px;
+}
 
 
     /* Transitions for smooth interactions */
@@ -1104,6 +1117,21 @@ footer span {
         top: 100%;
         border-radius: 10px;
     }
+/*Notificaciones*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#notificationsDropdown {
+    position: absolute;
+    background-color: var(--color-principal);
+    color: var(--color-letra);
+    min-width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+    top: 100%;
+    border-radius: 10px;
+}
 
     #notificationsDropdown .notificacion-item {
         display: block;
