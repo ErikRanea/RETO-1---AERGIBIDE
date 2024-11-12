@@ -7,15 +7,16 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
     <div class="contenido">
         <?php foreach ($actividad as $respuesta): ?>
             <div class="pregunta">
-                <p>
-                    <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= $pregunta["id"] ?>" class="tituloPregunta"><?= $pregunta["titulo"] ?></a>
-                </p>
+                <div>
+                    <p><?= $respuesta["titulo_pregunta"] ?></p>
+                    <p><?= $respuesta["respuesta"] ?></p>
+                </div>
                 <div class="datos-pregunta">
-                    <span><?= $pregunta["votos"] ?> Votos</span>
+                    <span><?= $respuesta["votos"] ?> Votos</span>
 
                     <div>
-                        <?= $pregunta["username"] ?>
-                        <?= $pregunta["fecha_hora"] ?>
+                        <?= $respuesta["username"] ?>
+                        <?= $respuesta["fecha_hora"] ?>
                     </div>
                 </div>
             </div>
@@ -24,7 +25,7 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
     <div class="pagination">
         <!-- Enlaces de número de página -->
         <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
-            <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" href="index.php?controller=usuario&action=mostrarActividad&page=<?= $i; ?>">
+            <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPaginacion(<?= $i ?>, 'Respuestas_Usuario')">
                 <?= $i; ?>
             </a>
         <?php endfor; ?>

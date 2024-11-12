@@ -1,15 +1,13 @@
 <?php
-    if (isset($_GET["id"])) {
-        $id = $_GET["id"];
-    } else {
-        $id = "";
-    }
+    if ( isset($dataToView["usuario"]) ) $usuario = $dataToView["usuario"];
+
+    print_r($usuario)
 ?>
 <div class="panelDatos">
     <div class="perfil">
         <h1><!-- Nombre de usuario se actualizará aquí --></h1>
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="datosFotoForm" enctype="multipart/form-data" class="divFoto">
-            <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $id ?>">
+            <input type="hidden" name="idUsuario" id="idUsuario" value="<?= $usuario["id"] ?>">
             <!-- Aqui se mostrara la foto de usuario -->
             <img class="sinFoto" id="fotoPerfil" src="<?php echo isset($usuario->foto_perfil) ? $usuario->foto_perfil : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil default">
 
@@ -32,11 +30,11 @@
     <div class="listaDatos">
         <h2>Datos de usuario</h2>
         <form action="index.php?controller=usuario&action=update" method="post" id="datosUsuarioForm" enctype="multipart/form-data">
-            <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $id ?>">
+            <input type="hidden" name="idUsuario" id="idUsuario" value="<?= $usuario["id"] ?>">
             <table class="estiloTabla">
                 <tr>
                     <th>Nombre:</th>
-                    <td><input type="text" name="nombre" id="nombre" value="" readonly /></td>
+                    <td><input type="text" name="nombre" id="nombre" value="<?= $usuario["nombre"] ?>" readonly /></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -46,7 +44,7 @@
                 </tr>
                 <tr>
                     <th>Usuario:</th>
-                    <td><input type="text" name="username" id="username" value="" readonly /></td>
+                    <td><input type="text" name="username" id="username" value="<?= $usuario["username"] ?>" disabled /></td>
                     <td>
                         <button id="editarUsuario" class="botonEditar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" color="#4DBAD9">
@@ -57,7 +55,7 @@
                 </tr>
                 <tr>
                     <th>Email:</th>
-                    <td><input type="text" name="email" id="email" value="" readonly /></td>
+                    <td><input type="text" name="email" id="email" value="<?= $usuario["username"] ?>" readonly /></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -76,7 +74,7 @@
                     <td><input type="text" name="nuevaPassword" id="nuevaPassword" value="" readonly /></td>
                 </tr>
             </table>
-            <div class="divBotonGuardar">
+            <div id="btnGuardarEditarUsu" class="divBotonGuardar" hidden>
                 <button type="submit" id="guardarDatosUsuario" class="diseñoBoton">Guardar</button>
                 <button type="button" class="diseñoBoton" onclick="location.reload();">Cancelar</button>
             </div>
@@ -91,6 +89,7 @@
 document.getElementById('editarUsuario').addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById("username").readOnly = false;
+    document.getElementById("btnGuardarEditarUsu").hidden = false;
 });
 
 document.getElementById('editarPassword').addEventListener('click', function(e) {

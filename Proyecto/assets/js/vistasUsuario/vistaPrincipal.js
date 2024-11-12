@@ -28,7 +28,6 @@ divPrincipal.addEventListener("click", (event) => {
 });
 
 
-
 async function cambiarPanelPrincipal(event){
     //event.preventDefault();
 
@@ -79,11 +78,11 @@ async function cambiarPanelPrincipal(event){
                 btn = document.getElementById("btnPregunta");
                 verActividad({ target: btn }); // Llama a verActividad simulando un clic en "Preguntas"
             }
-            // Si el botón seleccionado es "Actividad", carga "Preguntas" por defecto
 
+            // Si el botón seleccionado es "Panel Control", carga "Lista de Usuarios" por defecto
             if (idBtn === "btnPanelControl") {
                 btn = document.getElementById("btnGestion");
-                verGestion({ target: btn }); // Llama a verActividad simulando un clic en "Preguntas"
+                verGestion({ target: btn }); // Llama a verGestion simulando un clic en "Lista de Usuarios"
             }
 
         } else {

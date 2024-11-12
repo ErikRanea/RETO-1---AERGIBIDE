@@ -330,6 +330,37 @@ class Usuario{
         return ceil($total/$limit);
 
     }
+
+    public function getGuardadosPaginated($username, $pagination, $vista, $tipo, $page=1){
+        $limit=$pagination;
+        $offset = ($page - 1) * $limit; // Calcula el desplazamiento
+        $sql = "SELECT * FROM " . $vista . " WHERE username= :username AND tipo= :tipo LIMIT :limit OFFSET :offset";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->execute();
+        $totalPages = $this->getNumberPages($username, $pagination, $vista); //ceil($this->getNumperPages()/$limit);
+        return [$stmt->fetchAll(), $page, $totalPages];
+
+    }
+
+    public function getNumberPagesGuardados($username, $pagination, $vista, $tipo){
+        $limit=$pagination;
+        $sql = "SELECT COUNT(*) FROM ". $vista ." WHERE username=? AND tipo=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$username, $tipo]);
+        $total = $stmt->fetchColumn();
+
+        //$total=$this->connection->query("SELECT COUNT(*) FROM ".$this->tabla. " WHERE id_tema=?")->fetchColumn();
+        return ceil($total/$limit);
+
+    }
+
+
+
+
     public function delete($userId) {
             $sql = "DELETE FROM " . $this->tabla . " WHERE id = :id";
             $stmt = $this->connection->prepare($sql);
