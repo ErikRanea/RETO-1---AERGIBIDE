@@ -1,3 +1,4 @@
+/*
 document.addEventListener("DOMContentLoaded", function() {
     // Obtener el ID del usuario de la URL, si existe
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error('Error:', error);
     });
 });
+
+ */
 
 function editarUsuario(userId) {
     const url = `index.php?controller=usuario&action=mostrarDatosUsuario&id=${userId}`;

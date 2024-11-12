@@ -298,9 +298,14 @@ class UsuarioController{
             $vista = $_POST["vista"];
         }
 
+        $mostrar_usuario = "";
         ob_start();
         switch ($vista){
             case "DatosUsuario":
+                $usuario = $_SESSION["user_data"];
+                $mostrar_usuario = $this->model->getUsuarioById($usuario["id"]);
+
+
                 include "view/usuario/vistaPrincipal/datosUsuario.html.php";
                 break;
             case "Actividad":
@@ -322,7 +327,8 @@ class UsuarioController{
         echo json_encode([
             "status" => "success",
             "data" => [
-                "html" => $htmlPrincipal
+                "html" => $htmlPrincipal,
+                "usuario" => $mostrar_usuario
             ]
         ]);
         exit();
@@ -370,6 +376,14 @@ class UsuarioController{
                 include "view/usuario/actividad/respuestas.html.php";
                 break;
             case "Guardados":
+                /*
+                $preguntas_pag = $this->model->getGuardadosPaginated($usuario, $pagination, $vista, "Pregunta", $page);
+                $respuestas_pag = $this->model->getGuardadosPaginated($usuario, $pagination, $vista, "Respuesta", $page);
+
+                $actividad = [$preguntas_pag, $respuestas_pag];
+                */
+
+
                 include "view/usuario/actividad/guardados.html.php";
                 break;
             default:

@@ -35,7 +35,7 @@ foreach ($actividad as $item) {
         </div>
         <div class="pagination">
             <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
-                <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPagina(<?= $i ?>, 'Preguntas_Usuario')">
+                <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPaginacion(<?= $i ?>, 'Guardados')">
                     <?= $i; ?>
                 </a>
             <?php endfor; ?>
@@ -49,7 +49,7 @@ foreach ($actividad as $item) {
     <h2>Respuestas</h2>
     <?php if (count($respuestas) > 0):?>
         <div class="contenido">
-            <?php foreach ($respuestas as $respuesta): ?>
+            <?php foreach ($respuestas as $respuesta):?>
                 <div class="respuesta">
                     <?php if (isset($respuesta["titulo_pregunta"])): ?>
                         <h3><?= htmlspecialchars($respuesta["titulo_pregunta"]) ?></h3>
@@ -75,7 +75,9 @@ foreach ($actividad as $item) {
         </div>
         <div class="pagination">
             <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
+
                 <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" onclick="cargarPagina(<?= $i ?>, 'Respuestas_Usuario')">
+
                     <?= $i; ?>
                 </a>
             <?php endfor; ?>
