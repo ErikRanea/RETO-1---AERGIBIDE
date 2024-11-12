@@ -3,28 +3,38 @@ if (isset($dataToView["actividad"])) $actividad = $dataToView["actividad"];
 if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
 ?>
 
-<?php if (count($actividad) > 0):?>
+<?php if (!empty($actividad)): ?>
     <div class="contenido">
         <?php foreach ($actividad as $respuesta): ?>
-            <div class="pregunta">
+            <div class="respuesta">
                 <p>
-                    <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= $pregunta["id"] ?>" class="tituloPregunta"><?= $pregunta["titulo"] ?></a>
+                    <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= htmlspecialchars($respuesta["id_respuesta"] ?? '') ?>" class="tituloRespuesta">
+                        <?= htmlspecialchars($respuesta["titulo_pregunta"] ?? 'Sin título') ?>
+                    </a>
                 </p>
-                <div class="datos-pregunta">
-                    <span><?= $pregunta["votos"] ?> Votos</span>
-
+                <div class="datos-respuesta">
+                    <span><?= htmlspecialchars($respuesta["votos"] ?? '0') ?> Votos</span>
                     <div>
-                        <?= $pregunta["username"] ?>
-                        <?= $pregunta["fecha_hora"] ?>
+                        <?= htmlspecialchars($respuesta["username"] ?? 'Usuario desconocido') ?>
+                        <?= htmlspecialchars($respuesta["fecha_hora"] ?? 'Fecha desconocida') ?>
                     </div>
                 </div>
+                <p class="contenido-respuesta">
+                    <?php
+                    if (isset($respuesta["respuesta"]) && !empty($respuesta["respuesta"])) {
+                        echo htmlspecialchars(substr($respuesta["respuesta"], 0, 100)) . '...';
+                    } else {
+                        echo 'No hay contenido disponible';
+                    }
+                    ?>
+                </p>
             </div>
         <?php endforeach; ?>
     </div>
     <div class="pagination">
         <!-- Enlaces de número de página -->
-        <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
-            <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" href="index.php?controller=usuario&action=mostrarActividad&page=<?= $i; ?>">
+        <?php for ($i = 1; $i <= ($paginas[1] ?? 1); $i++): ?>
+            <a class="page-btn <?= ($i == ($paginas[0] ?? 1)) ? 'active' : ''; ?>" onclick="cargarPaginacion(<?= $i ?>, 'Respuestas_Usuario')">
                 <?= $i; ?>
             </a>
         <?php endfor; ?>
