@@ -738,6 +738,7 @@ input[readonly] {
     border-radius: 50%;
 }
 
+
 .publicacion {
     display: flex;
     align-items: center;
@@ -923,6 +924,7 @@ input[readonly] {
 }
 
 /*Pregunta y respuesta*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 .pregunta p a:hover{
     color: var(--color-secundario);
     text-decoration: none
@@ -1093,6 +1095,17 @@ input[readonly] {
     clear: both;
     color: var(--color-letra);
 }
+
+.imagenDeLaPregunta{
+    max-width: 50%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+
+
+
 .bi-send{
     font-size: 300%;
 }
@@ -1227,7 +1240,7 @@ input[readonly] {
 }
 
 
-/* Additional styles for better readability and interaction */
+/*  Estilos adiccionales para la una correcta readaptabilidad */
 .contenedorRespuesta {
     margin-left: 20px;
     border-left: 2px solid var(--color-secundario);
@@ -1273,13 +1286,13 @@ input[readonly] {
 
 
 
-/* Hover effects */
+/* Efectos hover  */
 .botonPanel:hover i,
 .botonDeEditar:hover i {
     color: var(--color-secundario-activo);
 }
 
-/* Focus styles for accessibility */
+/* Estilos focus */
 .botonPanel:focus,
 .botonDeEditar:focus,
 .botonSubirArchivo:focus,
@@ -1296,6 +1309,7 @@ input[readonly] {
 }
 
 /*Notificaciones*/
+/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 #notificationsDropdown {
     position: absolute;
     background-color: var(--color-principal);

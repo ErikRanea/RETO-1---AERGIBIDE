@@ -116,6 +116,9 @@
 
 ?>
 
+  <!--Aqui comienzan la PREGUNTA-->
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
 <input type="text" id="userId" value="<?php echo $_SESSION["user_data"]['id']; ?>" hidden >
 <div class="contenedorPreguntasYRespuestas">
     <i class="barra">
@@ -178,7 +181,15 @@
                 <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
             </div>
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
-            <?php echo isset($pregunta["imagen"]) && $pregunta["imagen"] != null ? '<img src='.$pregunta["imagen"].' style="width: 10px>"' : "";?>
+            <?php
+            if(isset($pregunta["imagen"]))
+            {?>
+                    <br>
+                    <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">
+
+
+            <?php }
+            ?>
         </div>
         <div class="panelDeBotones">
             <?php
