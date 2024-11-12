@@ -17,13 +17,15 @@ $notificaciones = $id_usuario ? $usuarioModel->getNotificacionesNoLeidas($id_usu
     <meta charset="utf-8">
     <title>AERGIBIDE</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/actividad.css">
     <link rel="stylesheet" href="assets/css/preguntaAcciones.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link  rel="icon" type="image/svg" href="assets/img/LogoVectorizado.svg">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Cargar los estilos de modo oscuro si la cookie está habilitada -->
     <?php if ($darkModeEnabled): ?>
-        <link rel="stylesheet" href="assets/css/darkModeStyle.css"> <!-- Estilos base modo oscuro -->
+        <link rel="stylesheet" href="assets/css/darkModeStyle.css">
+        <!-- Estilos base modo oscuro -->
     <?php endif; ?>
 </head>
 <body>
