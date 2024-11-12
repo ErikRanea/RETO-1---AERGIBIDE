@@ -103,7 +103,7 @@ class RespuestaController
         
                 
 
-                if(!$this->puedeEditar($datos["respuesta"]["id"]))
+                if(!$this->esDueno($datos["respuesta"]["id_usuario"]))
                 {
                     echo json_encode([
                         "status" => "error",
@@ -150,7 +150,7 @@ class RespuestaController
 
             try {
             
-                if(!$this->puedeEditar($_POST["id_respuesta"]) || !isset($_POST["id_respuesta"]) || !isset($_POST["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
+                if(!isset($_POST["id_respuesta"]) || !isset($_POST["id_pregunta"]) || !isset($_SESSION['user_data']['autorizado']))
                 {
                     echo json_encode([
                         "status" => "error",
@@ -568,6 +568,18 @@ private function puedeEditar($id)
         return $puedeEditar = true;
     }
 
+    return $puedeEditar;
+}
+
+private function esDueno($id)
+{
+    $puedeEditar = false;
+    $idUsuario = $_SESSION["user_data"]["id"];
+
+    if($idUsuario == $id)
+    {
+         return $puedeEditar = true;
+    }
     return $puedeEditar;
 }
 
