@@ -302,8 +302,8 @@ class UsuarioController{
         ob_start();
         switch ($vista){
             case "DatosUsuario":
-                $usuario = $_SESSION["user_data"];
-                $mostrar_usuario = $this->model->getUsuarioByIdObj($usuario["id"]);
+                $id_usuario = $_SESSION["user_data"];
+                $usuario = $this->model->getUsuarioById($id_usuario["id"]);
 
 
                 include "view/usuario/vistaPrincipal/datosUsuario.html.php";
@@ -420,10 +420,16 @@ class UsuarioController{
             $vista = $_POST["vista"];
         }
 
+        /*
+         * Hacemos una carga del html en un espacio de memoria en el servidor sin devolverlo al cliente (sin mostrarlo
+         * en el navegador).
+         * Haciendo que el código de php actué y lo guardamos en una varible el contenido de ese htnl
+         * con los datos guardados y se lo pasamos al JavaScript para que lo pegue.*/
+
         ob_start();
         switch ($vista){
             case "Gestion":
-                $usuarios = $this->model->getAllUsuarios();
+                $listaUsuarios = $this->model->getUsuarios();
                 include "view/usuario/gestion/listaUsuarios.html.php";
                 break;
             case "CrearUsuario":
@@ -433,7 +439,7 @@ class UsuarioController{
                 echo json_encode([
                     "status" => "error",
                     "message" => "ERRO vista switch"
-                ]); 
+                ]);
                 exit();
         }
 
@@ -442,8 +448,7 @@ class UsuarioController{
         echo json_encode([
             "status" => "success",
             "data" => [
-                "html" => $contenidoHtml,
-                "usuarios" => $usuarios
+                "html" => $contenidoHtml
             ]
         ]);
         exit();

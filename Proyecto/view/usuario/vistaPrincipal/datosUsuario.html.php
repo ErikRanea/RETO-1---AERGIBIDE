@@ -1,19 +1,21 @@
 <?php
+if ( isset($dataToView["usuario"]) ) $usuario = $dataToView["usuario"];
 
-    if (isset($_GET["id"])) {
-        $id = $_GET["id"];
-    } else {
-        $id = "";
-    }
+
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+} else {
+    $id = $_SESSION["user_data"]["id"];
+}
 
 ?>
 <div class="user-dashboard">
     <div class="user-profile-section">
-        <h1 class="user-name"><!-- Nombre de usuario se actualizará aquí --></h1>
+        <h1 class="user-name"><?php echo htmlspecialchars($usuario['nombre'] . ' ' . $usuario['apellido']); ?></h1>
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="photoForm" enctype="multipart/form-data" class="profile-photo-form">
-            <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $id ?>">
+            <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo htmlspecialchars($id); ?>">
             <div class="profile-photo-container">
-                <img class="profile-photo" id="userImage" src="<?php echo isset($usuario["foto_perfil"]) ? $usuario["foto_perfil"] : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil">
+                <img class="profile-photo" id="userImage" src="<?php echo isset($usuario['foto_perfil']) ? htmlspecialchars($usuario['foto_perfil']) : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'; ?>" alt="Foto de perfil">
                 <label for="newImage" class="photo-update-label">
                     <button id="editPhoto" class="btn-edit btn-edit-photo">
                         <i class="bi bi-pencil"></i>
@@ -33,31 +35,29 @@
         <?php if ( $usuario["rol"] == "admin" || $usuario["rol"] == "gestor" ): ?>
             <button class="btn btnCrear btnPanelLateral" id="btnPanelControl">Panel de Control</button>
         <?php endif; ?>
-
     </div>
-
 
     <div class="user-data-section">
         <h2 class="section-title">Datos de usuario</h2>
         <form action="index.php?controller=usuario&action=update" method="post" id="userDataForm" class="user-data-form">
             <div class="form-field">
                 <label for="nombre" class="field-label">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" class="field-input" value="<?=$mostrar_usuario->nombre?>" readonly />
+                <input type="text" name="nombre" id="nombre" class="field-input" readonly value="<?php echo htmlspecialchars($usuario['nombre'] ?? ''); ?>" />
             </div>
             <div class="form-field">
                 <label for="apellido" class="field-label">Apellido:</label>
-                <input type="text" name="apellido" id="apellido" class="field-input" readonly />
+                <input type="text" name="apellido" id="apellido" class="field-input" readonly value="<?php echo htmlspecialchars($usuario['apellido'] ?? ''); ?>" />
             </div>
             <div class="form-field">
                 <label for="username" class="field-label">Usuario:</label>
                 <div class="input-with-button">
-                    <input type="text" name="username" id="username" class="field-input" readonly />
+                    <input type="text" name="username" id="username" class="field-input" readonly value="<?php echo htmlspecialchars($usuario['username'] ?? ''); ?>" />
                     <button id="editarUsuario" class="btn-edit">Editar</button>
                 </div>
             </div>
             <div class="form-field">
                 <label for="email" class="field-label">Email:</label>
-                <input type="text" name="email" id="email" class="field-input" readonly />
+                <input type="text" name="email" id="email" class="field-input" readonly value="<?php echo htmlspecialchars($usuario['email'] ?? ''); ?>" />
             </div>
             <div class="form-field">
                 <label for="actualPassword" class="field-label">Contraseña actual:</label>
