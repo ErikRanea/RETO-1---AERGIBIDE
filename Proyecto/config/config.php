@@ -1,9 +1,9 @@
 <?php
 //Dirección en clase
-define("DB_HOST", "172.20.227.241");
+//define("DB_HOST", "172.20.227.241");
 
 //Dirección fuera de clase
- //define('DB_HOST', 'mysql.arriaga.eu');
+define('DB_HOST', 'mysql.arriaga.eu');
 
 define("DB", "grupo6_2425");
 define("DB_USER", "grupo6_2425");
