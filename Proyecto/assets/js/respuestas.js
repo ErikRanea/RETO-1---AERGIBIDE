@@ -28,6 +28,8 @@ async function likePregunta(event, idElemento) {
     const idPregunta = boton.value;
     const idUsuario = document.getElementById('userId').value;
     let meGusta = 0;
+    const votosElemento = document.getElementById(`preguntaVoto`);
+ 
 
     // Obtener referencias a los botones
     const botonLike = document.getElementById('botonPreguntaLike');
@@ -39,9 +41,11 @@ async function likePregunta(event, idElemento) {
         // Actualizar inmediatamente la UI
         if(botonLike.querySelector('i').classList.contains('bi-airplane-fill')) {
             // Si ya está liked, lo quitamos
+           
             botonLike.innerHTML = '<i class="bi bi-airplane"></i>';
         } else {
             // Si no está liked, lo ponemos
+
             botonLike.innerHTML = '<i class="bi bi-airplane-fill"></i>';
             botonDislike.innerHTML = '<i class="bi bi-airplane airplane-down"></i>';
         }
@@ -51,9 +55,11 @@ async function likePregunta(event, idElemento) {
         // Actualizar inmediatamente la UI
         if(botonDislike.querySelector('i').classList.contains('bi-airplane-fill')) {
             // Si ya está disliked, lo quitamos
+          
             botonDislike.innerHTML = '<i class="bi bi-airplane airplane-down"></i>';
         } else {
             // Si no está disliked, lo ponemos
+
             botonDislike.innerHTML = '<i class="bi bi-airplane-fill airplane-down"></i>';
             botonLike.innerHTML = '<i class="bi bi-airplane"></i>';
         }
@@ -85,6 +91,11 @@ async function likePregunta(event, idElemento) {
         if(data.status !== "success") {
             // Si la respuesta no es exitosa, revertir los cambios
             console.log(data.message);
+        }
+        else if (data.status === "success")
+        {
+            const votosNuevos = await conseguirVotos("pregunta", idPregunta);
+            votosElemento.textContent = votosNuevos["votos"];
         }
     } catch (error) {
         console.log(error);
