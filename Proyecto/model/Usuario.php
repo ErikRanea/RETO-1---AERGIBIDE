@@ -189,7 +189,7 @@ class Usuario{
 
     public function updateUsuario($objeto) {
         $sql = "UPDATE " . $this->tabla .
-               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password, foto_perfil = :foto_perfil WHERE id = :id";
+               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
@@ -199,13 +199,20 @@ class Usuario{
 
         $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
         $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
-        $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
+        //$stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
     
         if ($stmt->execute()) {
             echo "Foto guardada: " . $objeto->foto_perfil;
         } else {
             echo "Error al actualizar la foto";
         }
+    }
+
+    public function updateFoto($idUsuario, $foto){
+        $sql = "UPDATE " . $this->tabla . " SET foto_perfil=? WHERE id=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$foto, $idUsuario]);
+
     }
 
     public function createUsuario($objeto) {
