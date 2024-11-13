@@ -24,10 +24,11 @@ class Respuesta
 
     public function getRespuestasByIdPregunta($id)
     {
-        $sql = "SELECT r.* FROM Respuestas r
+        $sql = "SELECT r.* 
+        FROM Respuestas r
         LEFT JOIN Respuestas_favs rf ON r.id = rf.id_respuesta
         WHERE r.id_pregunta = ?
-        ORDER BY rf.id_respuesta IS NULL, r.id DESC;";
+        ORDER BY rf.id_respuesta IS NULL, r.fecha_hora ASC, r.id DESC;";
         $stmt = $this->connection->prepare($sql);
         $stmt -> execute([$id]);
         return $stmt -> fetchAll();
