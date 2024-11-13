@@ -560,7 +560,11 @@ if(botonEliminarPregunta != null)
                     background: 'var(--color-principal)',
                     showDenyButton: true,
                     confirmButtonText: 'Aceptar',
-                    denyButtonText: 'Cancelar'
+                    denyButtonText: 'Cancelar',
+                    customClass: {
+                        confirmButton: 'btn btnCrear', // Clases personalizadas para el botón de aceptar
+                        denyButton: 'btn btnCancel'    // Clases personalizadas para el botón de cancelar
+                    }
     
                 }).then((result)  => {
                     if(result.isConfirmed) {
@@ -727,7 +731,11 @@ document.querySelectorAll('[id^="eliminarRespuesta-"]').forEach(boton => {
                     background: 'var(--color-principal)',
                     showDenyButton: true,
                     confirmButtonText: 'Aceptar',
-                    denyButtonText: 'Cancelar'
+                    denyButtonText: 'Cancelar',
+                    customClass: {
+                        confirmButton: 'btn btnCrear', // Clases personalizadas para el botón de aceptar
+                        denyButton: 'btn btnCancel'    // Clases personalizadas para el botón de cancelar
+                    }
 
                 }).then((result)  => {
                     if(result.isConfirmed) {
@@ -807,9 +815,16 @@ document.querySelectorAll('[id^="eliminarRespuesta-"]').forEach(boton => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Metodos exclusivos de uso interno
 function esPdf(path) {
-    // Convertir el path a minúsculas y obtener la extensión
-    const extension = path.split('.').pop().toLowerCase();
+
+    try {
+        const extension = path.split('.').pop().toLowerCase();
     
-    // Verificar si la extensión es "pdf"
-    return extension === 'pdf';
+        // Verificar si la extensión es "pdf"
+        return extension === 'pdf';
+    } 
+    catch (error) {
+        return false;    
+    }
+    // Convertir el path a minúsculas y obtener la extensión
+
 }

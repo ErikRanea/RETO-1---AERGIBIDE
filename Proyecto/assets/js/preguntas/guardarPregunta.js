@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
         denyButtonText: 'Volver',
         timer: 5000,
         timerProgressBar: true,
+        customClass: {
+            confirmButton: 'btn btnCrear', // Clases personalizadas para el botón de aceptar
+            denyButton: 'btn btnCancel'    // Clases personalizadas para el botón de cancelar
+        },
         willClose: () => {
             window.location.href = `index.php?controller=pregunta&action=list&id_tema=${pregunta.getAttribute('data-id-tema')}`;
           }
