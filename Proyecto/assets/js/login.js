@@ -8,7 +8,11 @@ async function validarCredenciales(event)
     var password = document.getElementById("password").value;
 
     if (email === "" || password === "") {
-        alert("Por favor, introduce el email y la contraseña.");
+        swal.fire({
+            icon: "error",
+            title: "error",
+            text: "Por favor, introduce el email y la contraseña."
+        });
         return;
     }
 
@@ -44,7 +48,11 @@ async function validarCredenciales(event)
         else if (data.status === "error") 
         {
             console.log(data.message);
-            alert('Login fallido: ' + data.message +"\n"+data.datosDeSesion);
+            swal.fire({
+                icon: "error",
+                title: "error",
+                text: 'Login fallido: ' + data.message +"\n"+data.datosDeSesion
+            });
         }
     } 
     catch (error)

@@ -12,6 +12,10 @@ document.getElementById("botonPublicarRespuesta").addEventListener("click", func
             timer: 3000,
             timerProgressBar: true,
             showConfirmButton: false,
+            customClass: {
+                confirmButton: 'btn btnCrear', // Clases personalizadas para el botón de aceptar
+                denyButton: 'btn btnCancel'    // Clases personalizadas para el botón de cancelar
+            },
             didOpen: () => {
                 const timer = Swal.getPopup().querySelector('b');
                 timerInterval = setInterval(() => {
