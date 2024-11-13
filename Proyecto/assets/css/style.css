@@ -2078,8 +2078,18 @@ footer span {
 
         /* Crear preguntas */
 
+        .contenedorFormCrear {
+            display: flex;
+            align-items: center;
+        }
+
+        .crearPreguntaCrear {
+            height: 100%;
+        }
+
         .crearPreguntaCrear h1 {
             font-size: 4em;
+            padding-bottom: 2em;
         }
 
         .formPreguntaCrear label {
@@ -2106,7 +2116,8 @@ footer span {
 
         .acciones {
             display: flex;
-            justify-content: space-evenly;
+            flex-direction: column;
+            text-align: center;
         }
 
     }
