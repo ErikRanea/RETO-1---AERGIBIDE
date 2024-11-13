@@ -12,6 +12,13 @@ if (isset($_GET["id"])) {
 
 ?>
 <div class="user-dashboard">
+    <div class="panelLateralMovil">
+        <button class="btn btnCrear btnPanelLateral active" id="btnDatos">Datos de Usuario</button>
+        <button class="btn btnCrear btnPanelLateral" id="btnActividad">Actividad</button>
+        <?php if ( $usuario["rol"] == "admin" || $usuario["rol"] == "gestor" ): ?>
+            <button class="btn btnCrear btnPanelLateral" id="btnPanelControl">Panel de Control</button>
+        <?php endif; ?>
+    </div>
     <div class="user-profile-section">
         <h1 class="user-name"><?php echo htmlspecialchars($usuario['nombre'] . ' ' . $usuario['apellido']); ?></h1>
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="photoForm" enctype="multipart/form-data" class="profile-photo-form">
@@ -29,14 +36,6 @@ if (isset($_GET["id"])) {
                 <button type="submit" id="savePhoto" class="btn-save btn-save-photo">Actualizar Foto</button>
             </div>
         </form>
-    </div>
-
-    <div class="panelLateralMovil">
-        <button class="btn btnCrear btnPanelLateral active" id="btnDatos">Datos de Usuario</button>
-        <button class="btn btnCrear btnPanelLateral" id="btnActividad">Actividad</button>
-        <?php if ( $usuario["rol"] == "admin" || $usuario["rol"] == "gestor" ): ?>
-            <button class="btn btnCrear btnPanelLateral" id="btnPanelControl">Panel de Control</button>
-        <?php endif; ?>
     </div>
 
     <div class="user-data-section">

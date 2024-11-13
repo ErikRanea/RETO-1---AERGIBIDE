@@ -13,7 +13,7 @@ $usuario = $_SESSION["user_data"];
     </div>
 
     <div class="panelGestion">
-    <div class="botonesArriba">
+    <div class="panel-botones-actividad">
         <button class="btnAc btnPanelGestion" id="btnGestion">Gestión Usuarios</button>
         <button class="btnAc btnPanelGestion" id="btnNuevousuario">Nuevo Usuario</button>
     </div>

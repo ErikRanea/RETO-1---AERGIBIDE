@@ -77,6 +77,8 @@ strong {
     transition: all 0.3s ease;
 }
 
+
+
 .btnPanelLateral.active {
     background-color: var(--color-secundario);
     color: white;
@@ -271,12 +273,13 @@ strong {
 /* Mobile panel */
 .panelLateralMovil {
     display: none;
-    width: 100%;
-    background-color: var(--color-principal);
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
     padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow-sm);
+    gap: 10px;
+    white-space: nowrap;
 }
 
 .btnPanelLateral {
@@ -345,8 +348,12 @@ strong {
     color: var(--color-letra);
 }
 
+.user-name{
+    text-align: center;
+}
+
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     .user-dashboard {
         flex-direction: column;
     }
@@ -358,11 +365,88 @@ strong {
 
     .panelLateralMovil {
         display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
     }
 
     .btnPanelLateral {
         margin-bottom: 0.5rem;
+    }
+
+    body {
+        font-size: 18px;
+    }
+
+    .user-dashboard {
+        padding: 1rem;
+    }
+
+    .user-profile-section,
+    .user-data-section {
+        padding: 1.5rem;
+    }
+
+    .user-name {
+        font-size: 2.5rem;
+    }
+
+    .profile-photo-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .btn-edit-photo {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .field-label {
+        font-size: 1.2rem;
+    }
+
+    .field-input {
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+
+    .btn-edit,
+    .btn-save,
+    .btn-cancel {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
+    }
+
+    .btnAc {
+        font-size: 1.2rem;
+        padding: 15px 25px;
+    }
+
+    .contenedor-botones-actividad {
+        gap: 20px;
+    }
+
+    .panelLateralMovil {
+        padding: 1.5rem;
+    }
+
+    .btnPanelLateral {
+        font-size: 1.2rem;
+        padding: 0.7rem 1.2rem;
+    }
+    .side-panel {
+        display: none;
+    }
+
+    .panel-botones-actividad {
+        display: flex;
+        justify-content: center; /* Centra horizontalmente los botones */
+        flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
+        gap: 10px; /* Espacio entre los botones */
+    }
+
+    .btnAc {
+        flex: 0 0 auto;
     }
 }
