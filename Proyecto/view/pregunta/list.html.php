@@ -33,7 +33,7 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
                 </div>
             <?php endforeach; ?>
 
-            <div class="pagination">
+            <div class="paginacion">
                 <!-- Enlaces de número de página -->
                 <?php for ($i = 1; $i <= $paginas[1]; $i++): ?>
                     <a class="page-btn <?= ($i == $paginas[0]) ? 'active' : ''; ?>" href="index.php?controller=pregunta&action=list&id_tema=<?= $tema["id"] ?>&page=<?= $i; ?>">

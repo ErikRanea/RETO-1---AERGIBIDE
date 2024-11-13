@@ -2069,6 +2069,91 @@ footer span {
             margin-right: 15px;
         }
 
+        /* Lista preguntas por tema */
+        
+        .listaPreguntas {
+            width: 100%;
+        }
+
+        .encabezado {
+            align-items: center;
+        }
+
+        .encabezado a {
+            display: flex;
+            align-items: center;
+            margin: 0.5em;
+        }
+
+        .encabezado h1 {
+            font-size: 4em;
+            margin: 0.5em;
+        }
+
+        .pregunta {
+            align-items: center;
+            display: block;
+        }
+
+        .pregunta a {
+            font-size: 3em;
+            margin-bottom: 1.5%;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            color: var(--color-letra);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .datos-pregunta span, .datos-pregunta div {
+            font-size: 1.3em;
+        }
+
+        /* Crear preguntas */
+
+        .contenedorFormCrear {
+            display: flex;
+            align-items: center;
+        }
+
+        .crearPreguntaCrear {
+            height: 100%;
+        }
+
+        .crearPreguntaCrear h1 {
+            font-size: 4em;
+            padding-bottom: 2em;
+        }
+
+        .formPreguntaCrear label {
+            font-size: 3em;
+        }
+
+        #titulo {
+            margin-top: 2em;
+            height: 7em;
+        }
+
+        #texto {
+            margin-top: 2em;
+            height: 10em;
+        }
+
+        #titulo::placeholder {
+            font-size: 3em;
+        }
+
+        #texto::placeholder {
+            font-size: 3em;
+        }
+
+        .acciones {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
     .dropdown-content {
         width: 300px;
     }
