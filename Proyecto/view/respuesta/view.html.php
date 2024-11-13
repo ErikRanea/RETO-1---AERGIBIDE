@@ -114,6 +114,19 @@
         return $puedeEditar;
     }
 
+
+
+    function esPdf($path)
+    {
+        // Convertir el path a minúsculas para asegurar la comparación de la extensión
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        
+        
+        return $extension === "pdf";
+    }
+    
+
+
 ?>
 
   <!--Aqui comienzan la PREGUNTA-->
@@ -183,13 +196,22 @@
             <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
             <?php
             if(isset($pregunta["imagen"]) && $pregunta["imagen"] != "")
-            {?>
+            {
+                if(esPdf($pregunta["imagen"]))
+                {?>
+                    <br>
+                    <iframe style="width: 100%;" src="<?=$pregunta["imagen"]?>" frameborder="0" ></iframe>
+                    <a class="href" href="<?= $pregunta["imagen"]?>">
+                        Ir al pdf
+                        <i class="bi bi-file-pdf"></i>
+                    </a>
+                <?php 
+                }
+                else{?>
                     <br>
                     <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">
-
-
-            <?php }
-            ?>
+                <?php } 
+            }?>
         </div>
         <div class="panelDeBotones">
             <?php
@@ -301,7 +323,7 @@
                     <label>
                         <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
                                 href="index.php?controller=respuesta&action=esUtil&idRespuesta=<?php echo $datosRespuesta["id"];?>&idPregunta=<?php echo $pregunta["id"];?>">
-                            <?php if($datosRespuesta["util"] == 1){?>
+                            <?php if($datosRespuesta["esFav"]){?>
                                 <i class="bi bi-star-fill"></i>
                             <?php }else{?>
                                 <i class="bi bi-star"></i>
@@ -312,11 +334,29 @@
             <div class="respuesta">
                     <div class="contenidoRespuesta">
                         <?php echo $datosRespuesta["texto"]; ?>
+                        <br>
+                        <?php 
+                    if($datosRespuesta["imagen"] != null && $datosRespuesta["imagen"] != "")
+                    {
+                        if(esPdf($datosRespuesta["imagen"]))
+                        {?>
+                            <label id="srcRespuesta-<?php echo $datosRespuesta["id"]?>" value="<?php echo $datosRespuesta["id"]?>" data-src="<?=$datosRespuesta["imagen"]?>" hidden></label>
+                            <iframe style="width: 100%;height:20%;" src="<?=$datosRespuesta["imagen"]?>" frameborder="0" ></iframe>
+                            <a class="href" href="<?= $datosRespuesta["imagen"]?>">
+                                Ir al pdf
+                                <i class="bi bi-file-pdf"></i>
+                            </a>
+                        <?php
+                        }
+                        else{?>
+                            <label id="srcRespuesta-<?php echo $datosRespuesta["id"]?>" value="<?php echo $datosRespuesta["id"]?>" data-src="<?=$datosRespuesta["imagen"]?>" hidden></label>
+                            <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>">
+                        <?php 
+                        } 
+                    }?>
+
 
                     </div>
-                <?php if($datosRespuesta["imagen"] != null && $datosRespuesta["imagen"] != ""){?>
-                    <img class="imagenRespuesta" src="<?php echo $datosRespuesta["imagen"];?>">
-                <?php }?>
 
                 </div>
                 <div class="panelDeBotones">
@@ -404,7 +444,7 @@
                     <div class="botonesRespuesta">
                         <label class="botonRedondeado botonSubirArchivo">
                             Subir Archivo
-                            <input type="file" name="imagen" id="cargadorDeImagenRespuesta" accept="image/*" hidden>
+                            <input type="file" name="imagen" id="cargadorDeImagenRespuesta" accept="application/pdf, image/*" hidden>
                             <label id="archivoSubidoRespuesta" hidden>
                                 <i class="bi bi-check-circle-fill"></i>
                             </label>

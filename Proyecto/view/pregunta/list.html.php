@@ -43,7 +43,7 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
             </div>
 
         <?php else: ?>
-            <p>No hay preguntas sobre ese tema</p>
+            <p class="noPreguntas">No hay preguntas sobre ese tema</p>
         <?php endif;?>
     </div>
 </div>

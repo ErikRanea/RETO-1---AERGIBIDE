@@ -3,6 +3,15 @@
     $pregunta = $dataToView;
 
 
+    function esPdf($path)
+    {
+        // Convertir el path a minúsculas para asegurar la comparación de la extensión
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        
+        
+        return $extension === "pdf";
+    }
+
 ?>
 
 <div class="contenedorFormCrear">
@@ -36,9 +45,20 @@
                     <br>
                     <?php
                     if(isset($pregunta["imagen"]))
-                    {?>
+                    {
+                        if(esPdf($pregunta["imagen"]))
+                        {?>
+                            <iframe style="width: 100%;" src="<?=$pregunta["imagen"]?>" frameborder="0" ></iframe>
+                <?php
+                        }   
+                        else
+                        {
+                            ?>
                             <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">
-                    <?php }
+                            <?php 
+                        } 
+                       
+                    }
                     ?>
                 </label>
             </div>

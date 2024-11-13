@@ -39,31 +39,52 @@ class RespuestaController
         if(!$post){sleep(3);header("Location: index.php?controller=respuesta&action=view&id_pregunta=".$_GET["id_pregunta"]);exit();}
         $filePath = null;
 
-        if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
+
+        if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['imagen']['tmp_name'];
             $fileMimeType = mime_content_type($fileTmpPath);
-            $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
-
-            if(in_array($fileMimeType, $allowedMimeTypes)) {
-                $fileName = uniqid(). $_FILES['imagen']['name'];
-                print_r($fileName);
+            
+            // Tipos de archivo permitidos
+            $allowedImageMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+            $allowedPdfMimeType = 'application/pdf';
+    
+            // Aquí procesamos la imagen
+            if(in_array($fileMimeType, $allowedImageMimeTypes)) {
+                $fileName = uniqid() . $_FILES['imagen']['name'];
                 $uploadFileDir = 'assets/upload/respuestas/';
-                $destPath = $uploadFileDir.$fileName;
-
-                // Movemos de temporal a /uploads
-                if(move_uploaded_file($fileTmpPath,$destPath)){
+                $destPath = $uploadFileDir . $fileName;
+    
+                // Mover archivo de imagen
+                if(move_uploaded_file($fileTmpPath, $destPath)) {
                     $filePath = $destPath;
-                }
-                else {
+                } else {
                     $_GET["response"] = false;
-                    print_r("No le ha permitido subir la imagen");
+                    print_r("No se pudo subir la imagen");
+                    return;
+                }
+            }
+            // Y aqui procesamos el pdf
+            elseif($fileMimeType === $allowedPdfMimeType) {
+                $fileName = uniqid() . $_FILES['imagen']['name'];
+                $uploadFileDir = 'assets/upload/respuestas/';
+                $destPath = $uploadFileDir . $fileName;
+    
+                // Mover archivo PDF
+                if(move_uploaded_file($fileTmpPath, $destPath)) {
+                    $filePath = $destPath;
+                } else {
+                    $_GET["response"] = false;
+                    print_r("No se pudo subir el archivo PDF");
                     return;
                 }
             } else {
+                // Tipo de archivo no permitido
                 $_GET["response"] = false;
+                print_r("Tipo de archivo no permitido");
                 return;
             }
         }
+    
 
 
 
@@ -161,6 +182,18 @@ class RespuestaController
                 }
                 elseif($_SESSION['user_data']['autorizado'])
                 {
+
+                    $respuesta = $this-> model -> getRespuestaById($_POST["id_respuesta"]);
+
+                    if($respuesta["imagen"] != "")
+                    {
+                        $imagenEliminada = $this -> eliminarImagen($respuesta["imagen"]);
+                        if(!$imagenEliminada)
+                        {
+                            throw new Error("No se ha borrado la imagen correctamente");
+                        }
+                    }
+
                     $result = $this-> model -> deleteRespuestaById($_POST["id_respuesta"]);
                     if($result)
                     {
@@ -471,7 +504,10 @@ class RespuestaController
         {
             $idRespuesta = $_GET["idRespuesta"];
             $idPregunta = $_GET["idPregunta"];
-            $result = $this->model->esUtil($idRespuesta);    
+            $id = array();
+            $id["idPregunta"] = $idPregunta;
+            $id["idRespuesta"] = $idRespuesta;
+            $result = $this->model->setFav($id);    
 
             if($result)
             {
@@ -582,6 +618,23 @@ private function esDueno($id)
     }
     return $puedeEditar;
 }
+
+    private function eliminarImagen($path)
+    {
+
+        if (file_exists($path)) {
+            
+            if (unlink($path)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
 
 
 }

@@ -24,35 +24,63 @@ class Respuesta
 
     public function getRespuestasByIdPregunta($id)
     {
-        $sql = "SELECT * FROM ".$this->tabla." WHERE id_pregunta = ? ORDER BY util DESC";
+        $sql = "SELECT r.* 
+        FROM Respuestas r
+        LEFT JOIN Respuestas_favs rf ON r.id = rf.id_respuesta
+        WHERE r.id_pregunta = ?
+        ORDER BY rf.id_respuesta IS NULL, r.fecha_hora ASC, r.id DESC;";
         $stmt = $this->connection->prepare($sql);
         $stmt -> execute([$id]);
         return $stmt -> fetchAll();
     }
 
-    public function esUtil($id)
+    public function setFav($param)
     {
 
-        $sql = "SELECT util FROM Respuestas WHERE id = ?";
+        $sql = "SELECT * FROM Respuestas_favs WHERE id_pregunta = ?";
         $stmt = $this->connection->prepare($sql);
-        $stmt -> execute([$id]);
+        $stmt -> execute([$param["idPregunta"]]);
         $util = $stmt -> fetchColumn();
 
-        if($util == null || $util == 0)
+
+        if($util == null)
         {
-            $sql = "UPDATE Respuestas SET util =1 WHERE id = ?";
+            $sql = "INSERT INTO Respuestas_favs (id_pregunta,id_respuesta) VALUES (?,?)";
             $stmt = $this->connection->prepare($sql);
-            $stmt -> execute([$id]);
+            $stmt -> execute([$param["idPregunta"],$param["idRespuesta"]]);
             return $stmt -> rowCount() > 0;
         }
-        else
+        elseif($util["id_pregunta"] == $param["idPregunta"] && $util["id_respuesta"] == $param["idRespuesta"])
         {
-            $sql = "UPDATE Respuestas SET util = 0 WHERE id = ?";
+            $sql = "DELETE FROM Respuestas_favs WHERE id_pregunta = ?";
             $stmt = $this->connection->prepare($sql);
-            $stmt -> execute([$id]);
-            return $stmt -> rowCount() > 0;
+            $stmt -> execute([$param["idPregunta"]]);
+            return $stmt;
+        }
+        else{
+            $sql = "DELETE FROM Respuestas_favs WHERE id_pregunta = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt -> execute([$param["idPregunta"]]);
+            if($stmt)
+            {
+
+                $sql = "INSERT INTO Respuestas_favs (id_pregunta,id_respuesta) VALUES (?,?)";
+                $stmt = $this->connection->prepare($sql);
+                $stmt -> execute([$param["idPregunta"],$param["idRespuesta"]]);
+                return $stmt -> rowCount() > 0;
+            }
         }
     }
+
+
+    public function getFavById($id)
+    {
+        $sql = "SELECT * FROM Respuestas_favs WHERE id_respuesta = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt -> execute([$id]);
+        return $stmt -> fetch();
+    }
+
 
     public function contarVotos($param)
     {
@@ -117,7 +145,27 @@ class Respuesta
 
         for ($i=0; $i < count($respuestas) ; $i++) { 
 
+            //Calculo los votos y se los paso
             $respuestas[$i]["votos"] = $this -> contarVotos(["tipo"=>"respuesta","id"=>$respuestas[$i]["id"]]);
+
+
+
+
+            //Verifico si es favorito y se lo paso
+            $esFav = $this -> getFavById($respuestas[$i]["id"]);
+
+
+
+            if($esFav != null)
+            {
+                $respuestas[$i]["esFav"] = true;
+            }
+            else
+            {
+                $respuestas[$i]["esFav"] = false;
+            }
+
+            //Consulto el usuario de esta respuesta
             $usuarioRespuesta = $this->usuario -> getUsuarioById($respuestas[$i]["id_usuario"]);
             array_push($usuariosRespuestas, $usuarioRespuesta);
         }
