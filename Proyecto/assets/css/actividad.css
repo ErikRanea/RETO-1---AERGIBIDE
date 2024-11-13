@@ -348,6 +348,10 @@ strong {
     color: var(--color-letra);
 }
 
+.user-name{
+    text-align: center;
+}
+
 /* Responsive design */
 @media (max-width: 991px) {
     .user-dashboard {
