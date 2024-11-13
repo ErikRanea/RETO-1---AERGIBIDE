@@ -15,11 +15,11 @@ class Publicacion {
     //Obtener las últimas 5 publicaciones (preguntas y respuestas)
     public function getPubliaciones() {
         $sql = "
-            (SELECT 'pregunta' as tipo, p.titulo, p.texto, p.fecha_hora, u.foto_perfil 
+            (SELECT 'pregunta' as tipo, p.id, p.titulo, p.texto, p.fecha_hora, u.foto_perfil 
              FROM Preguntas p
              JOIN Usuarios u ON p.id_usuario = u.id)
             UNION
-            (SELECT 'respuesta' as tipo, pr.titulo, r.texto, r.fecha_hora, u.foto_perfil 
+            (SELECT 'respuesta' as tipo, pr.id, pr.titulo, r.texto, r.fecha_hora, u.foto_perfil 
              FROM Respuestas r
              JOIN Preguntas pr ON r.id_pregunta = pr.id
              JOIN Usuarios u ON r.id_usuario = u.id)
