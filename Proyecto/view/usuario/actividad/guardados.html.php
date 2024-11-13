@@ -51,20 +51,9 @@ foreach ($actividad as $item) {
         <div class="contenido">
             <?php foreach ($respuestas as $respuesta):?>
                 <div class="respuesta">
-                    <?php if (isset($respuesta["titulo_pregunta"])): ?>
-                        <h3><?= htmlspecialchars($respuesta["titulo_pregunta"]) ?></h3>
+                    <?php if (isset($respuesta["titulo"])): ?>
+                        <h3><?= htmlspecialchars($respuesta["titulo"]) ?></h3>
                     <?php endif; ?>
-                    <p>
-                        <?php
-                        if (isset($respuesta["contenido"])) {
-                            echo htmlspecialchars($respuesta["contenido"]);
-                        } elseif (isset($respuesta["respuesta"])) {
-                            echo htmlspecialchars($respuesta["respuesta"]);
-                        } else {
-                            echo "Contenido no disponible";
-                        }
-                        ?>
-                    </p>
                     <div class="datos-respuesta">
                         <span><?= isset($respuesta["votos"]) ? $respuesta["votos"] : 0 ?> votos</span>
                         <span><?= isset($respuesta["fecha_hora"]) ? $respuesta["fecha_hora"] : "Fecha no disponible" ?></span>

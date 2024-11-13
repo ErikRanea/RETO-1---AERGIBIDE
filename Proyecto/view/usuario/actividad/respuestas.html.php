@@ -9,7 +9,7 @@ if (isset($dataToView["paginas"])) $paginas = $dataToView["paginas"];
 
             <div class="respuesta">
                 <p>
-                    <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= htmlspecialchars($respuesta["id_respuesta"] ?? '') ?>" class="tituloRespuesta">
+                    <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= htmlspecialchars($respuesta["id_pregunta"] ?? '') ?>" class="tituloRespuesta">
                         <?= htmlspecialchars($respuesta["titulo_pregunta"] ?? 'Sin título') ?>
                     </a>
                 </p>
