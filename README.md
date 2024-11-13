@@ -27,18 +27,29 @@ AERGIBIDE es una aplicación web dinámica diseñada para fomentar el aprendizaj
 
 ## 🎨 Paleta de Colores
 
-```css
-:root {
-    --color-principal: #f4f4f9;
-    --color-secundario: #4DBAD9;
-    --color-secundario-activo: #379BB3;
-    --color-fondo: #ffffff;
-    --color-letra: #333;
-    --color-dia-chat: #5f6368;
-    --color-rojo-aergibide: #e51816;
-    --fondo-header-footer: #EAFBFF;
-}
-```
+- **Fondo Claro**  
+  ![#f4f4f9](https://via.placeholder.com/20/f4f4f9/000000?text=+) `#f4f4f9`
+
+- **Acento**  
+  ![#4DBAD9](https://via.placeholder.com/20/4DBAD9/000000?text=+) `#4DBAD9`
+
+- **Acento Activo**  
+  ![#379BB3](https://via.placeholder.com/20/379BB3/000000?text=+) `#379BB3`
+
+- **Fondo Principal**  
+  ![#ffffff](https://via.placeholder.com/20/ffffff/000000?text=+) `#ffffff`
+
+- **Texto**  
+  ![#333333](https://via.placeholder.com/20/333333/ffffff?text=+) `#333333`
+
+- **Texto de Chat**  
+  ![#5f6368](https://via.placeholder.com/20/5f6368/ffffff?text=+) `#5f6368`
+
+- **Rojo de Alerta**  
+  ![#e51816](https://via.placeholder.com/20/e51816/ffffff?text=+) `#e51816`
+
+- **Fondo Header y Footer**  
+  ![#EAFBFF](https://via.placeholder.com/20/EAFBFF/000000?text=+) `#EAFBFF`
 ## 🚀 Inicio Rápido
 
 1. Clona el repositorio:
