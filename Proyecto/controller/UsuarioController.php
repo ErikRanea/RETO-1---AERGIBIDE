@@ -94,7 +94,7 @@ class UsuarioController{
             $this->model->updateUsuario($usuario);
 
             // Redirigir a la página de los datos del usuario actualizado
-            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario&id=" . $usuarioId);
+            header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
             exit();
         }
     }
@@ -130,21 +130,27 @@ class UsuarioController{
                 $usuarioId = $_POST['idUsuario'];
             }
 
-            $usuario = $this->model->getUsuarioByIdObj($usuarioId);
+            $usuario = $this->model->getUsuarioById($usuarioId);
+
 
             if (isset($_FILES['nuevaFoto']) && $_FILES['nuevaFoto']['error'] === UPLOAD_ERR_OK) {
                 $fileTmpPath = $_FILES['nuevaFoto']['tmp_name'];
                 $fileMimeType = mime_content_type($fileTmpPath);
                 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
 
+
+
                 if (in_array($fileMimeType, $allowedMimeTypes)) {
                     $fileName = uniqid() . '-' . basename($_FILES['nuevaFoto']['name']);
                     $uploadFileDir = 'assets/upload/fotoPerfil/';
                     $destPath = $uploadFileDir . $fileName;
 
+
+
                     if (move_uploaded_file($fileTmpPath, $destPath)) {
-                        $usuario->foto_perfil = $destPath;
-                        $this->model->updateUsuario($usuario);
+                        //$usuario->foto_perfil = $destPath;
+
+                        $this->model->updateFoto($usuario["id"], $destPath);
                         header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
                         exit();
                     } else {
@@ -157,6 +163,8 @@ class UsuarioController{
                 }
             } else {
                 echo "No se subió ningún archivo o hubo un error al cargar la imagen.";
+                header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
+                exit();
             }
         }
     }

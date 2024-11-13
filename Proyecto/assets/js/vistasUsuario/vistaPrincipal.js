@@ -13,6 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
     cambiarPanelPrincipal({ target: btnDatos });
 });
 
+divPrincipal.addEventListener("click", (event) => {
+    if ( event.target.id === "btnEditarUsuario" ){
+        habilitarEdicion(event);
+    }
+});
+
+divPrincipal.addEventListener("click", (event) => {
+    if ( event.target.id === "btnPhotoEdit" ){
+        cambiarFoto(event);
+    }
+});
 
 
 // Usamos delegación de eventos para el div contenedor de la actividad
@@ -36,6 +47,53 @@ divPrincipal.addEventListener("click", (event) => {
     }
 });
 
+function habilitarEdicion(event){
+    event.preventDefault();
+
+    console.log("FUNCIONA EL CLICK");
+
+    // Mostrar el contenedor de botones de acción
+    document.getElementById("actionsEditarUsuario").style.display = "flex";
+
+    // Habilitar la edicion de los campos
+    document.getElementById("txtNombreEdit").disabled = false;
+    document.getElementById("txtApellidoEdit").disabled = false;
+    document.getElementById("txtUsernameEdit").disabled = false;
+    document.getElementById("txtEmailEdit").disabled = false;
+}
+
+function cambiarFoto(event){
+    event.preventDefault();
+
+    console.log("LLEGA AL PRIMERO");
+    let fileInput = document.getElementById("newImage");
+
+    if (fileInput){
+        fileInput.click();
+        console.log("LLEGA AL CLICK")
+
+        // Registrar el evento 'change' para capturar la imagen seleccionada
+        fileInput.addEventListener("change", function(event) {
+            let selectedImage = event.target.files[0];
+
+            // Verificar si la imagen se ha seleccionado
+            if (selectedImage) {
+                console.log("Imagen seleccionada:", selectedImage.name); // Muestra el nombre del archivo en la consola
+                console.log(typeof selectedImage);
+
+                // Enviar el Formulario
+                console.log("Enviando Formulario")
+                document.getElementById("photoForm").submit();
+
+            } else {
+                console.log("Ninguna imagen seleccionada");
+            }
+        });
+
+    } else {
+        console.log("NADA");
+    }
+}
 
 async function cambiarPanelPrincipal(event){
     //event.preventDefault();
