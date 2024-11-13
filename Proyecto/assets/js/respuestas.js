@@ -410,25 +410,27 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
         
         const idPregunta = this.getAttribute('data-id-pregunta');
         const contenedorRespuesta = this.closest('.contenedorRespuestaDivididor');
+        const srcImagenContenedor = document.getElementById(`srcRespuesta-${idRespuesta}`);
         const contenidoOriginal = contenedorRespuesta.querySelector('.contenidoRespuesta');
         const textoOriginal = contenidoOriginal.textContent.trim();
         const imagenOriginal = contenedorRespuesta.querySelector('.imagenRespuesta');
         let imagenOriginalUrl = null;
-        if (imagenOriginal) {
-            imagenOriginalUrl = imagenOriginal.src;
+        let srcImagen = "";
+        if (srcImagenContenedor) {
+            srcImagen = srcImagenContenedor.getAttribute("data-src");
         }
         
 
-        const formularioEdicion = `
+        const formularioEdicionimagen = `
             <form class="editarRespuestaForm" action="index.php?controller=respuesta&action=edit" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="idRespuesta" value="${idRespuesta}">
                 <input type="hidden" name="id_pregunta" value="${idPregunta}">
                 <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
                 <div class="contenedorImagenEdicion">
-                    <img class="ImagenEditar" src="${imagenOriginalUrl ? imagenOriginalUrl : ''}">
+                    <img class="ImagenEditar" src="${srcImagen ? srcImagen : ''}">
                 </div>
                 <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
-                    <label class="botonSubirArchivo">
+                    <label class="botonGuardarRespuesta">
                         Cambiar Archivo
                         <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="image/*" hidden>
                         <label id="archivoSubidoRespuesta-${idRespuesta}" hidden>
@@ -445,18 +447,54 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
             </form>
         `;
 
-        // Reemplazar el contenido original con el formulario
-        contenidoOriginal.innerHTML = formularioEdicion;
+        const formularioEdicionpdf = `
+            <form class="editarRespuestaForm" action="index.php?controller=respuesta&action=edit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="idRespuesta" value="${idRespuesta}">
+                <input type="hidden" name="id_pregunta" value="${idPregunta}">
+                <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
+                <div class="contenedorImagenEdicion">
+                    <img class="ImagenEditar" src="${srcImagen ? srcImagen : ''}">
+                        <a class="href" href="src="${srcImagen ? srcImagen : ''}">
+                            Ir al pdf
+                            <i class="bi bi-file-pdf"></i>
+                        </a>
+                </div>
+                <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
+                     <label class="botonGuardarRespuesta">
+                        Cambiar Archivo
+                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="image/*" hidden>
+                        <label id="archivoSubidoRespuesta-${idRespuesta}" hidden>
+                            <i class="bi bi-check-circle-fill"></i>
+                        </label>
+                    </label>
+                    <button class="botonGuardarRespuesta" type="submit" data-id="${idRespuesta}">
+                        <i class="bi bi-check-circle"></i> Guardar
+                    </button>
+                    <button class="botonCancelarRespuesta">
+                        <i class="bi bi-x-circle "></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        `;
 
-        // Añadir manejador para restaurar el botón cuando se cancela
+        contenidoOriginal.innerHTML;
+
+        if(esPdf(srcImagen))
+        {
+            contenidoOriginal.innerHTML = formularioEdicionpdf;
+        }
+        else
+        {
+            contenidoOriginal.innerHTML = formularioEdicionimagen;
+        }
+
+
+        
+
+
         contenedorRespuesta.querySelector('.botonCancelarRespuesta').addEventListener('click', (e) => {
-            e.preventDefault();
-            contenidoOriginal.innerHTML = textoOriginal;
-            if (imagenOriginal) {
-                contenidoOriginal.appendChild(imagenOriginal);
-            }
-            // Remover el atributo active al cancelar
-            botonEditar.removeAttribute('data-active');
+            e.preventDefault();  // Prevenir que el formulario se envíe
+            window.location.reload();  
         });
     });
 });
@@ -633,22 +671,52 @@ document.querySelectorAll('[id^="eliminarRespuesta-"]').forEach(boton => {
                 const respuesta = data.data["respuesta"];
                 const idPregunta = respuesta["id_pregunta"];
                 const imagen = respuesta["imagen"];
+                let html = '';
 
-                let html = `    
-                <div class="contenedorRespuestaDivididorRemove">
-                <div class="fotoUsuarioRespuesta">
-                    <img src="${usuario["foto_perfil"] || "assets/img/fotoPorDefecto.png"}" alt="Foto de usuario">
-                    <span>${usuario["username"]}</span>
-                </div>
-                <div class="respuesta">
-                    <div class="estrella-respuesta"></div>
-                    <div class="contenidoRespuesta">
-                        ${respuesta["texto"]}
 
-                        <img class="imagenRespuesta" src="${imagen ?? "" }">
+                //Hacer condicional para mostrar o no el pdf 
+
+                if(esPdf(imagen))
+                {
+                    html = `    
+                    <div class="contenedorRespuestaDivididorRemove">
+                    <div class="fotoUsuarioRespuesta">
+                        <img src="${usuario["foto_perfil"] || "assets/img/fotoPorDefecto.png"}" alt="Foto de usuario">
+                        <span>${usuario["username"]}</span>
                     </div>
-                </div>
-                </div>`; 
+                    <div class="respuesta">
+                        <div class="estrella-respuesta"></div>
+                        <div class="contenidoRespuesta">
+                            ${respuesta["texto"]}
+                            <br>
+                                <a class="href" href="${imagen ?? "" }">
+                                Ir al pdf
+                                <i class="bi bi-file-pdf"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    </div>`; 
+                }
+                else
+                {
+                    html = `    
+                    <div class="contenedorRespuestaDivididorRemove">
+                    <div class="fotoUsuarioRespuesta">
+                        <img src="${usuario["foto_perfil"] || "assets/img/fotoPorDefecto.png"}" alt="Foto de usuario">
+                        <span>${usuario["username"]}</span>
+                    </div>
+                    <div class="respuesta">
+                        <div class="estrella-respuesta"></div>
+                        <div class="contenidoRespuesta">
+                            ${respuesta["texto"]}
+                            <br>
+    
+                            <img class="imagenRespuesta" src="${imagen ?? "" }">
+                        </div>
+                    </div>
+                    </div>`; 
+                }
 
                 let respuestaUsuario;
                 Swal.fire({
@@ -722,3 +790,26 @@ document.querySelectorAll('[id^="eliminarRespuesta-"]').forEach(boton => {
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Metodos exclusivos de uso interno
+function esPdf(path) {
+    // Convertir el path a minúsculas y obtener la extensión
+    const extension = path.split('.').pop().toLowerCase();
+    
+    // Verificar si la extensión es "pdf"
+    return extension === 'pdf';
+}

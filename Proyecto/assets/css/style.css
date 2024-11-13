@@ -2381,4 +2381,19 @@ footer span {
     }
 
 
+.href
+{
+    color: var(--color-letra);
+    text-decoration: none;
+}
 
+.href:hover
+{
+    color: var(--color-secundario);
+    text-decoration: none;
+}
+
+iframe ~ .toolbarHorizontalGroup
+{
+    background-color: white;
+}
