@@ -471,7 +471,10 @@ class RespuestaController
         {
             $idRespuesta = $_GET["idRespuesta"];
             $idPregunta = $_GET["idPregunta"];
-            $result = $this->model->esUtil($idRespuesta);    
+            $id = array();
+            $id["idPregunta"] = $idPregunta;
+            $id["idRespuesta"] = $idRespuesta;
+            $result = $this->model->setFav($id);    
 
             if($result)
             {
