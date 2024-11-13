@@ -24,7 +24,7 @@
                 $publicaciones = $dataToView["publicaciones"] ?? [];
                 if (!empty($publicaciones)): ?>
                     <?php foreach ($publicaciones as $publicacion): ?>
-                        <div class="publicacion">
+                        <a href="index.php?controller=respuesta&action=view&id_pregunta=<?=$publicacion["id"]?>" class="publicacion">
                             <div class="user-avatar">
                                 <?php if (!empty($publicacion['foto_perfil'])): ?>
                                     <img src="<?= htmlspecialchars($publicacion['foto_perfil']) ?>" alt="Foto de perfil">
@@ -36,7 +36,7 @@
                                 <p><strong><?= htmlspecialchars($publicacion['titulo']) ?></strong></p>
                                 <p><?= htmlspecialchars(implode(' ', array_slice(explode(' ', $publicacion['texto']), 0, 6))) ?>...</p>
                             </div>
-                        </div>
+                        </a>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p>No hay publicaciones recientes</p>
