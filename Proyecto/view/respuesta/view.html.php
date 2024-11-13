@@ -301,7 +301,7 @@
                     <label>
                         <a <?php if($pregunta["id_usuario"] != $_SESSION["user_data"]["id"]){echo "hidden";}?>
                                 href="index.php?controller=respuesta&action=esUtil&idRespuesta=<?php echo $datosRespuesta["id"];?>&idPregunta=<?php echo $pregunta["id"];?>">
-                            <?php if($datosRespuesta["util"] == 1){?>
+                            <?php if($datosRespuesta["esFav"]){?>
                                 <i class="bi bi-star-fill"></i>
                             <?php }else{?>
                                 <i class="bi bi-star"></i>
