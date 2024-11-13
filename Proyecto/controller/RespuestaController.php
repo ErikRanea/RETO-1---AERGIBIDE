@@ -182,6 +182,18 @@ class RespuestaController
                 }
                 elseif($_SESSION['user_data']['autorizado'])
                 {
+
+                    $respuesta = $this-> model -> getRespuestaById($_POST["id_respuesta"]);
+
+                    if($respuesta["imagen"] != "")
+                    {
+                        $imagenEliminada = $this -> eliminarImagen($respuesta["imagen"]);
+                        if(!$imagenEliminada)
+                        {
+                            throw new Error("No se ha borrado la imagen correctamente");
+                        }
+                    }
+
                     $result = $this-> model -> deleteRespuestaById($_POST["id_respuesta"]);
                     if($result)
                     {
@@ -606,6 +618,23 @@ private function esDueno($id)
     }
     return $puedeEditar;
 }
+
+    private function eliminarImagen($path)
+    {
+
+        if (file_exists($path)) {
+            
+            if (unlink($path)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
 
 
 }

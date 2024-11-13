@@ -428,6 +428,18 @@ class PreguntaController{
     
                     $idTema = $this -> model -> getIdTemaByIdPregunta($_POST["id_pregunta"]);
                     
+                    $pregunta = $this-> model -> getPreguntaById($_POST["id_pregunta"]);
+
+                    if($pregunta["imagen"] != "")
+                    {
+                        $imagenEliminada = $this -> eliminarImagen($pregunta["imagen"]);
+                        if(!$imagenEliminada)
+                        {
+                            throw new Error("No se ha borrado la imagen correctamente");
+                        }
+                    }
+
+
                     $result = $this-> model -> deletePreguntaById($_POST["id_pregunta"]);
                     if($result)
                     {
@@ -486,6 +498,23 @@ class PreguntaController{
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*Metodos exclusivos para el uso interno del controlador */
 
+    private function eliminarImagen($path)
+    {
+
+        if (file_exists($path)) {
+            
+            if (unlink($path)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+
     private function puedeEditar($id)
     {
         $puedeEditar = false;
@@ -513,4 +542,8 @@ class PreguntaController{
         }
         return $puedeEditar;
     }
+
+
+
 }
+
