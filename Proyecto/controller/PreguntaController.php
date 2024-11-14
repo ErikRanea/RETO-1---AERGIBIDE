@@ -310,33 +310,50 @@ class PreguntaController{
 
                    // Primero, verificamos si se ha subido un archivo
                     $filePath = null;
-                    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
-
-
+                    if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
                         $fileTmpPath = $_FILES['imagen']['tmp_name'];
                         $fileMimeType = mime_content_type($fileTmpPath);
-                        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
-
-                        if(in_array($fileMimeType, $allowedMimeTypes)) {
-                            $fileName = uniqid(). $_FILES['imagen']['name'];
-                            $uploadFileDir = 'assets/upload/respuestas/';
-                            $destPath = $uploadFileDir.$fileName;
-
-                            // Movemos de temporal a /uploads
-                            if(move_uploaded_file($fileTmpPath,$destPath)){
+                        
+            
+                        $allowedImageMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+                        $allowedPdfMimeType = 'application/pdf';
+            
+                   
+                        if(in_array($fileMimeType, $allowedImageMimeTypes)) {
+                            $fileName = uniqid() . $_FILES['imagen']['name'];
+                            $uploadFileDir = 'assets/upload/preguntas/';
+                            $destPath = $uploadFileDir . $fileName;
+            
+                            // Mover archivo de imagen
+                            if(move_uploaded_file($fileTmpPath, $destPath)) {
                                 $filePath = $destPath;
-                            }
-                            else {
+                            } else {
                                 $_GET["response"] = false;
-                                print_r("No le ha permitido subir la imagen");
+                                print_r("No se pudo subir la imagen");
+                                return;
+                            }
+                        }
+                     
+                        elseif($fileMimeType === $allowedPdfMimeType) {
+                            $fileName = uniqid() . $_FILES['imagen']['name'];
+                            $uploadFileDir = 'assets/upload/preguntas/';
+                            $destPath = $uploadFileDir . $fileName;
+            
+            
+                            if(move_uploaded_file($fileTmpPath, $destPath)) {
+                                $filePath = $destPath;
+                            } else {
+                                $_GET["response"] = false;
+                                print_r("No se pudo subir el archivo PDF");
                                 return;
                             }
                         } else {
+                            // Tipo de archivo no permitido
                             $_GET["response"] = false;
+                            print_r("Tipo de archivo no permitido");
                             return;
                         }
                     }
-
 
                 $_POST["file_path"] = $filePath;
                 $result = $this->model->updatePregunta($_POST);
