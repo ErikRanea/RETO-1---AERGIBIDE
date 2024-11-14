@@ -18,6 +18,7 @@ divPrincipal.addEventListener("click", (event) => {
     if ( event.target.id === "btnEditarUsuario" ){
         habilitarEdicion(event);
     }
+});
 
 
 divPrincipal.addEventListener("click" , (event) => {
