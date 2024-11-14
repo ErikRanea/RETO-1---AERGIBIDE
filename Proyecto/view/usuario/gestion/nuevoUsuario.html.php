@@ -3,12 +3,18 @@
 <div class="containerCreate">
     <div class="user-dashboard">
         <h2 class="section-title">Datos de usuario</h2>
-        <form action="index.php?controller=usuario&action=create" method="post" id="userDataForm" class="user-data-form">
+
+        <form action="index.php?controller=usuario&action=create" method="post" id="userDataForm" enctype="multipart/form-data" class="user-data-form">
             <div class="user-profile-section">
+
                 <div class="profile-photo-container">
-                    <img class="profile-photo" src="assets/img/fotoPorDefecto.png" alt="Foto de perfil default">
-                    <input type="file" name="fotoPerfil" accept="image/*">
+                    <img class="profile-photo" id="imgAddFotoPerfil" src="assets/img/fotoPorDefecto.png" alt="Foto de perfil default">
                 </div>
+                <label class="btn btnImagenCrear">
+                    Seleccionar Archivo
+                    <input id="btnAddFotoPerfil" type="file" name="imagen" hidden accept="application/pdf, image/*">
+                    <i class="bi bi-check-circle-fill" hidden></i>
+                </label>
             </div>
             <div class="user-data-section">
                 <div class="form-field">
@@ -41,7 +47,9 @@
                     <label for="rol" class="field-label">Rol:</label>
                     <select name="rol" id="rol" class="field-input">
                         <option value="user">Usuario</option>
-                        <option value="admin">Administrador</option>
+                        <?php if ($_SESSION["user_data"]["rol"] == "gestor" ): ?>
+                            <option value="admin">Administrador</option>
+                        <?php endif; ?>
                     </select>
                 </div>
                 <div class="form-actions">
@@ -55,5 +63,4 @@
     </div>
 
 </div>
-
 
