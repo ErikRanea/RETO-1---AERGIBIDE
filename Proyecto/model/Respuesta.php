@@ -354,7 +354,9 @@ class Respuesta
 
 
     public function updateRespuesta($param){
-        if(isset($param["imagen"]))
+
+
+        if(isset($param["imagen"]) && $param["imagen"] != "")
         {
             $sql = "UPDATE Respuestas SET texto = ?, imagen = ? WHERE id = ?";
             $stmt = $this->connection->prepare($sql);
@@ -367,7 +369,7 @@ class Respuesta
             $stmt->execute([$param["texto"], $param["idRespuesta"]]);
         }
 
-        return $stmt->rowCount() > 0; //Devuelve true si se ha votado correctamente  
+        return true; 
     }
 
 

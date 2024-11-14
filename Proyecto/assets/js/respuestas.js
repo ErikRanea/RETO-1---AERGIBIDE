@@ -432,7 +432,7 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
                 <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
                     <label class="botonGuardarRespuesta">
                         Cambiar Archivo
-                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="image/*" hidden>
+                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="application/pdf, image/*" hidden>
                         <label id="archivoSubidoRespuesta-${idRespuesta}" hidden>
                             <i class="bi bi-check-circle-fill"></i>
                         </label>
@@ -453,7 +453,6 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
                 <input type="hidden" name="id_pregunta" value="${idPregunta}">
                 <textarea name="texto" class="textAreaRespuesta">${textoOriginal}</textarea>
                 <div class="contenedorImagenEdicion">
-                    <img class="ImagenEditar" src="${srcImagen ? srcImagen : ''}">
                         <a class="href" href="src="${srcImagen ? srcImagen : ''}">
                             Ir al pdf
                             <i class="bi bi-file-pdf"></i>
@@ -462,7 +461,7 @@ document.querySelectorAll('[id^="editarRespuesta-"]').forEach(boton => {
                 <div class="botonesEdicion" style="display: flex; justify-content: space-between; gap: 1em;">
                      <label class="botonGuardarRespuesta">
                         Cambiar Archivo
-                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="image/*" hidden>
+                        <input type="file" name="imagen" id="cargadorDeImagenRespuesta-${idRespuesta}" accept="application/pdf, image/*" hidden>
                         <label id="archivoSubidoRespuesta-${idRespuesta}" hidden>
                             <i class="bi bi-check-circle-fill"></i>
                         </label>
