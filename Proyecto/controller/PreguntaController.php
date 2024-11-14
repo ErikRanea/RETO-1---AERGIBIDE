@@ -52,13 +52,16 @@ class PreguntaController{
         ];
     }
 
-    /* Create the note */
+
     public function save(){
         $this->view = 'mensaje';
 
     
         $filePath = null;
 
+
+
+    
 
         if(isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['imagen']['tmp_name'];
@@ -116,6 +119,8 @@ class PreguntaController{
 
         $_GET["response"] = true;
         return ["pregunta" => $result];
+
+        
     }
 
 

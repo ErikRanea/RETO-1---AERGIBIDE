@@ -54,7 +54,7 @@
                         else
                         {
                             ?>
-                            <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>" alt="imagen de la pregunta">
+                            <img class="imagenDeLaPregunta" src="<?=$pregunta["imagen"]?>">
                             <?php 
                         } 
                        
@@ -71,7 +71,7 @@
                 <br>
                 <label class="btn btnImagenCrear">
                     Seleccionar Archivo
-                    <input id="botonAdjuntarImagen" type="file" name="imagen" hidden accept="image/*">
+                    <input id="botonAdjuntarImagen" type="file" name="imagen" hidden accept="application/pdf, image/*">
                         <i class="bi bi-check-circle-fill" hidden></i>
                 </label>
             </div>
