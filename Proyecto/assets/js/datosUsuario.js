@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => {
         // Verifica que el usuario tiene datos correctos
         if (data && !data.error) {
-            // Actualiza los campos del HTML con los datos recibidos
+            // Actualiza los campos del HTML con los datos recibidosbtn
             document.querySelector('.containerPerfil h1').textContent = data.username;
             document.querySelector('.divFoto img').src = data.foto_perfil || 'ruta_default_de_foto.png';
             document.getElementById("nombre").value = data.nombre || '';
