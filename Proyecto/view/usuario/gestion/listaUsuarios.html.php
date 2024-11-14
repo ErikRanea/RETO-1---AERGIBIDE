@@ -8,8 +8,11 @@
                 <?php if ($user->id != $_SESSION["user_data"]["id"] ): ?>
                     <div class="user" id="contenedorUsuario<?php echo $user->id; ?>">
                         <li>
+                            <div class="user-info">
+                                <img src="<?php echo $user->foto_perfil ? $user->foto_perfil : 'assets/img/fotoPorDefecto.png'; ?>" alt="Foto de perfil" class="user-image">
                             <?php echo $user->username; ?>
                             <?php if ($user->rol != "admin" && $user->rol != "gestor" ): ?>
+                            </div>
                             <span>
                                 <button class="botonEditar" onclick="editarUsuario(<?php echo $user->id; ?>)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" color="#4DBAD9">
