@@ -28,6 +28,13 @@ divPrincipal.addEventListener("click" , (event) => {
     }
 })
 
+divPrincipal.addEventListener("click" , (event) => {
+    if ( event.target.id === "btnCambiarPasswordAdmin")
+    {
+        setPassword(event);
+    }
+})
+
 divPrincipal.addEventListener("click", (event) => {
 
     if ( event.target.id === "btnPhotoEdit" ){
@@ -121,8 +128,7 @@ async function setPassword(event) {
                     Swal.showValidationMessage("Las nuevas contraseñas no coinciden.");
                   } else {
                     return {
-                      currentPassword: currentPassword,
-                      newPassword: newPassword,
+                      newPassword: newPassword
                     };
                   }
                 }
@@ -134,7 +140,7 @@ async function setPassword(event) {
                 params.append("pwdNueva",formValues.newPassword);
                 params.append("idUsuario",idUsuario);
 
-                const r2 = await fetch(`index.php?controller=usuario&action=updatePassword`,{
+                const r2 = await fetch(`index.php?controller=usuario&action=setPassword`,{
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

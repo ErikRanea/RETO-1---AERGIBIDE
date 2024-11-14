@@ -30,7 +30,7 @@
     <div class="user-data-section">
         <h2 class="section-title">Datos de usuario</h2>
         <button class="btn btnCrear" id="btnEditarUsuario">Editar Datos</button>
-        <button class="btn btnCancel" id="btnCambiarPassword">Cambiar contraseña</button>
+        <button class="btn btnCancel" id="btnCambiarPasswordAdmin">Cambiar contraseña</button>
 
         <form action="index.php?controller=usuario&action=update" method="post" id="userDataForm" class="user-data-form">
             <input type="hidden" name="idUsuario" value="<?php echo htmlspecialchars($usuarioEdit['id'] ?? ''); ?>">

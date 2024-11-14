@@ -118,7 +118,67 @@ class UsuarioController{
     }
 
 
-    public function setPassword(){}
+    public function setPassword()
+    {
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+        {
+            try {
+
+
+                //code...
+                if( !isset($_POST["pwdNueva"]) || !$this->puedeEditar($_POST["idUsuario"]))
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "No se está autorizado para utilizar este cambio de contraseña"
+                    ]);
+                    exit();
+                }
+
+
+                $_POST["pwdNueva"] =  password_hash($_POST["pwdNueva"], PASSWORD_DEFAULT);
+            
+
+
+                $result = $this->model->updatePassword($_POST);
+
+
+
+                if($result)
+                {
+                    echo json_encode([
+                        "status" => "success",
+                        "message" => "Se ha haseado la password"
+                    ]);
+                    exit();
+                }
+                else
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "No se ha actualizado la contraseña"
+                    ]);
+                    exit();
+                }
+
+
+
+
+            } 
+            catch (Error $e) 
+            {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Ha sucedido el siguiente error en el servidor ".$e
+                ]);
+                exit();
+            }
+        }
+        else
+        {
+            header("Location: index.php");
+        }
+    }
 
     public function confirmDelete() {
         try {
@@ -636,11 +696,15 @@ class UsuarioController{
 
         if($idUsuario == $id)
         {
+
             return $puedeEditar = true;
         }
         elseif (($rol == "admin") || ($rol == "gestor")) {
+
             return $puedeEditar = true;
         }
+
+
 
         return $puedeEditar;
     }
