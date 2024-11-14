@@ -192,8 +192,9 @@
         <div class="descripcionPregunta">
             <div class="preguntaTitulo">
                 <p><?php echo isset($pregunta["titulo"]) ? $pregunta["titulo"] : "Titulo no encontrado";?></p>
+                <br>
+               <p><?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?></p>
             </div>
-            <?php echo isset($pregunta["texto"]) && $pregunta["texto"] != null ? $pregunta["texto"] : "";?>
             <?php
             if(isset($pregunta["imagen"]) && $pregunta["imagen"] != "")
             {

@@ -869,6 +869,11 @@ footer span {
 
 .preguntaTitulo {
     margin-bottom: 10px;
+    word-wrap: break-word;  /* Permite el salto de línea en palabras largas */
+    overflow-wrap: break-word;  /* Asegura que las palabras largas se ajusten al contenedor */
+    display: block;  /* Asegura que el contenedor ocupe el espacio necesario */
+    width: 100%;  /* Utiliza todo el ancho disponible */
+    height: auto;  /* Permite que la altura se ajuste automáticamente según el contenido */
 }
 
 .preguntaTitulo p {
@@ -876,6 +881,21 @@ footer span {
     font-weight: bold;
     color: var(--negro1);
     margin: 0;
+    display: block;  /* Cambia de 'flex' a 'block' para que el texto fluya normalmente */
+    width: 100%;  /* Se ajusta al contenedor */
+    white-space: normal;  /* Permite que el texto se rompa y fluya a múltiples líneas */
+    word-wrap: break-word;  /* Permite que las palabras largas se dividan para ajustarse */
+    overflow-wrap: break-word;  /* Asegura que el texto largo se ajuste al contenedor */
+}
+
+.descripcionPregunta {
+    display: block;  /* Asegura que el contenedor sea un bloque para expandirse */
+    padding: 10px;
+}
+
+.descripcionPregunta p {
+    margin-bottom: 10px;
+    word-wrap: break-word;  /* Asegura que el texto largo no se desborde */
 }
 
 .descripcionPregunta, .contenidoRespuesta {
@@ -883,6 +903,7 @@ footer span {
     margin-left: 8%;
     clear: both;
     color: var(--color-letra);
+
 }
 
 .imagenDeLaPregunta{
