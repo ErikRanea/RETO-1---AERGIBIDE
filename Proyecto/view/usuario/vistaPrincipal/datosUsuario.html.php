@@ -8,7 +8,7 @@
         <?php endif; ?>
     </div>
     <div class="user-profile-section">
-        <h1 class="user-name"><?php echo htmlspecialchars($usuario['nombre'] . ' ' . $usuario['apellido']); ?></h1>
+        <h1 class="user-name"><?php echo htmlspecialchars($usuario['username'] ); ?></h1>
 
         <form action="index.php?controller=usuario&action=updateFoto" method="post" id="photoForm" enctype="multipart/form-data" class="profile-photo-form">
             <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo htmlspecialchars($usuario['id']); ?>">
@@ -29,9 +29,17 @@
     <div class="user-data-section">
         <h2 class="section-title">Datos de usuario</h2>
         <button class="btn btnCrear" id="btnEditarUsuario">Editar Datos</button>
+        <button class="btn btnCancel" id="btnCambiarPassword">Cambiar contraseña</button>
 
         <form action="index.php?controller=usuario&action=update" method="post" id="userDataForm" class="user-data-form">
             <input type="hidden" name="idUsuario" value="<?php echo htmlspecialchars($usuario['id'] ?? ''); ?>">
+            <div class="form-field">
+                <label for="username" class="field-label">Usuario:</label>
+                <div class="input-with-button">
+                    <input disabled type="text" name="username" id="txtUsernameEdit" class="field-input" value="<?php echo htmlspecialchars($usuario['username'] ?? ''); ?>" />
+
+                </div>
+            </div>
             <div class="form-field">
                 <label for="nombre" class="field-label">Nombre:</label>
                 <input disabled type="text" name="nombre" id="txtNombreEdit" class="field-input" value="<?php echo htmlspecialchars($usuario['nombre'] ?? ''); ?>" />
@@ -39,13 +47,6 @@
             <div class="form-field">
                 <label for="apellido" class="field-label">Apellido:</label>
                 <input disabled type="text" name="apellido" id="txtApellidoEdit" class="field-input" value="<?php echo htmlspecialchars($usuario['apellido'] ?? ''); ?>" />
-            </div>
-            <div class="form-field">
-                <label for="username" class="field-label">Usuario:</label>
-                <div class="input-with-button">
-                    <input disabled type="text" name="username" id="txtUsernameEdit" class="field-input" value="<?php echo htmlspecialchars($usuario['username'] ?? ''); ?>" />
-
-                </div>
             </div>
             <div class="form-field">
                 <label for="email" class="field-label">Email:</label>

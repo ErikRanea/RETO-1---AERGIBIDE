@@ -19,6 +19,16 @@ divPrincipal.addEventListener("click", (event) => {
         habilitarEdicion(event);
     }
 
+
+divPrincipal.addEventListener("click" , (event) => {
+    if ( event.target.id === "btnCambiarPassword")
+    {
+        cambiarContraseña(event);
+    }
+})
+
+divPrincipal.addEventListener("click", (event) => {
+
     if ( event.target.id === "btnPhotoEdit" ){
         cambiarFoto(event);
     }
@@ -69,8 +79,122 @@ function habilitarEdicion(event){
     // Habilitar la edicion de los campos
     document.getElementById("txtNombreEdit").disabled = false;
     document.getElementById("txtApellidoEdit").disabled = false;
-    document.getElementById("txtUsernameEdit").disabled = false;
     document.getElementById("txtEmailEdit").disabled = false;
+}
+
+async function cambiarContraseña(event)
+{
+    event.preventDefault();
+
+    console.log("Abriendo formulario ");
+
+    const idUsuario = document.getElementById("idUsuario").value;
+
+    try {
+      
+        const response = await fetch(`index.php?controller=usuario&action=datosUsuario&id=${idUsuario}`, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+
+        const data = await response.json();
+        console.log('Respuesta del servidor:', data);
+        
+        if(data.status == "success")
+        {
+            swal.fire(data.data["username"]);
+
+            const { value: formValues } = await Swal.fire({
+                title: "Cambiar contraseña",
+                html:
+                  '<input id="swal-input1" class="swal2-input" type="password" placeholder="Contraseña actual">' +
+                  '<input id="swal-input2" class="swal2-input" type="password" placeholder="Nueva contraseña">' +
+                  '<input id="swal-input3" class="swal2-input" type="password" placeholder="Confirmar nueva contraseña">',
+                focusConfirm: false,
+                preConfirm: () => {
+                  const currentPassword = document.getElementById("swal-input1").value;
+                  const newPassword = document.getElementById("swal-input2").value;
+                  const confirmPassword = document.getElementById("swal-input3").value;
+              
+                  // Validación simple
+                  if (!currentPassword || !newPassword || !confirmPassword) {
+                    Swal.showValidationMessage("Por favor, complete todos los campos.");
+                  } else if (newPassword !== confirmPassword) {
+                    Swal.showValidationMessage("Las nuevas contraseñas no coinciden.");
+                  } else {
+                    return {
+                      currentPassword: currentPassword,
+                      newPassword: newPassword,
+                    };
+                  }
+                }
+              });
+              
+              if (formValues) {
+
+                const params = new URLSearchParams();
+                params.append("pwdActual",formValues.currentPassword);
+                params.append("pwdNueva",formValues.newPassword);
+                params.append("idUsuario",idUsuario);
+
+                const r2 = await fetch(`index.php?controller=usuario&action=updatePassword`,{
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: params.toString()
+                });
+
+                const data2 = await r2.json();
+
+                if(data2.status == "success")
+                {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Contraseña cambiada con exito!',
+                        color: 'var(--color-letra)',
+                        background: 'var(--color-principal)',
+                        confirmButtonText: 'Volver',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btnCrear'
+                        },
+                        willClose: () => {
+                            window.location.href = `index.php?controller=usuario&action=mostrarDatosUsuario`;
+                          }
+                
+                    }).then((result)  => {
+                        if(result.isConfirmed) {
+                            window.location.href = `index.php?controller=usuario&action=mostrarDatosUsuario`;
+                        }
+                    });
+                }
+                else if(data2.status == "error")
+                {
+                    swal.fire({
+                        icon: "error",
+                        title: "Ha sucedido el siguiente error",
+                        text: data2.message
+                    });
+                }
+
+              }
+              
+
+        }  
+        else if(data.status == "error")
+        {
+            swal.fire(data.message);
+        }
+    } 
+    catch (error) {
+        console.log("El error en el catch"+ error.message);
+    }
 }
 
 function cambiarFoto(event){

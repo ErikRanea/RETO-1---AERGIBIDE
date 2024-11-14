@@ -187,6 +187,17 @@ class Usuario{
         return $result['total'] ?? 0;
     }
 
+
+    public function updateDatosUsuario($param)
+    {
+        $sql = "UPDATE " . $this->tabla .
+        " SET nombre = ?, apellido = ?, email = ? WHERE id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt -> execute([$param->nombre,$param->apellido,$param->email,$param-> id]);
+        return $stmt;
+
+    }
+
     public function updateUsuario($objeto) {
         $sql = "UPDATE " . $this->tabla .
                " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email WHERE id = :id";
@@ -212,6 +223,20 @@ class Usuario{
         $sql = "UPDATE " . $this->tabla . " SET foto_perfil=? WHERE id=?";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$foto, $idUsuario]);
+
+    }
+
+    public function updatePassword($param)
+    {
+
+        try {
+            $sql = "UPDATE ".$this->tabla." SET password = ? WHERE id = ?";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([$param["pwdNueva"], $param["idUsuario"]]);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
 
     }
 

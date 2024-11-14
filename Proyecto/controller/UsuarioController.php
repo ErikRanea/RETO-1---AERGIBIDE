@@ -22,15 +22,103 @@ class UsuarioController{
 
     public function datosUsuario() {
         // Si no se pasa un ID de usuario, usamos el ID del usuario logueado
+ 
         $usuarioId = isset($_GET['id']) ? $_GET['id'] : $_SESSION['user_data']['id'];
         $usuario = $this->model->getUsuarioById($usuarioId);
         if ($usuario) {
-            echo json_encode($usuario);
+            
+            echo json_encode([
+                "status" => "success",
+                "data" => $usuario
+            ]);
         } else {
             echo json_encode(['error' => 'Usuario no encontrado']);
         }
         exit;
     }
+
+    public function updatePassword()
+    {
+
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+        {
+            try {
+
+
+                //code...
+                if(!isset($_POST["pwdActual"]) || !isset($_POST["pwdNueva"]) || $_POST["idUsuario"] != $_SESSION["user_data"]["id"])
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "No se está autorizado para utilizar este cambio de contraseña"
+                    ]);
+                    exit();
+                }
+
+                $usuario = $this->model->getUsuarioById($_POST["idUsuario"]);
+
+
+                if(!password_verify($_POST["pwdActual"] , $usuario["password"]))
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "Las contraseña actual no es correcta"
+                    ]);
+                    exit();
+                }
+
+
+
+                $_POST["pwdNueva"] =  password_hash($_POST["pwdNueva"], PASSWORD_DEFAULT);
+
+
+                
+
+
+                $result = $this->model->updatePassword($_POST);
+
+
+
+                if($result)
+                {
+                    echo json_encode([
+                        "status" => "success",
+                        "message" => "Se ha haseado la página"
+                    ]);
+                    exit();
+                }
+                else
+                {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "No se ha actualizado la contraseña"
+                    ]);
+                    exit();
+                }
+
+
+
+
+            } 
+            catch (Error $e) 
+            {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Ha sucedido el siguiente error en el servidor ".$e
+                ]);
+                exit();
+            }
+        }
+        else
+        {
+            header("Location: index.php");
+        }
+
+
+
+
+    }
+
 
 
     public function confirmDelete() {
@@ -74,32 +162,21 @@ class UsuarioController{
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
 
+
             // Solo actualizar la contraseña si se ha proporcionado
-            if (!empty($_POST["actualPassword"])) {
-
-                // Verificar contraseña
-                $usuarioAlmacenado = $this->model->getUsuarioByEmail($usuario->email);
-                if ($usuarioAlmacenado && password_verify($_POST["actualPassword"], $usuarioAlmacenado->password)) {
-
-                    // Solo actualiza la contraseña si se proporciona una nueva
-                    if (!empty($_POST['nuevaPassword'])) {
-                        $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
-                    }
-
-                } else {
-                    echo "La contraseña actual es incorrecta.";
-                    return;
-                }
-            }
 
             // Actualizar usuario en la base de datos
-            $this->model->updateUsuario($usuario);
+            $result = $this->model->updateDatosUsuario($usuario);
 
             // Redirigir a la página de los datos del usuario actualizado
             header("Location: index.php?controller=usuario&action=mostrarDatosUsuario");
             exit();
         }
     }
+
+
+
+
 
     public function create() {
         if (isset($_POST)) {
