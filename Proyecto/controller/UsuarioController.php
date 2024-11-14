@@ -125,19 +125,21 @@ class UsuarioController{
         try {
             if (!isset($_POST["idUsuario"])) {
                 echo json_encode([
-                    "status" => "error", "message" => "error"
+                    "status" => "error",
+                    "message" => "error"
                 ]);
+                exit();
             } else {
                 $usuarioId = $_POST['idUsuario'];
             }
+
             $this->model->delete($usuarioId);
             echo json_encode([
                 "status" => "success",
                 "message" => "success"
             ]);
             exit();
-        } 
-        catch (Error $e) {
+        } catch (Error $e) {
             echo json_encode([
                 "status" => "error",
                 "message" => "El error es del catch: ".$e
@@ -183,16 +185,44 @@ class UsuarioController{
             $usuario->apellido = $_POST['apellido'];
             $usuario->username = $_POST['username'];
             $usuario->email = $_POST['email'];
-            $usuario->foto_perfil = 'assets/img/fotoPorDefecto.png';
             $usuario->rol = $_POST['rol'];
 
+
+
+
             // Confirmar contraseña
-            if ($_POST["nuevaPassword"] === $_POST["repetirPassword"]) {
-                $usuario->password = password_hash($_POST['nuevaPassword'], PASSWORD_BCRYPT);
+            if ($_POST["password"] === $_POST["repetirPassword"]) {
+                $usuario->password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
             } else {
                 echo "Las contraseñas no coinciden.";
                 return;
             }
+
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES['imagen']['tmp_name'];
+                $fileMimeType = mime_content_type($fileTmpPath);
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
+
+                if (in_array($fileMimeType, $allowedMimeTypes)) {
+                    $fileName = uniqid() . '-' . basename($_FILES['imagen']['name']);
+                    $uploadFileDir = 'assets/upload/fotoPerfil/';
+                    $destPath = $uploadFileDir . $fileName;
+
+                    if (move_uploaded_file($fileTmpPath, $destPath)) {
+                        $usuario->foto_perfil = $destPath;
+                    } else {
+                        echo "Error al mover el archivo de imagen.";
+
+                    }
+                } else {
+                    echo "Tipo de archivo no permitido. Solo se aceptan JPEG, PNG, GIF y WEBP.";
+
+                }
+            } else {
+                $usuario->foto_perfil = 'assets/img/fotoPorDefecto.png';
+            }
+
 
             // Crear usuario
             $this->model->createUsuario($usuario);
@@ -214,8 +244,6 @@ class UsuarioController{
                 $fileTmpPath = $_FILES['nuevaFoto']['tmp_name'];
                 $fileMimeType = mime_content_type($fileTmpPath);
                 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/webp'];
-
-
 
                 if (in_array($fileMimeType, $allowedMimeTypes)) {
                     $fileName = uniqid() . '-' . basename($_FILES['nuevaFoto']['name']);

@@ -200,7 +200,7 @@ class Usuario{
 
     public function updateUsuario($objeto) {
         $sql = "UPDATE " . $this->tabla .
-               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email, password = :password WHERE id = :id";
+               " SET nombre = :nombre, apellido = :apellido, username = :username, email = :email WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $objeto->id, PDO::PARAM_INT);
         $stmt->bindParam(':nombre', $objeto->nombre, PDO::PARAM_STR);
@@ -208,8 +208,8 @@ class Usuario{
         $stmt->bindParam(':username', $objeto->username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
 
-        $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
-        $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
+//        $passwordHaseada = password_hash($objeto->password, PASSWORD_DEFAULT);
+//        $stmt->bindParam(':password', $passwordHaseada, PDO::PARAM_STR);
         //$stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
     
         if ($stmt->execute()) {
@@ -250,7 +250,7 @@ class Usuario{
         $stmt->bindParam(':email', $objeto->email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $objeto->password, PDO::PARAM_STR);
         $stmt->bindParam(':foto_perfil', $objeto->foto_perfil, PDO::PARAM_STR);
-        $stmt->bindParam(':rol', $objeto->rol, PDO::PARAM_STR); // Agrega esta línea
+        $stmt->bindParam(':rol', $objeto->rol, PDO::PARAM_STR);
     
         if ($stmt->execute()) {
             echo "Usuario creado exitosamente.";

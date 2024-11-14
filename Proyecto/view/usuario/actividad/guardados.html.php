@@ -14,7 +14,7 @@ foreach ($actividad as $item) {
 }
 ?>
 
-<div>
+<div class="preguntasDiv">
     <h2>Preguntas</h2>
     <?php if (count($preguntas) > 0):?>
         <div class="contenido">
@@ -45,15 +45,18 @@ foreach ($actividad as $item) {
     <?php endif; ?>
 </div>
 
-<div>
+<div class="respuestasDiv">
     <h2>Respuestas</h2>
     <?php if (count($respuestas) > 0):?>
         <div class="contenido">
             <?php foreach ($respuestas as $respuesta):?>
                 <div class="respuesta">
-                    <?php if (isset($respuesta["titulo"])): ?>
-                        <h3><?= htmlspecialchars($respuesta["titulo"]) ?></h3>
-                    <?php endif; ?>
+                    <p>
+                        <a href="index.php?controller=respuesta&action=view&id_pregunta=<?= htmlspecialchars($respuesta["id"] ?? '') ?>" class="tituloRespuesta">
+                            <?= htmlspecialchars($respuesta["titulo"] ?? 'Sin título') ?>
+                        </a>
+                    </p>
+
                     <div class="datos-respuesta">
                         <span><?= isset($respuesta["votos"]) ? $respuesta["votos"] : 0 ?> votos</span>
                         <span><?= isset($respuesta["fecha_hora"]) ? $respuesta["fecha_hora"] : "Fecha no disponible" ?></span>
