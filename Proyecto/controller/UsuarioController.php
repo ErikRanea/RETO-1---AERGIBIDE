@@ -115,11 +115,10 @@ class UsuarioController{
         }
 
 
-
-
     }
 
 
+    public function setPassword(){}
 
     public function confirmDelete() {
         try {
@@ -231,6 +230,8 @@ class UsuarioController{
         }
     }
 
+
+    
     public function updateFoto() {
         if (isset($_POST)) {
             if (isset($_POST['idUsuario'])) {
