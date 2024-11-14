@@ -427,6 +427,21 @@ class UsuarioController{
             case "PanelControl":
                 include "view/usuario/vistaPrincipal/gestionUsuario.html.php";
                 break;
+            case "Editar":
+                if (!isset($_POST["idUsuario"])){
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "Usuario no especificada"
+                    ]);
+                    exit();
+                } else {
+                    $idUsuario = $_POST["idUsuario"];
+                }
+
+                $usuarioEdit = $this->model->getUsuarioById($idUsuario);
+
+                include "view/usuario/gestion/updateUsuario.html.php";
+                break;
             default:
                 echo json_encode([
                     "status" => "error",
@@ -582,6 +597,10 @@ class UsuarioController{
         }
         include __DIR__ . '/../view/layout/header.php';
         include __DIR__ . '/../view/usuario/gestion/listaUsuarios.html.php';
+    }
+
+    public function updateUsuarioList(){
+        $this->view = "gestion/updateUsuario";
     }
 
     public function nuevoUsuario() {
