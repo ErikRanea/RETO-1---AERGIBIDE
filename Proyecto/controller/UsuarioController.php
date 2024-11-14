@@ -46,7 +46,7 @@ class UsuarioController{
 
 
                 //code...
-                if(!isset($_POST["pwdActual"]) || !isset($_POST["pwdNueva"]) || $_POST["idUsuario"] != $_SESSION["user_data"]["id"])
+                if(!isset($_POST["pwdActual"]) || !isset($_POST["pwdNueva"]) || !$this->puedeEditar($_POST["idUsuario"]))
                 {
                     echo json_encode([
                         "status" => "error",
@@ -580,4 +580,23 @@ class UsuarioController{
         return false;
     }
 
+    private function puedeEditar($id)
+    {
+        $puedeEditar = false;
+        $idUsuario = $_SESSION["user_data"]["id"];
+        $rol = $_SESSION["user_data"]["rol"];
+
+        if($idUsuario == $id)
+        {
+            return $puedeEditar = true;
+        }
+        elseif (($rol == "admin") || ($rol == "gestor")) {
+            return $puedeEditar = true;
+        }
+
+        return $puedeEditar;
+    }
+
+
 }
+
