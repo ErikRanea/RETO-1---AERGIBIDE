@@ -1,5 +1,9 @@
 <main class="main-content">
-    <h1 class="temas-titulo">TEMAS</h1>
+    <div class="container-titulo-tema">
+        <h1 class="temas-titulo">TEMAS</h1>
+        <a href="index.php?controller=pregunta&action=create" class="btn btnCrear">Crear Pregunta</a>
+    </div>
+
     <div class="containerTema">
         <div class="temas">
             <?php
