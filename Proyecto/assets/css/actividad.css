@@ -344,14 +344,104 @@ strong {
     color: var(--color-secundario);
 }
 
-.listaUsers{
-    color: var(--color-letra);
+.listaUsers {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--color-principal);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow-md);
 }
 
-.user-name{
+.listaUsers p {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--negro1);
+    margin-bottom: 20px;
     text-align: center;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user {
+    background-color: var(--color-fondo);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+.user:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.user li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.user-name {
+    font-weight: 500;
+}
+
+.user-actions {
+    display: flex;
+}
+
+.botonEditar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+}
+
+.botonEditar:hover {
+    transform: scale(1.1);
+}
+
+.botonEditar svg {
+    width: 20px;
+    height: 20px;
+}
+
+.botonEditar:first-of-type svg {
+    color: var(--color-secundario);
+}
+
+.botonEditar:first-of-type:hover svg {
+    color: var(--color-secundario-activo);
+}
+
+.botonEditar:last-of-type svg {
+    color: var(--color-rojo-aergibide);
+}
+
+.botonEditar:last-of-type:hover svg {
+    color: var(--color-rojo-aergibide-activo);
+}
+.preguntasDiv{
+    padding-bottom: 50px;
+}
 /* Responsive design */
 @media (max-width: 991px) {
     .user-dashboard {
@@ -449,4 +539,25 @@ strong {
     .btnAc {
         flex: 0 0 auto;
     }
+
+    .listaUsers {
+        padding: 15px;
+    }
+
+    .user {
+        padding: 8px 12px;
+    }
+
+    .user-image {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    .botonEditar svg {
+        width: 18px;
+        height: 18px;
+    }
+
+
 }

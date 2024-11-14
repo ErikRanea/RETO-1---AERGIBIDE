@@ -80,12 +80,12 @@ class Chat {
     }
 
     public function obtenerMensajes($id_emisor, $id_receptor) {
-        $sql = "SELECT m.mensaje, m.fecha, u.nombre AS emisor 
-        FROM Mensajes m 
-        JOIN Usuarios u ON m.id_emisor = u.id 
-        WHERE (m.id_emisor = :id_emisor AND m.id_receptor = :id_receptor) 
-           OR (m.id_emisor = :id_receptor AND m.id_receptor = :id_emisor) 
-        ORDER BY m.fecha ASC";
+        $sql = "SELECT m.mensaje, m.fecha, u.username AS emisor 
+    FROM Mensajes m 
+    JOIN Usuarios u ON m.id_emisor = u.id 
+    WHERE (m.id_emisor = :id_emisor AND m.id_receptor = :id_receptor) 
+       OR (m.id_emisor = :id_receptor AND m.id_receptor = :id_emisor) 
+    ORDER BY m.fecha ASC";
 
         $stmt = $this->connection->prepare($sql);
         $stmt->execute(['id_emisor' => $id_emisor, 'id_receptor' => $id_receptor]);
