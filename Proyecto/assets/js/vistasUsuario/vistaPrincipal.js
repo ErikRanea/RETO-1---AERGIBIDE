@@ -13,39 +13,50 @@ document.addEventListener("DOMContentLoaded", () => {
     cambiarPanelPrincipal({ target: btnDatos });
 });
 
+// Usamos delegación de eventos para el div contenedor de la actividad
 divPrincipal.addEventListener("click", (event) => {
     if ( event.target.id === "btnEditarUsuario" ){
         habilitarEdicion(event);
     }
-});
 
-divPrincipal.addEventListener("click", (event) => {
     if ( event.target.id === "btnPhotoEdit" ){
         cambiarFoto(event);
     }
-});
 
-
-// Usamos delegación de eventos para el div contenedor de la actividad
-divPrincipal.addEventListener("click", (event) => {
     if (event.target.classList.contains("btnPanelActividad")) {
         verActividad(event);
     }
-});
 
-// Usamos delegación de eventos para el div contenedor de la gestion
-divPrincipal.addEventListener("click", (event) => {
     if (event.target.classList.contains("btnPanelGestion")) {
         verGestion(event);
     }
-});
 
-
-divPrincipal.addEventListener("click", (event) => {
     if (event.target.classList.contains("btnPanelLateral")) {
         cambiarPanelPrincipal(event);
     }
+
 });
+
+// Escucha el evento "change" directamente en el input de tipo file
+divPrincipal.addEventListener("change", (event) => {
+    if (event.target.id === "btnAddFotoPerfil") {
+        mostrarFoto(event);
+    }
+});
+
+function mostrarFoto(event){
+    console.log("AÑADIR FOTO")
+    // Opcional: Previsualiza la imagen seleccionada
+    let archivo = event.target.files[0]; // Obtiene el archivo seleccionado
+
+    if (archivo) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("imgAddFotoPerfil").src = e.target.result; // Actualiza la imagen de perfil con la imagen seleccionada
+        };
+        reader.readAsDataURL(archivo); // Lee el archivo como URL
+    }
+}
 
 function habilitarEdicion(event){
     event.preventDefault();
@@ -320,4 +331,50 @@ async function verGestion(event){
 
 }
 
+async function deleteUsuario(userId){
+    console.log("CLICK BOTON DELETE")
+    const params = new URLSearchParams();
+    params.append("idUsuario", userId);
+
+    console.log(params.toString());
+
+    let confirmado = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+    if (confirmado) {
+
+        const response = await fetch('index.php?controller=usuario&action=confirmDelete', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: params.toString()
+        });
+
+        const responsetxt = await response.text();
+        console.log("respuesta del javascript: " + responsetxt);
+        try {
+            const data = JSON.parse(responsetxt);
+            console.log("variable data: "+ data);
+
+            if (data.status === "success") {
+                alert("Usuario eliminado exitosamente");
+                // Eliminar el usuario de la interfaz
+                const usuarioElemento = document.getElementById(`contenedorUsuario`+userId);
+                if (usuarioElemento) {
+                    usuarioElemento.remove();
+                }
+            } else {
+                console.error(data.message);
+                alert("Hubo un problema al eliminar el usuario.");
+            }
+        } catch(error) {
+            console.error("Error:", error);
+            alert("Error al intentar eliminar el usuario.");
+        }
+    }
+}
+
+function editarUsuario(userId){
+    console.log("CLICK BOTON EDITAR")
+}
 
