@@ -5,7 +5,7 @@ if (!isset($dataToView)) {
 }
 
 $id_emisor = $_SESSION['user_data']['id'] ?? null;
-$user_emisor = $_SESSION['user_data']['nombre'] ?? null; // Changed from 'username' to 'nombre'
+$user_emisor = $_SESSION['user_data']['username'] ?? null;
 
 if (!$id_emisor || !$user_emisor) {
     // Handle the case where user is not properly logged in
@@ -59,7 +59,7 @@ if (!$id_emisor || !$user_emisor) {
                 <?php endforeach; ?>
             </select>
             <label for="message" class="visually-hidden"></label>
-            <input type="text" id="message" placeholder="Escribe tu mensaje aquí..."  />
+            <input type="text" id="message" class="enviarMensajeBarra" placeholder="Escribe tu mensaje aquí..."  />
             <button id="send-message">Enviar</button>
         </div>
     </div>

@@ -14,7 +14,7 @@ foreach ($actividad as $item) {
 }
 ?>
 
-<div>
+<div class="preguntasDiv">
     <h2>Preguntas</h2>
     <?php if (count($preguntas) > 0):?>
         <div class="contenido">
@@ -45,7 +45,7 @@ foreach ($actividad as $item) {
     <?php endif; ?>
 </div>
 
-<div>
+<div class="respuestasDiv">
     <h2>Respuestas</h2>
     <?php if (count($respuestas) > 0):?>
         <div class="contenido">
